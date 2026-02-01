@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-deep-teal: #0D6E6E;
+  --color-slate-navy: #2C3E50;
+  --color-industrial-amber: #E67E22;
+  --color-off-white: #F8F9FA;
+  --color-light-grey: #E9ECEF;
+  --color-mid-grey: #6C757D;
+  --color-charcoal: #343A40;
+  
+  --font-family-heading: var(--font-inter), sans-serif;
+  --font-family-body: var(--font-source-sans), sans-serif;
+}
+
+/* Custom utility classes */
+.section-padding {
+  @apply px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+}
+
+.container-max {
+  @apply max-w-7xl mx-auto;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+  background-color: #0D6E6E;
+  color: white;
+}
+
+/* Focus states for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #E67E22;
+  outline-offset: 2px;
+}
+
+/* Transitions */
+.transition-default {
+  @apply transition-all duration-300 ease-in-out;
+}
