@@ -62,7 +62,7 @@ const curriculum = [
   },
   {
     module: 12,
-    title: 'Certification Exam Preparation',
+    title: 'Final Assessment',
     topics: ['Key concepts review', 'Practice questions', 'Common pitfalls', 'Exam strategy'],
   },
 ];
@@ -88,10 +88,10 @@ export default function RCMPractitionerPage() {
               <span className="text-white font-semibold text-sm">COMING SOON</span>
             </div>
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              RCM Practitioner Certification
+              RCM Practitioner Preparation
             </h1>
             <p className="mt-6 text-xl md:text-2xl text-gray-200 leading-relaxed">
-              Become a certified RCM practitioner. Lead analyses with confidence, make better maintenance decisions, and transform your organisation&apos;s reliability approach.
+              Become a confident RCM practitioner. Lead analyses with confidence, make better maintenance decisions, and transform your organisation&apos;s reliability approach.
             </p>
             
             <div className="mt-8 flex flex-wrap items-center gap-6 text-gray-200">
@@ -111,7 +111,7 @@ export default function RCMPractitionerPage() {
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
                 </svg>
-                <span>Professional Certification</span>
+                <span>Comprehensive Training</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-heading font-bold text-industrial-amber">£399</span>
@@ -130,7 +130,7 @@ export default function RCMPractitionerPage() {
               <h2 className="font-heading text-2xl font-bold text-slate-navy mb-6">About This Course</h2>
               <div className="prose max-w-none text-charcoal">
                 <p>
-                  The RCM Practitioner Certification course takes you beyond the fundamentals to become a confident, 
+                  The RCM Practitioner Preparation course takes you beyond the fundamentals to become a confident, 
                   competent RCM analyst. You&apos;ll learn to lead RCM analysis teams, navigate complex maintenance 
                   decisions, and implement sustainable reliability programs.
                 </p>
@@ -209,7 +209,7 @@ export default function RCMPractitionerPage() {
                 </div>
                 <div className="p-4 bg-off-white rounded-lg">
                   <h4 className="font-semibold text-slate-navy mb-2">Career Advancers</h4>
-                  <p className="text-sm text-mid-grey">Looking to differentiate yourself with a recognised professional certification.</p>
+                  <p className="text-sm text-mid-grey">Looking to differentiate yourself with advanced RCM expertise.</p>
                 </div>
               </div>
             </section>
@@ -274,7 +274,7 @@ export default function RCMPractitionerPage() {
                     <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
-                    Professional certification exam
+                    Comprehensive final assessment
                   </div>
                   <div className="flex items-center gap-2 text-sm text-charcoal">
                     <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">

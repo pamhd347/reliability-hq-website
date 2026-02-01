@@ -18,16 +18,16 @@ const courses = [
     features: ['5 interactive lessons', 'Quizzes with instant feedback', 'Certificate of completion', 'Progress tracking'],
   },
   {
-    title: 'RCM Practitioner Certification',
+    title: 'RCM Practitioner Preparation',
     subtitle: 'Professional Course',
-    description: 'Become a certified RCM practitioner with our comprehensive training program. Lead RCM analyses with confidence.',
+    description: 'Become a confident RCM practitioner with our comprehensive training program. Lead RCM analyses with confidence.',
     lessons: 12,
     duration: '8-10 hours',
     price: '£399',
     href: '/training/rcm-practitioner',
     badge: 'Coming Soon',
     badgeColor: 'bg-industrial-amber',
-    features: ['12 in-depth modules', 'Real-world case studies', 'Certification exam', 'Lifetime access'],
+    features: ['12 in-depth modules', 'Real-world case studies', 'Final assessment', 'Lifetime access'],
   },
   {
     title: 'FMEA Masterclass',
@@ -54,7 +54,7 @@ const faqs = [
   },
   {
     question: 'Do I get a certificate?',
-    answer: 'Yes! Upon completing our free RCM Fundamentals course (including all quizzes), you\'ll receive a completion certificate. Our premium courses offer professional certifications that demonstrate your expertise.',
+    answer: 'Yes! Upon completing our free RCM Fundamentals course (including all quizzes), you\'ll receive a completion certificate. Our premium courses offer completion certificates that demonstrate your expertise.',
   },
   {
     question: 'Can I access the courses on mobile?',
