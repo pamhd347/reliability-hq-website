@@ -1,5 +1,6 @@
 import Button from '@/components/Button';
 import ProductCard from '@/components/ProductCard';
+import EmailSignupForm from '@/components/EmailSignupForm';
 import { getFeaturedProducts } from '@/data/products';
 
 export default function HomePage() {
@@ -275,20 +276,7 @@ export default function HomePage() {
               <li>• Exclusive subscriber discounts</li>
             </ul>
             
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg text-charcoal focus:outline-none focus:ring-2 focus:ring-industrial-amber"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-industrial-amber text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors"
-              >
-                Join Free
-              </button>
-            </form>
+            <EmailSignupForm />
             <p className="text-gray-300 text-sm mt-4">No spam. Unsubscribe anytime.</p>
           </div>
         </div>
