@@ -1,0 +1,135 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F8F9FA"/>
+  
+  <!-- Database/Library visualization -->
+  <g transform="translate(80, 50)">
+    <!-- Shadow -->
+    <rect x="12" y="12" width="620" height="490" rx="12" fill="#2C3E50" opacity="0.15"/>
+    
+    <!-- Main window -->
+    <rect width="620" height="490" rx="12" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    
+    <!-- Title bar -->
+    <rect width="620" height="44" rx="12" fill="#2C3E50"/>
+    <rect y="36" width="620" height="8" fill="#2C3E50"/>
+    <circle cx="24" cy="22" r="6" fill="#EF4444"/>
+    <circle cx="44" cy="22" r="6" fill="#F59E0B"/>
+    <circle cx="64" cy="22" r="6" fill="#10B981"/>
+    <text x="310" y="28" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Failure Mode Library</text>
+    
+    <!-- Search bar -->
+    <g transform="translate(20, 55)">
+      <rect width="580" height="40" rx="8" fill="#F8F9FA" stroke="#E5E7EB" stroke-width="1"/>
+      <circle cx="25" cy="20" r="10" stroke="#9CA3AF" stroke-width="2" fill="none"/>
+      <line x1="32" y1="27" x2="38" y2="33" stroke="#9CA3AF" stroke-width="2"/>
+      <text x="55" y="25" font-family="Inter, sans-serif" font-size="12" fill="#9CA3AF">Search failure modes, equipment, or effects...</text>
+    </g>
+    
+    <!-- Stats bar -->
+    <g transform="translate(20, 110)">
+      <rect width="180" height="50" rx="6" fill="#0D6E6E" opacity="0.1"/>
+      <text x="15" y="22" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Total Failure Modes</text>
+      <text x="15" y="40" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#0D6E6E">547</text>
+      
+      <rect x="200" y="0" width="180" height="50" rx="6" fill="#E67E22" opacity="0.1"/>
+      <text x="215" y="22" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Equipment Categories</text>
+      <text x="215" y="40" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#E67E22">42</text>
+      
+      <rect x="400" y="0" width="180" height="50" rx="6" fill="#2C3E50" opacity="0.1"/>
+      <text x="415" y="22" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Linked Effects</text>
+      <text x="415" y="40" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#2C3E50">1,284</text>
+    </g>
+    
+    <!-- Equipment categories -->
+    <g transform="translate(20, 175)">
+      <text x="0" y="0" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2C3E50">Equipment Categories</text>
+      
+      <g transform="translate(0, 15)">
+        <rect width="135" height="70" rx="6" fill="#0D6E6E" opacity="0.1" stroke="#0D6E6E" stroke-width="1"/>
+        <text x="68" y="30" font-family="Inter, sans-serif" font-size="20" text-anchor="middle">⚙️</text>
+        <text x="68" y="50" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#2C3E50" text-anchor="middle">Rotating</text>
+        <text x="68" y="62" font-family="Inter, sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">156 modes</text>
+      </g>
+      
+      <g transform="translate(145, 15)">
+        <rect width="135" height="70" rx="6" fill="#E67E22" opacity="0.1" stroke="#E67E22" stroke-width="1"/>
+        <text x="68" y="30" font-family="Inter, sans-serif" font-size="20" text-anchor="middle">🔌</text>
+        <text x="68" y="50" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#2C3E50" text-anchor="middle">Electrical</text>
+        <text x="68" y="62" font-family="Inter, sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">98 modes</text>
+      </g>
+      
+      <g transform="translate(290, 15)">
+        <rect width="135" height="70" rx="6" fill="#2C3E50" opacity="0.1" stroke="#2C3E50" stroke-width="1"/>
+        <text x="68" y="30" font-family="Inter, sans-serif" font-size="20" text-anchor="middle">🔧</text>
+        <text x="68" y="50" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#2C3E50" text-anchor="middle">Valves</text>
+        <text x="68" y="62" font-family="Inter, sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">87 modes</text>
+      </g>
+      
+      <g transform="translate(435, 15)">
+        <rect width="135" height="70" rx="6" fill="#F59E0B" opacity="0.1" stroke="#F59E0B" stroke-width="1"/>
+        <text x="68" y="30" font-family="Inter, sans-serif" font-size="20" text-anchor="middle">📊</text>
+        <text x="68" y="50" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#2C3E50" text-anchor="middle">Instruments</text>
+        <text x="68" y="62" font-family="Inter, sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">76 modes</text>
+      </g>
+    </g>
+    
+    <!-- Sample data table -->
+    <g transform="translate(20, 275)">
+      <text x="0" y="0" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2C3E50">Sample Entries</text>
+      
+      <!-- Table header -->
+      <g transform="translate(0, 15)">
+        <rect width="580" height="30" fill="#0D6E6E" opacity="0.1"/>
+        <text x="15" y="20" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#2C3E50">Equipment</text>
+        <text x="140" y="20" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#2C3E50">Failure Mode</text>
+        <text x="320" y="20" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#2C3E50">Cause</text>
+        <text x="480" y="20" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#2C3E50">Effect</text>
+      </g>
+      
+      <!-- Rows -->
+      <g transform="translate(0, 45)">
+        <line x1="0" y1="30" x2="580" y2="30" stroke="#E5E7EB"/>
+        <text x="15" y="20" font-family="Inter, sans-serif" font-size="10" fill="#2C3E50">Centrifugal Pump</text>
+        <text x="140" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Fails to start</text>
+        <text x="320" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Motor burnout</text>
+        <text x="480" y="20" font-family="Inter, sans-serif" font-size="10" fill="#EF4444">No flow</text>
+      </g>
+      
+      <g transform="translate(0, 75)">
+        <rect width="580" height="30" fill="#F8F9FA"/>
+        <line x1="0" y1="30" x2="580" y2="30" stroke="#E5E7EB"/>
+        <text x="15" y="20" font-family="Inter, sans-serif" font-size="10" fill="#2C3E50">Centrifugal Pump</text>
+        <text x="140" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Low output</text>
+        <text x="320" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Impeller wear</text>
+        <text x="480" y="20" font-family="Inter, sans-serif" font-size="10" fill="#E67E22">Reduced flow</text>
+      </g>
+      
+      <g transform="translate(0, 105)">
+        <line x1="0" y1="30" x2="580" y2="30" stroke="#E5E7EB"/>
+        <text x="15" y="20" font-family="Inter, sans-serif" font-size="10" fill="#2C3E50">Ball Valve</text>
+        <text x="140" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Fails to close</text>
+        <text x="320" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Seat damage</text>
+        <text x="480" y="20" font-family="Inter, sans-serif" font-size="10" fill="#E67E22">Leakage</text>
+      </g>
+      
+      <g transform="translate(0, 135)">
+        <rect width="580" height="30" fill="#F8F9FA"/>
+        <text x="15" y="20" font-family="Inter, sans-serif" font-size="10" fill="#2C3E50">Electric Motor</text>
+        <text x="140" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Overheats</text>
+        <text x="320" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Bearing failure</text>
+        <text x="480" y="20" font-family="Inter, sans-serif" font-size="10" fill="#EF4444">Trip/Shutdown</text>
+      </g>
+    </g>
+    
+    <!-- Update badge -->
+    <g transform="translate(450, 440)">
+      <rect width="150" height="35" rx="17" fill="#0D6E6E"/>
+      <text x="75" y="22" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="white" text-anchor="middle">Updates Included</text>
+    </g>
+  </g>
+  
+  <!-- Decorative -->
+  <circle cx="720" cy="80" r="45" fill="#0D6E6E" opacity="0.1"/>
+  <circle cx="60" cy="520" r="30" fill="#E67E22" opacity="0.08"/>
+</svg>

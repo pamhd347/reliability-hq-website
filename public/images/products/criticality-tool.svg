@@ -1,0 +1,105 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F8F9FA"/>
+  
+  <!-- Main calculator/dashboard mockup -->
+  <g transform="translate(80, 50)">
+    <!-- Shadow -->
+    <rect x="12" y="12" width="620" height="490" rx="12" fill="#2C3E50" opacity="0.15"/>
+    
+    <!-- Main window -->
+    <rect width="620" height="490" rx="12" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    
+    <!-- Title bar -->
+    <rect width="620" height="44" rx="12" fill="#2C3E50"/>
+    <rect y="36" width="620" height="8" fill="#2C3E50"/>
+    <circle cx="24" cy="22" r="6" fill="#EF4444"/>
+    <circle cx="44" cy="22" r="6" fill="#F59E0B"/>
+    <circle cx="64" cy="22" r="6" fill="#10B981"/>
+    <text x="310" y="28" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Criticality Analysis Calculator</text>
+    
+    <!-- Scoring section -->
+    <g transform="translate(20, 60)">
+      <text x="0" y="20" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#2C3E50">Criticality Scoring Matrix</text>
+      
+      <!-- Score bars -->
+      <g transform="translate(0, 35)">
+        <text x="0" y="14" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Safety Impact</text>
+        <rect x="120" y="4" width="200" height="16" rx="4" fill="#E5E7EB"/>
+        <rect x="120" y="4" width="180" height="16" rx="4" fill="#EF4444"/>
+        <text x="330" y="16" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2C3E50">9/10</text>
+      </g>
+      
+      <g transform="translate(0, 65)">
+        <text x="0" y="14" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Environmental</text>
+        <rect x="120" y="4" width="200" height="16" rx="4" fill="#E5E7EB"/>
+        <rect x="120" y="4" width="140" height="16" rx="4" fill="#E67E22"/>
+        <text x="330" y="16" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2C3E50">7/10</text>
+      </g>
+      
+      <g transform="translate(0, 95)">
+        <text x="0" y="14" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Production Loss</text>
+        <rect x="120" y="4" width="200" height="16" rx="4" fill="#E5E7EB"/>
+        <rect x="120" y="4" width="160" height="16" rx="4" fill="#F59E0B"/>
+        <text x="330" y="16" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2C3E50">8/10</text>
+      </g>
+      
+      <g transform="translate(0, 125)">
+        <text x="0" y="14" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Repair Cost</text>
+        <rect x="120" y="4" width="200" height="16" rx="4" fill="#E5E7EB"/>
+        <rect x="120" y="4" width="100" height="16" rx="4" fill="#0D6E6E"/>
+        <text x="330" y="16" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2C3E50">5/10</text>
+      </g>
+    </g>
+    
+    <!-- Criticality result card -->
+    <g transform="translate(400, 60)">
+      <rect width="200" height="160" rx="8" fill="#0D6E6E" opacity="0.1" stroke="#0D6E6E" stroke-width="2"/>
+      <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2C3E50" text-anchor="middle">CRITICALITY SCORE</text>
+      <text x="100" y="90" font-family="Inter, sans-serif" font-size="56" font-weight="700" fill="#0D6E6E" text-anchor="middle">87</text>
+      <rect x="50" y="110" width="100" height="28" rx="14" fill="#EF4444"/>
+      <text x="100" y="129" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">CRITICAL</text>
+    </g>
+    
+    <!-- Equipment list -->
+    <g transform="translate(20, 240)">
+      <text x="0" y="0" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#2C3E50">Equipment Rankings</text>
+      
+      <g transform="translate(0, 20)">
+        <rect width="580" height="40" rx="6" fill="#EF4444" opacity="0.1"/>
+        <rect x="8" y="8" width="24" height="24" rx="4" fill="#EF4444"/>
+        <text x="20" y="26" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">1</text>
+        <text x="50" y="26" font-family="Inter, sans-serif" font-size="12" fill="#2C3E50">Main Pump Assembly</text>
+        <text x="540" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#EF4444" text-anchor="end">87</text>
+      </g>
+      
+      <g transform="translate(0, 65)">
+        <rect width="580" height="40" rx="6" fill="#E67E22" opacity="0.1"/>
+        <rect x="8" y="8" width="24" height="24" rx="4" fill="#E67E22"/>
+        <text x="20" y="26" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">2</text>
+        <text x="50" y="26" font-family="Inter, sans-serif" font-size="12" fill="#2C3E50">Hydraulic Power Unit</text>
+        <text x="540" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#E67E22" text-anchor="end">72</text>
+      </g>
+      
+      <g transform="translate(0, 110)">
+        <rect width="580" height="40" rx="6" fill="#F59E0B" opacity="0.1"/>
+        <rect x="8" y="8" width="24" height="24" rx="4" fill="#F59E0B"/>
+        <text x="20" y="26" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">3</text>
+        <text x="50" y="26" font-family="Inter, sans-serif" font-size="12" fill="#2C3E50">Control Valve Bank</text>
+        <text x="540" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#F59E0B" text-anchor="end">65</text>
+      </g>
+      
+      <g transform="translate(0, 155)">
+        <rect width="580" height="40" rx="6" fill="#0D6E6E" opacity="0.1"/>
+        <rect x="8" y="8" width="24" height="24" rx="4" fill="#0D6E6E"/>
+        <text x="20" y="26" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">4</text>
+        <text x="50" y="26" font-family="Inter, sans-serif" font-size="12" fill="#2C3E50">Cooling System</text>
+        <text x="540" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#0D6E6E" text-anchor="end">48</text>
+      </g>
+    </g>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="720" cy="100" r="50" fill="#E67E22" opacity="0.12"/>
+  <circle cx="70" cy="500" r="35" fill="#2C3E50" opacity="0.08"/>
+</svg>

@@ -1,0 +1,111 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F8F9FA"/>
+  
+  <!-- Decision tree mockup -->
+  <g transform="translate(100, 80)">
+    <!-- Main start node -->
+    <g transform="translate(250, 0)">
+      <rect x="0" y="0" width="100" height="50" rx="25" fill="#0D6E6E"/>
+      <text x="50" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="white" text-anchor="middle">START</text>
+    </g>
+    
+    <!-- Connecting line down -->
+    <line x1="300" y1="50" x2="300" y2="90" stroke="#2C3E50" stroke-width="2"/>
+    
+    <!-- First decision diamond -->
+    <g transform="translate(220, 90)">
+      <polygon points="80,0 160,60 80,120 0,60" fill="#2C3E50"/>
+      <text x="80" y="55" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Is the failure</text>
+      <text x="80" y="70" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">evident?</text>
+    </g>
+    
+    <!-- Branch lines from first diamond -->
+    <line x1="220" y1="150" x2="120" y2="150" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="120" y1="150" x2="120" y2="200" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="380" y1="150" x2="480" y2="150" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="480" y1="150" x2="480" y2="200" stroke="#2C3E50" stroke-width="2"/>
+    
+    <!-- Yes/No labels -->
+    <text x="160" y="140" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#0D6E6E">NO</text>
+    <text x="420" y="140" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#0D6E6E">YES</text>
+    
+    <!-- Left branch - Hidden failure path -->
+    <g transform="translate(40, 200)">
+      <polygon points="80,0 160,60 80,120 0,60" fill="#E67E22"/>
+      <text x="80" y="55" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Safety or</text>
+      <text x="80" y="70" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">environment?</text>
+    </g>
+    
+    <!-- Right branch - Evident failure path -->
+    <g transform="translate(400, 200)">
+      <polygon points="80,0 160,60 80,120 0,60" fill="#E67E22"/>
+      <text x="80" y="55" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Safety</text>
+      <text x="80" y="70" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">consequence?</text>
+    </g>
+    
+    <!-- More branch lines -->
+    <line x1="40" y1="260" x2="0" y2="260" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="0" y1="260" x2="0" y2="330" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="200" y1="260" x2="240" y2="260" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="240" y1="260" x2="240" y2="330" stroke="#2C3E50" stroke-width="2"/>
+    
+    <line x1="400" y1="260" x2="360" y2="260" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="360" y1="260" x2="360" y2="330" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="560" y1="260" x2="600" y2="260" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="600" y1="260" x2="600" y2="330" stroke="#2C3E50" stroke-width="2"/>
+    
+    <!-- Task outcome boxes -->
+    <g transform="translate(-40, 330)">
+      <rect width="80" height="45" rx="6" fill="#0D6E6E"/>
+      <text x="40" y="20" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Scheduled</text>
+      <text x="40" y="32" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">FFI Task</text>
+    </g>
+    
+    <g transform="translate(200, 330)">
+      <rect width="80" height="45" rx="6" fill="#0D6E6E"/>
+      <text x="40" y="20" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Condition</text>
+      <text x="40" y="32" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Monitoring</text>
+    </g>
+    
+    <g transform="translate(320, 330)">
+      <rect width="80" height="45" rx="6" fill="#EF4444"/>
+      <text x="40" y="20" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Scheduled</text>
+      <text x="40" y="32" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Restoration</text>
+    </g>
+    
+    <g transform="translate(560, 330)">
+      <rect width="80" height="45" rx="6" fill="#0D6E6E"/>
+      <text x="40" y="20" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Run to</text>
+      <text x="40" y="32" font-family="Inter, sans-serif" font-size="9" fill="white" text-anchor="middle">Failure</text>
+    </g>
+    
+    <!-- Legend -->
+    <g transform="translate(0, 420)">
+      <rect width="600" height="70" rx="8" fill="white" stroke="#E5E7EB" stroke-width="1"/>
+      <text x="20" y="25" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#2C3E50">Legend</text>
+      
+      <rect x="20" y="38" width="20" height="20" rx="10" fill="#0D6E6E"/>
+      <text x="48" y="52" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Start/End</text>
+      
+      <polygon points="160,38 180,48 160,58 140,48" fill="#2C3E50"/>
+      <text x="190" y="52" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Decision</text>
+      
+      <rect x="280" y="38" width="40" height="20" rx="4" fill="#0D6E6E"/>
+      <text x="330" y="52" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Task</text>
+      
+      <rect x="420" y="38" width="40" height="20" rx="4" fill="#EF4444"/>
+      <text x="470" y="52" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Safety Critical</text>
+    </g>
+  </g>
+  
+  <!-- Badge -->
+  <g transform="translate(580, 40)">
+    <rect width="150" height="40" rx="20" fill="#2C3E50"/>
+    <text x="75" y="25" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">Moubray Method</text>
+  </g>
+  
+  <!-- Decorative -->
+  <circle cx="50" cy="550" r="25" fill="#0D6E6E" opacity="0.1"/>
+  <circle cx="750" cy="550" r="35" fill="#E67E22" opacity="0.1"/>
+</svg>

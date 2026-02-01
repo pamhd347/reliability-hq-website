@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Product } from '@/data/products';
 
 interface ProductCardProps {
@@ -25,27 +26,36 @@ export default function ProductCard({ product }: ProductCardProps) {
       href={`/products/${product.slug}`}
       className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-light-grey"
     >
-      {/* Product Image Placeholder */}
-      <div className="aspect-[4/3] bg-gradient-to-br from-deep-teal/10 to-slate-navy/10 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 bg-deep-teal/20 rounded-lg flex items-center justify-center">
-            <svg className="w-8 h-8 text-deep-teal" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-            </svg>
+      {/* Product Image */}
+      <div className="aspect-[4/3] bg-off-white relative overflow-hidden">
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-deep-teal/10 to-slate-navy/10">
+            <div className="w-16 h-16 bg-deep-teal/20 rounded-lg flex items-center justify-center">
+              <svg className="w-8 h-8 text-deep-teal" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+            </div>
           </div>
-        </div>
+        )}
         
         {/* Category Badge */}
-        <div className="absolute top-3 left-3">
-          <span className={`${categoryColors[product.category]} text-white text-xs font-semibold px-2.5 py-1 rounded-full`}>
+        <div className="absolute top-3 left-3 z-10">
+          <span className={`${categoryColors[product.category]} text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm`}>
             {categoryLabels[product.category]}
           </span>
         </div>
         
         {/* Featured Badge */}
         {product.featured && (
-          <div className="absolute top-3 right-3">
-            <span className="bg-industrial-amber text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+          <div className="absolute top-3 right-3 z-10">
+            <span className="bg-industrial-amber text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">
               Featured
             </span>
           </div>

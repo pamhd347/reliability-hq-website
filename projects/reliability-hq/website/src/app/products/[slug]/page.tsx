@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import Button from '@/components/Button';
 import { products, getProductBySlug } from '@/data/products';
 
@@ -78,12 +79,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="container-max">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Product Image */}
-            <div className="aspect-[4/3] bg-gradient-to-br from-deep-teal/10 to-slate-navy/10 rounded-2xl flex items-center justify-center">
-              <div className="w-24 h-24 bg-deep-teal/20 rounded-xl flex items-center justify-center">
-                <svg className="w-12 h-12 text-deep-teal" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                </svg>
-              </div>
+            <div className="aspect-[4/3] bg-off-white rounded-2xl overflow-hidden relative shadow-lg">
+              {product.image ? (
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-deep-teal/10 to-slate-navy/10 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-deep-teal/20 rounded-xl flex items-center justify-center">
+                    <svg className="w-12 h-12 text-deep-teal" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Product Info */}

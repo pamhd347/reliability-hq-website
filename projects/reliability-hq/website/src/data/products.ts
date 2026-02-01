@@ -7,6 +7,7 @@ export interface Product {
   currency: string;
   category: 'templates' | 'courses' | 'tools' | 'bundles';
   featured: boolean;
+  image?: string; // Product image path
   features?: string[];
   whoIsItFor?: string[];
   whatsIncluded?: string[];
@@ -23,6 +24,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'templates',
     featured: true,
+    image: '/images/products/fmea-template.svg',
     buyUrl: 'https://reliabilityhq.gumroad.com/l/dewmhh',
     features: [
       'SAE JA1011 compliant methodology',
@@ -55,6 +57,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'tools',
     featured: true,
+    image: '/images/products/criticality-tool.svg',
     features: [
       'Customisable criticality criteria',
       'Weighted scoring system',
@@ -85,6 +88,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'templates',
     featured: false,
+    image: '/images/products/decision-diagram.svg',
     features: [
       'Moubray methodology compliant',
       'Clear decision flow structure',
@@ -112,6 +116,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'bundles',
     featured: true,
+    image: '/images/products/starter-bundle.svg',
     features: [
       'All essential templates included',
       'Step-by-step implementation guide',
@@ -144,6 +149,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'templates',
     featured: false,
+    image: '/images/products/pm-optimisation.svg',
     features: [
       'Task review framework',
       'Value analysis methodology',
@@ -172,6 +178,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'tools',
     featured: false,
+    image: '/images/products/failure-mode-library.svg',
     features: [
       '500+ documented failure modes',
       'Common industrial equipment covered',

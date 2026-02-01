@@ -1,0 +1,106 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#F8F9FA"/>
+  
+  <!-- Stacked documents/products effect -->
+  <!-- Back document (shadow layer) -->
+  <g transform="translate(160, 100)">
+    <rect x="20" y="20" width="240" height="320" rx="8" fill="#2C3E50" opacity="0.1"/>
+    <rect width="240" height="320" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    <rect width="240" height="36" rx="8" fill="#0D6E6E" opacity="0.7"/>
+    <rect y="28" width="240" height="8" fill="#0D6E6E" opacity="0.7"/>
+    <text x="120" y="24" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">FMEA Template</text>
+    
+    <!-- Content lines -->
+    <rect x="16" y="50" width="100" height="6" rx="2" fill="#2C3E50" opacity="0.15"/>
+    <rect x="16" y="66" width="180" height="6" rx="2" fill="#2C3E50" opacity="0.1"/>
+    <rect x="16" y="82" width="160" height="6" rx="2" fill="#2C3E50" opacity="0.1"/>
+    <rect x="16" y="98" width="200" height="6" rx="2" fill="#2C3E50" opacity="0.1"/>
+  </g>
+  
+  <!-- Middle document -->
+  <g transform="translate(280, 80)">
+    <rect x="20" y="20" width="240" height="320" rx="8" fill="#2C3E50" opacity="0.1"/>
+    <rect width="240" height="320" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    <rect width="240" height="36" rx="8" fill="#2C3E50"/>
+    <rect y="28" width="240" height="8" fill="#2C3E50"/>
+    <text x="120" y="24" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">Criticality Tool</text>
+    
+    <!-- Bar chart mockup -->
+    <g transform="translate(20, 60)">
+      <rect x="10" y="60" width="30" height="80" fill="#EF4444"/>
+      <rect x="55" y="40" width="30" height="100" fill="#E67E22"/>
+      <rect x="100" y="70" width="30" height="70" fill="#F59E0B"/>
+      <rect x="145" y="90" width="30" height="50" fill="#0D6E6E"/>
+    </g>
+    
+    <!-- Bottom lines -->
+    <rect x="16" y="220" width="140" height="6" rx="2" fill="#2C3E50" opacity="0.15"/>
+    <rect x="16" y="236" width="180" height="6" rx="2" fill="#2C3E50" opacity="0.1"/>
+  </g>
+  
+  <!-- Front document -->
+  <g transform="translate(400, 60)">
+    <rect x="20" y="20" width="240" height="320" rx="8" fill="#2C3E50" opacity="0.15"/>
+    <rect width="240" height="320" rx="8" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+    <rect width="240" height="36" rx="8" fill="#E67E22"/>
+    <rect y="28" width="240" height="8" fill="#E67E22"/>
+    <text x="120" y="24" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">Decision Diagram</text>
+    
+    <!-- Mini flowchart -->
+    <g transform="translate(30, 60)">
+      <circle cx="90" cy="20" r="16" fill="#0D6E6E"/>
+      <line x1="90" y1="36" x2="90" y2="60" stroke="#2C3E50" stroke-width="2"/>
+      <polygon points="90,60 110,90 90,120 70,90" fill="#2C3E50"/>
+      <line x1="70" y1="90" x2="30" y2="90" stroke="#2C3E50" stroke-width="2"/>
+      <line x1="30" y1="90" x2="30" y2="130" stroke="#2C3E50" stroke-width="2"/>
+      <line x1="110" y1="90" x2="150" y2="90" stroke="#2C3E50" stroke-width="2"/>
+      <line x1="150" y1="90" x2="150" y2="130" stroke="#2C3E50" stroke-width="2"/>
+      <rect x="10" y="130" width="40" height="25" rx="4" fill="#0D6E6E"/>
+      <rect x="130" y="130" width="40" height="25" rx="4" fill="#EF4444"/>
+    </g>
+    
+    <!-- Bottom lines -->
+    <rect x="16" y="240" width="120" height="6" rx="2" fill="#2C3E50" opacity="0.15"/>
+    <rect x="16" y="256" width="200" height="6" rx="2" fill="#2C3E50" opacity="0.1"/>
+    <rect x="16" y="272" width="160" height="6" rx="2" fill="#2C3E50" opacity="0.1"/>
+  </g>
+  
+  <!-- Bundle ribbon/badge -->
+  <g transform="translate(480, 340)">
+    <ellipse cx="80" cy="50" rx="80" ry="50" fill="#0D6E6E"/>
+    <text x="80" y="42" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">STARTER</text>
+    <text x="80" y="60" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">BUNDLE</text>
+  </g>
+  
+  <!-- Save badge -->
+  <g transform="translate(100, 420)">
+    <rect width="140" height="50" rx="25" fill="#EF4444"/>
+    <text x="70" y="28" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">SAVE 30%</text>
+    <text x="70" y="42" font-family="Inter, sans-serif" font-size="9" fill="white" opacity="0.9" text-anchor="middle">vs buying separately</text>
+  </g>
+  
+  <!-- Included items list -->
+  <g transform="translate(100, 490)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#2C3E50">Includes:</text>
+    <g transform="translate(0, 15)">
+      <circle cx="6" cy="6" r="4" fill="#0D6E6E"/>
+      <text x="16" y="10" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">FMEA Template Pack</text>
+    </g>
+    <g transform="translate(140, 15)">
+      <circle cx="6" cy="6" r="4" fill="#0D6E6E"/>
+      <text x="16" y="10" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Criticality Tool</text>
+    </g>
+    <g transform="translate(260, 15)">
+      <circle cx="6" cy="6" r="4" fill="#0D6E6E"/>
+      <text x="16" y="10" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Decision Diagram</text>
+    </g>
+    <g transform="translate(380, 15)">
+      <circle cx="6" cy="6" r="4" fill="#0D6E6E"/>
+      <text x="16" y="10" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">+ Implementation Guide</text>
+    </g>
+  </g>
+  
+  <!-- Decorative -->
+  <circle cx="720" cy="80" r="40" fill="#E67E22" opacity="0.12"/>
+</svg>
