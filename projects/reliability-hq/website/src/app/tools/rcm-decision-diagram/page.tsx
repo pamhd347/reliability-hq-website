@@ -1,0 +1,839 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+
+// Define the decision tree structure based on Moubray/SAE JA1011 methodology
+interface DecisionNode {
+  id: string;
+  question: string;
+  explanation: string;
+  yesNext?: string;
+  noNext?: string;
+  result?: {
+    strategy: string;
+    description: string;
+    color: string;
+    icon: string;
+  };
+}
+
+const decisionTree: Record<string, DecisionNode> = {
+  start: {
+    id: 'start',
+    question: 'Is the failure evident to operators under normal circumstances?',
+    explanation: 'An evident failure is one that, on its own, will become apparent to the operating crew under normal circumstances. Hidden failures are not evident and typically affect protective devices or standby equipment.',
+    yesNext: 'evident_safety',
+    noNext: 'hidden_safety',
+  },
+  
+  // EVIDENT FAILURE PATH
+  evident_safety: {
+    id: 'evident_safety',
+    question: 'Does the failure mode cause a loss of function or secondary damage that could hurt or kill someone?',
+    explanation: 'Safety consequences are the highest priority. Consider direct safety hazards to operators, maintenance personnel, or the public. This includes immediate physical harm or conditions that could lead to injury.',
+    yesNext: 'evident_safety_task',
+    noNext: 'evident_environment',
+  },
+  evident_safety_task: {
+    id: 'evident_safety_task',
+    question: 'Is there a condition-monitoring task that can detect potential failure in time to prevent the functional failure?',
+    explanation: 'Condition-monitoring (predictive maintenance) tasks detect deterioration using techniques like vibration analysis, oil analysis, thermography, or visual inspections. The P-F interval must be long enough to take action.',
+    yesNext: 'result_condition_monitoring_safety',
+    noNext: 'evident_safety_scheduled_restoration',
+  },
+  evident_safety_scheduled_restoration: {
+    id: 'evident_safety_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that will reduce the probability of failure to an acceptable level?',
+    explanation: 'Scheduled restoration involves refurbishing or overhauling components at fixed intervals. This is only effective if there is a clear age-related failure pattern and if restoration actually returns the item to its original capability.',
+    yesNext: 'result_scheduled_restoration_safety',
+    noNext: 'evident_safety_scheduled_discard',
+  },
+  evident_safety_scheduled_discard: {
+    id: 'evident_safety_scheduled_discard',
+    question: 'Is there a scheduled discard task that will reduce the probability of failure to an acceptable level?',
+    explanation: 'Scheduled discard means replacing a component at fixed intervals regardless of condition. This applies to items with predictable wear-out characteristics, like seals, filters, or items with safe-life limits.',
+    yesNext: 'result_scheduled_discard_safety',
+    noNext: 'result_redesign_safety',
+  },
+
+  evident_environment: {
+    id: 'evident_environment',
+    question: 'Does the failure mode cause a loss of function or secondary damage that could breach any environmental standard or regulation?',
+    explanation: 'Environmental consequences include spills, emissions, noise, or any other impact that violates environmental regulations or causes significant ecological damage. Consider both direct effects and secondary consequences.',
+    yesNext: 'evident_environment_task',
+    noNext: 'evident_operational',
+  },
+  evident_environment_task: {
+    id: 'evident_environment_task',
+    question: 'Is there a condition-monitoring task that can detect potential failure in time to prevent the functional failure?',
+    explanation: 'For environmental consequences, predictive tasks are preferred as they allow intervention before the breach occurs. Consider all available monitoring technologies applicable to this failure mode.',
+    yesNext: 'result_condition_monitoring_environment',
+    noNext: 'evident_environment_scheduled_restoration',
+  },
+  evident_environment_scheduled_restoration: {
+    id: 'evident_environment_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that will reduce the probability of failure to an acceptable level?',
+    explanation: 'Time-based restoration can be effective if the failure mode has an identifiable age-reliability relationship. The interval must be set to ensure failures remain below acceptable frequency.',
+    yesNext: 'result_scheduled_restoration_environment',
+    noNext: 'evident_environment_scheduled_discard',
+  },
+  evident_environment_scheduled_discard: {
+    id: 'evident_environment_scheduled_discard',
+    question: 'Is there a scheduled discard task that will reduce the probability of failure to an acceptable level?',
+    explanation: 'Replacement at fixed intervals may be necessary for components where restoration is not possible but there is a predictable wear-out pattern.',
+    yesNext: 'result_scheduled_discard_environment',
+    noNext: 'result_redesign_environment',
+  },
+
+  evident_operational: {
+    id: 'evident_operational',
+    question: 'Does the failure mode have a direct adverse effect on operational capability (output, quality, customer service, or operational costs beyond repair)?',
+    explanation: 'Operational consequences affect production, throughput, quality, or cause significant indirect costs. Consider lost revenue, quality issues, missed deliveries, or cascading effects on other systems.',
+    yesNext: 'evident_operational_task',
+    noNext: 'evident_nonoperational_task',
+  },
+  evident_operational_task: {
+    id: 'evident_operational_task',
+    question: 'Is there a condition-monitoring task that is cost-effective?',
+    explanation: 'For operational consequences, the proactive task must be economically justified. The cost of the task (including downtime for inspection) must be less than the cost of letting the failure occur.',
+    yesNext: 'result_condition_monitoring_operational',
+    noNext: 'evident_operational_scheduled_restoration',
+  },
+  evident_operational_scheduled_restoration: {
+    id: 'evident_operational_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that is cost-effective?',
+    explanation: 'Scheduled overhauls are justified if they cost less over time than allowing failures to occur. Include all costs: labor, materials, downtime, and the cost of occasional failures that still occur.',
+    yesNext: 'result_scheduled_restoration_operational',
+    noNext: 'evident_operational_scheduled_discard',
+  },
+  evident_operational_scheduled_discard: {
+    id: 'evident_operational_scheduled_discard',
+    question: 'Is there a scheduled discard task that is cost-effective?',
+    explanation: 'Replacing components at intervals may be justified economically if the part is relatively inexpensive and failures cause significant operational disruption.',
+    yesNext: 'result_scheduled_discard_operational',
+    noNext: 'result_run_to_failure_operational',
+  },
+
+  evident_nonoperational_task: {
+    id: 'evident_nonoperational_task',
+    question: 'Is there a condition-monitoring task that is cost-effective?',
+    explanation: 'For non-operational consequences (repair costs only), proactive maintenance must still be economically justified. Compare the total cost of the maintenance program against expected repair costs.',
+    yesNext: 'result_condition_monitoring_nonoperational',
+    noNext: 'evident_nonoperational_scheduled_restoration',
+  },
+  evident_nonoperational_scheduled_restoration: {
+    id: 'evident_nonoperational_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that is cost-effective?',
+    explanation: 'Time-based restoration for non-operational failures is only worth doing if it costs less than repairing failures as they occur.',
+    yesNext: 'result_scheduled_restoration_nonoperational',
+    noNext: 'evident_nonoperational_scheduled_discard',
+  },
+  evident_nonoperational_scheduled_discard: {
+    id: 'evident_nonoperational_scheduled_discard',
+    question: 'Is there a scheduled discard task that is cost-effective?',
+    explanation: 'Fixed-interval replacement for non-operational failures must show clear economic benefit compared to a run-to-failure approach.',
+    yesNext: 'result_scheduled_discard_nonoperational',
+    noNext: 'result_run_to_failure_nonoperational',
+  },
+
+  // HIDDEN FAILURE PATH
+  hidden_safety: {
+    id: 'hidden_safety',
+    question: 'Could the multiple failure (hidden function failure combined with a subsequent failure) hurt or kill someone?',
+    explanation: 'Hidden failures typically affect protective devices. Consider what happens if the protective device has failed AND the event it protects against occurs. This "multiple failure" could have severe consequences.',
+    yesNext: 'hidden_safety_task',
+    noNext: 'hidden_environment',
+  },
+  hidden_safety_task: {
+    id: 'hidden_safety_task',
+    question: 'Is there a failure-finding task that can detect the hidden failure and is practical to perform at appropriate intervals?',
+    explanation: 'Failure-finding tasks (functional checks) are designed to detect hidden failures. The interval is set so the unavailability of the protected function remains at an acceptable level.',
+    yesNext: 'result_failure_finding_safety',
+    noNext: 'hidden_safety_condition',
+  },
+  hidden_safety_condition: {
+    id: 'hidden_safety_condition',
+    question: 'Is there a condition-monitoring task that can detect potential failure of the hidden function?',
+    explanation: 'Some hidden functions can be monitored predictively. For example, corrosion on a relief valve spring might be detectable through inspection before the valve fails to operate.',
+    yesNext: 'result_condition_monitoring_hidden_safety',
+    noNext: 'hidden_safety_scheduled_restoration',
+  },
+  hidden_safety_scheduled_restoration: {
+    id: 'hidden_safety_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that will reduce the probability of the multiple failure to an acceptable level?',
+    explanation: 'Periodic overhaul of protective devices may be appropriate if there is a clear age-reliability relationship for the hidden failure mode.',
+    yesNext: 'result_scheduled_restoration_hidden_safety',
+    noNext: 'hidden_safety_scheduled_discard',
+  },
+  hidden_safety_scheduled_discard: {
+    id: 'hidden_safety_scheduled_discard',
+    question: 'Is there a scheduled discard task that will reduce the probability of the multiple failure to an acceptable level?',
+    explanation: 'Replacing protective device components at fixed intervals may be necessary if other tasks are not applicable.',
+    yesNext: 'result_scheduled_discard_hidden_safety',
+    noNext: 'result_redesign_hidden_safety',
+  },
+
+  hidden_environment: {
+    id: 'hidden_environment',
+    question: 'Could the multiple failure breach any environmental standard or regulation?',
+    explanation: 'Consider environmental impact if both the hidden function fails AND the protected event occurs. Many environmental protection systems fall into this category.',
+    yesNext: 'hidden_environment_task',
+    noNext: 'hidden_economic_task',
+  },
+  hidden_environment_task: {
+    id: 'hidden_environment_task',
+    question: 'Is there a failure-finding task that can detect the hidden failure?',
+    explanation: 'Regular functional tests of environmental protection equipment ensure they will work when needed. Set intervals to maintain acceptable availability.',
+    yesNext: 'result_failure_finding_environment',
+    noNext: 'hidden_environment_condition',
+  },
+  hidden_environment_condition: {
+    id: 'hidden_environment_condition',
+    question: 'Is there a condition-monitoring task that can detect potential failure?',
+    explanation: 'Predictive techniques may help identify degradation in environmental protection systems before they fail to function.',
+    yesNext: 'result_condition_monitoring_hidden_environment',
+    noNext: 'hidden_environment_scheduled_restoration',
+  },
+  hidden_environment_scheduled_restoration: {
+    id: 'hidden_environment_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that will reduce the probability of the multiple failure to an acceptable level?',
+    explanation: 'Periodic overhaul may maintain reliability of environmental protection systems if age-related degradation exists.',
+    yesNext: 'result_scheduled_restoration_hidden_environment',
+    noNext: 'hidden_environment_scheduled_discard',
+  },
+  hidden_environment_scheduled_discard: {
+    id: 'hidden_environment_scheduled_discard',
+    question: 'Is there a scheduled discard task that will reduce the probability of the multiple failure to an acceptable level?',
+    explanation: 'Fixed-interval replacement may be the final proactive option for maintaining environmental protection system reliability.',
+    yesNext: 'result_scheduled_discard_hidden_environment',
+    noNext: 'result_redesign_hidden_environment',
+  },
+
+  hidden_economic_task: {
+    id: 'hidden_economic_task',
+    question: 'Is there a failure-finding task that is cost-effective?',
+    explanation: 'For hidden failures with only economic consequences, functional checks must be economically justified. The cost of checks must be less than the expected cost of multiple failures.',
+    yesNext: 'result_failure_finding_economic',
+    noNext: 'hidden_economic_condition',
+  },
+  hidden_economic_condition: {
+    id: 'hidden_economic_condition',
+    question: 'Is there a condition-monitoring task that is cost-effective?',
+    explanation: 'Predictive maintenance on hidden functions must show economic benefit considering the probability of the multiple failure occurring.',
+    yesNext: 'result_condition_monitoring_hidden_economic',
+    noNext: 'hidden_economic_scheduled_restoration',
+  },
+  hidden_economic_scheduled_restoration: {
+    id: 'hidden_economic_scheduled_restoration',
+    question: 'Is there a scheduled restoration task that is cost-effective?',
+    explanation: 'Time-based overhaul of hidden function components must be justified against the expected cost of occasional multiple failures.',
+    yesNext: 'result_scheduled_restoration_hidden_economic',
+    noNext: 'hidden_economic_scheduled_discard',
+  },
+  hidden_economic_scheduled_discard: {
+    id: 'hidden_economic_scheduled_discard',
+    question: 'Is there a scheduled discard task that is cost-effective?',
+    explanation: 'Fixed-interval replacement for economic hidden failures needs clear cost justification.',
+    yesNext: 'result_scheduled_discard_hidden_economic',
+    noNext: 'result_run_to_failure_hidden_economic',
+  },
+
+  // RESULTS - Evident Failures
+  result_condition_monitoring_safety: {
+    id: 'result_condition_monitoring_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Safety Critical)',
+      description: 'Implement a condition-monitoring (predictive) maintenance task. Monitor the condition of the component using appropriate techniques such as vibration analysis, oil analysis, thermography, ultrasound, or visual inspection. Because this addresses a safety consequence, ensure the monitoring interval allows sufficient lead time to take corrective action before functional failure occurs.',
+      color: 'bg-deep-teal',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_safety: {
+    id: 'result_scheduled_restoration_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Safety Critical)',
+      description: 'Implement a scheduled restoration (overhaul) task at a fixed interval. Restore the component to its original capability through refurbishment, cleaning, adjustment, or partial replacement of wear components. The interval must be set conservatively to ensure the probability of failure remains acceptably low given the safety implications.',
+      color: 'bg-deep-teal',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_safety: {
+    id: 'result_scheduled_discard_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Safety Critical)',
+      description: 'Implement a scheduled discard (replacement) task at a fixed interval. Replace the component regardless of its apparent condition. This is appropriate for items with well-defined wear-out characteristics or safe-life limits. Due to safety consequences, intervals must be set conservatively with appropriate safety factors.',
+      color: 'bg-deep-teal',
+      icon: '🔄',
+    },
+  },
+  result_redesign_safety: {
+    id: 'result_redesign_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Redesign Required (Safety Critical)',
+      description: 'No scheduled maintenance task is applicable and effective for this failure mode with safety consequences. The equipment or process must be redesigned to either eliminate the failure mode, reduce its consequences to an acceptable level, or make it possible to implement an effective maintenance task. This is mandatory—the current situation is unacceptable from a safety standpoint.',
+      color: 'bg-red-600',
+      icon: '⚠️',
+    },
+  },
+
+  result_condition_monitoring_environment: {
+    id: 'result_condition_monitoring_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Environmental)',
+      description: 'Implement a condition-monitoring task to detect deterioration before environmental consequences occur. Use appropriate predictive techniques and set monitoring intervals to ensure potential failures are detected with adequate warning time to prevent environmental breaches.',
+      color: 'bg-green-600',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_environment: {
+    id: 'result_scheduled_restoration_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Environmental)',
+      description: 'Implement a scheduled restoration task at fixed intervals to maintain component capability and prevent environmental consequences. Set intervals to keep the probability of failure below acceptable environmental risk levels.',
+      color: 'bg-green-600',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_environment: {
+    id: 'result_scheduled_discard_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Environmental)',
+      description: 'Implement a scheduled discard task at fixed intervals to prevent failures that could cause environmental damage. Replace components before wear-out regardless of apparent condition.',
+      color: 'bg-green-600',
+      icon: '🔄',
+    },
+  },
+  result_redesign_environment: {
+    id: 'result_redesign_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Redesign Required (Environmental)',
+      description: 'No scheduled maintenance task is applicable and effective for this failure mode with environmental consequences. Redesign is required to eliminate the failure mode, reduce consequences, or enable effective maintenance. This is mandatory—environmental compliance cannot be achieved with the current design.',
+      color: 'bg-red-600',
+      icon: '⚠️',
+    },
+  },
+
+  result_condition_monitoring_operational: {
+    id: 'result_condition_monitoring_operational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Operational)',
+      description: 'Implement a cost-effective condition-monitoring task. The total cost of the monitoring program (including inspections, analysis, and occasional failures) should be less than the cost of allowing failures to occur. Monitor at intervals appropriate to the P-F interval and operational criticality.',
+      color: 'bg-industrial-amber',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_operational: {
+    id: 'result_scheduled_restoration_operational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Operational)',
+      description: 'Implement a cost-effective scheduled restoration task. Periodic overhauls should cost less over the equipment life than allowing failures to occur and repairing reactively. Include all costs in the analysis: maintenance costs, downtime, and residual failure costs.',
+      color: 'bg-industrial-amber',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_operational: {
+    id: 'result_scheduled_discard_operational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Operational)',
+      description: 'Implement a cost-effective scheduled discard task. Replace components at fixed intervals when this costs less than allowing them to fail and repairing. Consider component cost, labor, planned vs. unplanned downtime differences, and secondary damage costs.',
+      color: 'bg-industrial-amber',
+      icon: '🔄',
+    },
+  },
+  result_run_to_failure_operational: {
+    id: 'result_run_to_failure_operational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Run-to-Failure (Operational)',
+      description: 'No scheduled maintenance task is cost-effective. Allow this failure mode to occur and repair when it happens. This is a valid strategy when the cost of prevention exceeds the cost of failure. Ensure spare parts and repair procedures are in place for efficient corrective maintenance.',
+      color: 'bg-slate-navy',
+      icon: '⏱️',
+    },
+  },
+
+  result_condition_monitoring_nonoperational: {
+    id: 'result_condition_monitoring_nonoperational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Non-Operational)',
+      description: 'Implement a condition-monitoring task where economically justified. Since there are no operational consequences, the task only needs to be more cost-effective than corrective maintenance. Consider if the monitoring cost is worth the modest savings.',
+      color: 'bg-mid-grey',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_nonoperational: {
+    id: 'result_scheduled_restoration_nonoperational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Non-Operational)',
+      description: 'Implement a scheduled restoration task where economically justified. For non-operational consequences, this must cost less than reactive repairs. Often run-to-failure is more economical for these failure modes.',
+      color: 'bg-mid-grey',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_nonoperational: {
+    id: 'result_scheduled_discard_nonoperational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Non-Operational)',
+      description: 'Implement a scheduled discard task where economically justified. Replace components at intervals only if this clearly costs less than waiting for failure. For non-operational items, this is often not the case.',
+      color: 'bg-mid-grey',
+      icon: '🔄',
+    },
+  },
+  result_run_to_failure_nonoperational: {
+    id: 'result_run_to_failure_nonoperational',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Run-to-Failure (Non-Operational)',
+      description: 'No scheduled maintenance task is cost-effective. Since this failure has no safety, environmental, or operational consequences, simply allow it to fail and repair when convenient. This is often the most economical approach for non-critical items.',
+      color: 'bg-mid-grey',
+      icon: '⏱️',
+    },
+  },
+
+  // RESULTS - Hidden Failures
+  result_failure_finding_safety: {
+    id: 'result_failure_finding_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Failure-Finding Task (Safety Critical Hidden)',
+      description: 'Implement a failure-finding (functional check) task at intervals that ensure the unavailability of the protective function remains at an acceptable level. Test the protective device to verify it will work when needed. The interval is calculated based on acceptable probability of multiple failure and the mean time between failures of the protected function.',
+      color: 'bg-deep-teal',
+      icon: '🔍',
+    },
+  },
+  result_condition_monitoring_hidden_safety: {
+    id: 'result_condition_monitoring_hidden_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Safety Critical Hidden)',
+      description: 'Implement condition monitoring on the hidden function component. Monitor for degradation that would prevent the protective device from functioning when demanded. This is in addition to or instead of functional testing when monitoring can provide earlier warning.',
+      color: 'bg-deep-teal',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_hidden_safety: {
+    id: 'result_scheduled_restoration_hidden_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Safety Critical Hidden)',
+      description: 'Implement scheduled restoration of the protective device at intervals that maintain acceptable multiple failure probability. Overhaul the device to ensure it will function when demanded, addressing age-related degradation.',
+      color: 'bg-deep-teal',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_hidden_safety: {
+    id: 'result_scheduled_discard_hidden_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Safety Critical Hidden)',
+      description: 'Implement scheduled discard of protective device components at intervals that maintain acceptable reliability. Replace parts before they could degrade to a non-functional state.',
+      color: 'bg-deep-teal',
+      icon: '🔄',
+    },
+  },
+  result_redesign_hidden_safety: {
+    id: 'result_redesign_hidden_safety',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Redesign Required (Safety Critical Hidden)',
+      description: 'No maintenance task can adequately address this hidden failure with safety-critical multiple failure consequences. The protective system must be redesigned. Options include redundancy, diversity, making the failure evident, or eliminating the need for protection. This is mandatory.',
+      color: 'bg-red-600',
+      icon: '⚠️',
+    },
+  },
+
+  result_failure_finding_environment: {
+    id: 'result_failure_finding_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Failure-Finding Task (Environmental Hidden)',
+      description: 'Implement failure-finding tasks on environmental protection equipment at intervals that maintain acceptable availability. Functional tests verify the protective system will respond correctly when an environmental threat occurs.',
+      color: 'bg-green-600',
+      icon: '🔍',
+    },
+  },
+  result_condition_monitoring_hidden_environment: {
+    id: 'result_condition_monitoring_hidden_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Environmental Hidden)',
+      description: 'Monitor the condition of environmental protection equipment to detect degradation before it affects functionality. Use appropriate techniques to identify developing failures in protective systems.',
+      color: 'bg-green-600',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_hidden_environment: {
+    id: 'result_scheduled_restoration_hidden_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Environmental Hidden)',
+      description: 'Implement scheduled restoration of environmental protection equipment at intervals that maintain required reliability for preventing environmental consequences.',
+      color: 'bg-green-600',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_hidden_environment: {
+    id: 'result_scheduled_discard_hidden_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Environmental Hidden)',
+      description: 'Replace environmental protection equipment components at fixed intervals to maintain reliability. Applicable when components have predictable wear-out characteristics.',
+      color: 'bg-green-600',
+      icon: '🔄',
+    },
+  },
+  result_redesign_hidden_environment: {
+    id: 'result_redesign_hidden_environment',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Redesign Required (Environmental Hidden)',
+      description: 'No maintenance task adequately addresses this hidden failure with environmental multiple failure consequences. Redesign the protective system to achieve acceptable reliability or make the failure evident. This is mandatory for environmental compliance.',
+      color: 'bg-red-600',
+      icon: '⚠️',
+    },
+  },
+
+  result_failure_finding_economic: {
+    id: 'result_failure_finding_economic',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Failure-Finding Task (Economic Hidden)',
+      description: 'Implement cost-effective failure-finding tasks. Test hidden functions at intervals where the cost of testing is justified by the avoided cost of multiple failures. Calculate intervals based on acceptable multiple failure probability and economic impact.',
+      color: 'bg-mid-grey',
+      icon: '🔍',
+    },
+  },
+  result_condition_monitoring_hidden_economic: {
+    id: 'result_condition_monitoring_hidden_economic',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Condition-Based Maintenance (Economic Hidden)',
+      description: 'Monitor the condition of hidden function components where economically justified. The cost of monitoring must be less than the expected cost of multiple failures to be worthwhile.',
+      color: 'bg-mid-grey',
+      icon: '📊',
+    },
+  },
+  result_scheduled_restoration_hidden_economic: {
+    id: 'result_scheduled_restoration_hidden_economic',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Restoration (Economic Hidden)',
+      description: 'Implement scheduled restoration of hidden function components where the cost is justified by reduced multiple failure probability. Economic analysis should demonstrate clear benefit.',
+      color: 'bg-mid-grey',
+      icon: '🔧',
+    },
+  },
+  result_scheduled_discard_hidden_economic: {
+    id: 'result_scheduled_discard_hidden_economic',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Scheduled Discard (Economic Hidden)',
+      description: 'Replace hidden function components at fixed intervals where economically justified. Must demonstrate lower total cost compared to allowing multiple failures to occur.',
+      color: 'bg-mid-grey',
+      icon: '🔄',
+    },
+  },
+  result_run_to_failure_hidden_economic: {
+    id: 'result_run_to_failure_hidden_economic',
+    question: '',
+    explanation: '',
+    result: {
+      strategy: 'Accept Multiple Failure Risk (Economic Hidden)',
+      description: 'No maintenance task is cost-effective for this hidden failure with only economic consequences. Accept the risk of multiple failures and ensure resources are available to respond when they occur. This is valid when the expected cost of multiple failures is low.',
+      color: 'bg-mid-grey',
+      icon: '⏱️',
+    },
+  },
+};
+
+export default function RCMDecisionDiagramPage() {
+  const [currentNodeId, setCurrentNodeId] = useState('start');
+  const [path, setPath] = useState<{ nodeId: string; answer: 'yes' | 'no' }[]>([]);
+
+  const currentNode = decisionTree[currentNodeId];
+
+  const handleAnswer = (answer: 'yes' | 'no') => {
+    const nextNodeId = answer === 'yes' ? currentNode.yesNext : currentNode.noNext;
+    if (nextNodeId) {
+      setPath([...path, { nodeId: currentNodeId, answer }]);
+      setCurrentNodeId(nextNodeId);
+    }
+  };
+
+  const handleStartOver = () => {
+    setCurrentNodeId('start');
+    setPath([]);
+  };
+
+  const handleGoBack = () => {
+    if (path.length > 0) {
+      const newPath = [...path];
+      const lastStep = newPath.pop();
+      if (lastStep) {
+        setCurrentNodeId(lastStep.nodeId);
+        setPath(newPath);
+      }
+    }
+  };
+
+  const getBreadcrumbLabel = (nodeId: string) => {
+    const node = decisionTree[nodeId];
+    if (nodeId === 'start') return 'Evident/Hidden';
+    if (nodeId.includes('safety')) return 'Safety';
+    if (nodeId.includes('environment')) return 'Environmental';
+    if (nodeId.includes('operational')) return 'Operational';
+    if (nodeId.includes('nonoperational')) return 'Non-operational';
+    if (nodeId.includes('economic')) return 'Economic';
+    if (nodeId.includes('task') || nodeId.includes('condition') || nodeId.includes('restoration') || nodeId.includes('discard')) return 'Task Selection';
+    return node.question.substring(0, 20) + '...';
+  };
+
+  return (
+    <div className="bg-off-white min-h-screen">
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-deep-teal to-slate-navy text-white">
+        <div className="container-max px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <div className="max-w-4xl">
+            <Link 
+              href="/resources" 
+              className="text-gray-300 hover:text-white text-sm mb-4 inline-flex items-center gap-2"
+            >
+              ← Back to Resources
+            </Link>
+            <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mt-4">
+              RCM Decision Diagram
+            </h1>
+            <p className="mt-4 text-lg md:text-xl text-gray-200">
+              Follow the SAE JA1011 / Moubray methodology to determine the right maintenance strategy for any failure mode.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Decision Tool */}
+      <section className="section-padding">
+        <div className="container-max">
+          {/* Breadcrumb Trail */}
+          {path.length > 0 && (
+            <div className="mb-8">
+              <div className="flex items-center gap-2 text-sm text-mid-grey flex-wrap">
+                <span className="font-medium text-slate-navy">Path:</span>
+                {path.map((step, index) => (
+                  <span key={index} className="flex items-center gap-2">
+                    <span className="bg-white px-2 py-1 rounded border border-light-grey">
+                      {getBreadcrumbLabel(step.nodeId)}: 
+                      <span className={step.answer === 'yes' ? 'text-deep-teal font-medium ml-1' : 'text-industrial-amber font-medium ml-1'}>
+                        {step.answer.toUpperCase()}
+                      </span>
+                    </span>
+                    {index < path.length - 1 && <span>→</span>}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Question or Result Card */}
+          <div className="max-w-3xl mx-auto">
+            {currentNode.result ? (
+              /* RESULT */
+              <div className="bg-white rounded-2xl shadow-lg border border-light-grey overflow-hidden">
+                <div className={`${currentNode.result.color} text-white px-6 py-8 text-center`}>
+                  <span className="text-5xl mb-4 block">{currentNode.result.icon}</span>
+                  <h2 className="font-heading text-2xl md:text-3xl font-bold">
+                    {currentNode.result.strategy}
+                  </h2>
+                </div>
+                <div className="p-6 md:p-8">
+                  <h3 className="font-heading font-semibold text-lg text-slate-navy mb-4">Recommended Approach</h3>
+                  <p className="text-charcoal leading-relaxed mb-8">
+                    {currentNode.result.description}
+                  </p>
+
+                  <div className="bg-off-white rounded-xl p-6 mb-8">
+                    <h4 className="font-heading font-semibold text-slate-navy mb-3">Your Decision Path</h4>
+                    <ol className="space-y-2 text-sm">
+                      {path.map((step, index) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="bg-deep-teal text-white w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                            {index + 1}
+                          </span>
+                          <span>
+                            <span className="text-mid-grey">{decisionTree[step.nodeId].question.substring(0, 60)}...</span>
+                            <span className={`font-medium ml-2 ${step.answer === 'yes' ? 'text-deep-teal' : 'text-industrial-amber'}`}>
+                              → {step.answer.toUpperCase()}
+                            </span>
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button
+                      onClick={handleStartOver}
+                      className="flex-1 bg-deep-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-slate-navy transition-colors"
+                    >
+                      Start Over
+                    </button>
+                    <button
+                      onClick={handleGoBack}
+                      className="flex-1 border-2 border-deep-teal text-deep-teal px-6 py-3 rounded-lg font-semibold hover:bg-deep-teal hover:text-white transition-colors"
+                    >
+                      Go Back
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* QUESTION */
+              <div className="bg-white rounded-2xl shadow-lg border border-light-grey overflow-hidden">
+                <div className="bg-slate-navy text-white px-6 py-4">
+                  <span className="text-sm text-gray-300">Question {path.length + 1}</span>
+                </div>
+                <div className="p-6 md:p-8">
+                  <h2 className="font-heading text-xl md:text-2xl font-bold text-slate-navy mb-6">
+                    {currentNode.question}
+                  </h2>
+                  
+                  <div className="bg-off-white rounded-xl p-4 mb-8">
+                    <div className="flex items-start gap-3">
+                      <span className="text-deep-teal text-xl">💡</span>
+                      <div>
+                        <h4 className="font-heading font-semibold text-slate-navy text-sm mb-1">Understanding this question</h4>
+                        <p className="text-mid-grey text-sm leading-relaxed">
+                          {currentNode.explanation}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                    <button
+                      onClick={() => handleAnswer('yes')}
+                      className="flex-1 bg-deep-teal text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-slate-navy transition-colors"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => handleAnswer('no')}
+                      className="flex-1 bg-industrial-amber text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-orange-600 transition-colors"
+                    >
+                      No
+                    </button>
+                  </div>
+
+                  {path.length > 0 && (
+                    <button
+                      onClick={handleGoBack}
+                      className="w-full text-mid-grey hover:text-slate-navy text-sm font-medium py-2"
+                    >
+                      ← Go back to previous question
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Help Section */}
+          <div className="max-w-3xl mx-auto mt-12">
+            <div className="bg-white rounded-xl p-6 border border-light-grey">
+              <h3 className="font-heading font-semibold text-lg text-slate-navy mb-4">About This Tool</h3>
+              <p className="text-mid-grey mb-4">
+                This interactive decision diagram follows the RCM task selection logic as defined in SAE JA1011 and John Moubray&apos;s 
+                <em> Reliability-centred Maintenance</em>. It guides you through determining the appropriate maintenance strategy 
+                for any failure mode based on its consequences and the applicability of different task types.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 className="font-semibold text-slate-navy mb-2">Maintenance Strategies</h4>
+                  <ul className="space-y-1 text-mid-grey">
+                    <li>• <strong>Condition-Based:</strong> Monitor & act on P-F curve</li>
+                    <li>• <strong>Scheduled Restoration:</strong> Periodic overhaul</li>
+                    <li>• <strong>Scheduled Discard:</strong> Fixed-interval replacement</li>
+                    <li>• <strong>Failure-Finding:</strong> Test hidden functions</li>
+                    <li>• <strong>Run-to-Failure:</strong> Reactive maintenance</li>
+                    <li>• <strong>Redesign:</strong> Modify the asset</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-slate-navy mb-2">Consequence Categories</h4>
+                  <ul className="space-y-1 text-mid-grey">
+                    <li>• <strong>Safety:</strong> Could hurt or kill someone</li>
+                    <li>• <strong>Environmental:</strong> Regulatory breach</li>
+                    <li>• <strong>Operational:</strong> Affects production/output</li>
+                    <li>• <strong>Non-operational:</strong> Repair costs only</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-slate-navy section-padding">
+        <div className="container-max text-center">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-6">
+            Need Complete RCM Analysis Templates?
+          </h2>
+          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            This tool helps with task selection, but full RCM analysis requires FMEA worksheets, function descriptions, 
+            and documentation templates. Get production-ready templates that integrate this decision logic.
+          </p>
+          <Link
+            href="/products"
+            className="inline-block bg-industrial-amber text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transition-colors"
+          >
+            Browse RCM Templates →
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
