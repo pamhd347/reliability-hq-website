@@ -115,9 +115,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <div className="space-y-4">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
-                  Coming Soon
-                </Button>
+                {product.buyUrl ? (
+                  <Button href={product.buyUrl} variant="secondary" size="lg" className="w-full sm:w-auto">
+                    Buy Now — £{product.price}
+                  </Button>
+                ) : (
+                  <Button variant="secondary" size="lg" className="w-full sm:w-auto opacity-75 cursor-not-allowed">
+                    Coming Soon
+                  </Button>
+                )}
                 <p className="text-sm text-mid-grey">
                   Instant digital download after purchase
                 </p>
@@ -202,9 +208,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
               Download instantly and start your RCM analysis today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="secondary" size="lg">
-                Coming Soon - £{product.price}
-              </Button>
+              {product.buyUrl ? (
+                <Button href={product.buyUrl} variant="secondary" size="lg">
+                  Buy Now — £{product.price}
+                </Button>
+              ) : (
+                <Button variant="secondary" size="lg" className="opacity-75 cursor-not-allowed">
+                  Coming Soon — £{product.price}
+                </Button>
+              )}
               <Button href="/products" variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-deep-teal">
                 Browse More Products
               </Button>

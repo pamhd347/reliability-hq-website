@@ -42,6 +42,12 @@
 - Full brand guide: `/projects/reliability-hq/Reliability-HQ-Brand-Guide.md`
 - Project tracker: `/projects/reliability-hq/PROJECT.md`
 
+### Live Links
+- **Website:** https://website-eight-eta-80.vercel.app (needs custom domain)
+- **Gumroad Store:** https://reliabilityhq.gumroad.com
+- **FMEA Template Pack:** https://reliabilityhq.gumroad.com/l/dewmhh (£79) ✅ LIVE
+- **GitHub:** https://github.com/pamhd347/reliability-hq-website
+
 ---
 
 ## 🔑 Account Access

@@ -20,8 +20,9 @@ Skills define _how_ tools work. This file is for _your_ specifics — the stuff 
 |------|-------|
 | Domains | reliabilityhq.com, reliabilityhq.co.uk |
 | Email | hello@reliabilityhq.com |
-| Hosting | Vercel (to be set up) |
-| Storefront | TBD (Gumroad or similar) |
+| Hosting | Vercel — https://website-eight-eta-80.vercel.app |
+| Storefront | Gumroad — https://reliabilityhq.gumroad.com |
+| GitHub | https://github.com/pamhd347/reliability-hq-website |
 
 ---
 

@@ -10,6 +10,7 @@ export interface Product {
   features?: string[];
   whoIsItFor?: string[];
   whatsIncluded?: string[];
+  buyUrl?: string; // Gumroad or other purchase link
 }
 
 export const products: Product[] = [
@@ -22,6 +23,7 @@ export const products: Product[] = [
     currency: 'GBP',
     category: 'templates',
     featured: true,
+    buyUrl: 'https://reliabilityhq.gumroad.com/l/dewmhh',
     features: [
       'SAE JA1011 compliant methodology',
       'Complete FMEA worksheet structure',
