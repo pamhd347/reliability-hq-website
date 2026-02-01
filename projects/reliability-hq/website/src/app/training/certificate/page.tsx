@@ -1,0 +1,344 @@
+'use client';
+
+import { useState, useRef } from 'react';
+import Link from 'next/link';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { lessons } from '@/data/rcm-fundamentals';
+import Button from '@/components/Button';
+
+export default function CertificatePage() {
+  const { isLoaded, isComplete, quizScores, progress } = useCourseProgress();
+  const [name, setName] = useState('');
+  const [showCertificate, setShowCertificate] = useState(false);
+  const certificateRef = useRef<HTMLDivElement>(null);
+
+  // Calculate average quiz score
+  const totalScore = Object.values(quizScores).reduce((sum, score) => sum + score, 0);
+  const avgScore = Math.round(totalScore / lessons.length);
+
+  // Format completion date
+  const completionDate = progress.completedAt 
+    ? new Date(progress.completedAt).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+    : new Date().toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+
+  const handlePrint = () => {
+    if (!name.trim()) {
+      alert('Please enter your name for the certificate');
+      return;
+    }
+    setShowCertificate(true);
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-off-white flex items-center justify-center">
+        <div className="animate-pulse text-mid-grey">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isComplete) {
+    return (
+      <div className="min-h-screen bg-off-white">
+        <div className="container-max px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-amber-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+            </div>
+            <h1 className="font-heading text-3xl font-bold text-slate-navy mb-4">
+              Course Not Yet Complete
+            </h1>
+            <p className="text-mid-grey mb-8">
+              Complete all 5 lessons and their quizzes to earn your RCM Fundamentals certificate.
+            </p>
+            <Button href="/training/rcm-fundamentals" variant="primary" size="lg">
+              Continue Learning →
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-off-white">
+      {/* Print-only certificate */}
+      {showCertificate && (
+        <div className="print:block hidden">
+          <div 
+            ref={certificateRef}
+            className="w-[297mm] h-[210mm] mx-auto bg-white p-12 relative"
+            style={{ pageBreakAfter: 'always' }}
+          >
+            {/* Border */}
+            <div className="absolute inset-4 border-4 border-deep-teal" />
+            <div className="absolute inset-6 border-2 border-deep-teal/30" />
+
+            {/* Content */}
+            <div className="relative h-full flex flex-col items-center justify-center text-center px-16">
+              {/* Logo/Header */}
+              <div className="mb-8">
+                <div className="w-16 h-16 bg-deep-teal rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <span className="text-white font-heading font-bold text-2xl">R</span>
+                </div>
+                <div className="text-3xl font-heading font-bold text-slate-navy">
+                  Reliability HQ
+                </div>
+              </div>
+
+              <div className="text-mid-grey uppercase tracking-widest text-sm mb-4">
+                Certificate of Completion
+              </div>
+
+              <h1 className="font-heading text-4xl font-bold text-deep-teal mb-6">
+                RCM Fundamentals
+              </h1>
+
+              <p className="text-lg text-mid-grey mb-4">This certifies that</p>
+
+              <div className="font-heading text-3xl font-bold text-slate-navy border-b-2 border-deep-teal px-8 py-2 mb-6">
+                {name}
+              </div>
+
+              <p className="text-mid-grey max-w-lg mb-8">
+                has successfully completed the RCM Fundamentals course, demonstrating understanding of 
+                Reliability Centred Maintenance principles, the 7 RCM questions, failure mode analysis, 
+                and maintenance task selection according to SAE JA1011 standards.
+              </p>
+
+              <div className="flex items-center justify-center gap-16 mb-8">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-deep-teal">{avgScore}%</div>
+                  <div className="text-sm text-mid-grey">Average Score</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-deep-teal">{lessons.length}</div>
+                  <div className="text-sm text-mid-grey">Lessons Completed</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-deep-teal">{lessons.length}</div>
+                  <div className="text-sm text-mid-grey">Quizzes Passed</div>
+                </div>
+              </div>
+
+              <div className="text-sm text-mid-grey">
+                Issued on {completionDate}
+              </div>
+
+              <div className="absolute bottom-12 right-16 text-right">
+                <div className="font-heading font-semibold text-slate-navy">reliabilityhq.com</div>
+                <div className="text-sm text-mid-grey">Professional RCM Training</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Screen view */}
+      <div className="print:hidden">
+        {/* Hero */}
+        <section className="bg-gradient-to-br from-deep-teal to-slate-navy text-white">
+          <div className="container-max px-4 sm:px-6 lg:px-8 py-16">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0" />
+                </svg>
+              </div>
+              <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+                Congratulations! 🎉
+              </h1>
+              <p className="text-xl text-gray-200">
+                You&apos;ve completed the RCM Fundamentals course
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div className="container-max px-4 sm:px-6 lg:px-8 py-12">
+          <div className="max-w-4xl mx-auto">
+            {/* Stats */}
+            <div className="grid sm:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white rounded-xl shadow-sm border border-light-grey p-6 text-center">
+                <div className="text-4xl font-heading font-bold text-deep-teal mb-2">{avgScore}%</div>
+                <div className="text-mid-grey">Average Quiz Score</div>
+              </div>
+              <div className="bg-white rounded-xl shadow-sm border border-light-grey p-6 text-center">
+                <div className="text-4xl font-heading font-bold text-deep-teal mb-2">{lessons.length}</div>
+                <div className="text-mid-grey">Lessons Completed</div>
+              </div>
+              <div className="bg-white rounded-xl shadow-sm border border-light-grey p-6 text-center">
+                <div className="text-4xl font-heading font-bold text-deep-teal mb-2">{lessons.length}</div>
+                <div className="text-mid-grey">Quizzes Passed</div>
+              </div>
+            </div>
+
+            {/* Certificate generator */}
+            <div className="bg-white rounded-xl shadow-sm border border-light-grey p-8 mb-12">
+              <h2 className="font-heading text-2xl font-bold text-slate-navy mb-6 text-center">
+                Generate Your Certificate
+              </h2>
+              
+              <div className="max-w-md mx-auto">
+                <label className="block text-sm font-medium text-charcoal mb-2">
+                  Enter your name as you want it to appear on the certificate
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your full name"
+                  className="w-full px-4 py-3 rounded-lg border border-light-grey focus:border-deep-teal focus:ring-1 focus:ring-deep-teal outline-none mb-6"
+                />
+                <button
+                  onClick={handlePrint}
+                  disabled={!name.trim()}
+                  className={`w-full py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors ${
+                    name.trim()
+                      ? 'bg-deep-teal text-white hover:bg-slate-navy'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" />
+                  </svg>
+                  Print Certificate
+                </button>
+              </div>
+
+              {/* Certificate preview */}
+              <div className="mt-8 p-6 bg-off-white rounded-lg border-2 border-dashed border-light-grey">
+                <div className="aspect-[1.414/1] bg-white rounded-lg shadow-inner flex flex-col items-center justify-center text-center p-8">
+                  <div className="w-12 h-12 bg-deep-teal rounded-lg flex items-center justify-center mb-4">
+                    <span className="text-white font-heading font-bold text-lg">R</span>
+                  </div>
+                  <div className="text-xs text-mid-grey uppercase tracking-widest mb-2">Certificate of Completion</div>
+                  <div className="font-heading text-xl font-bold text-deep-teal mb-3">RCM Fundamentals</div>
+                  <div className="text-sm text-mid-grey mb-2">This certifies that</div>
+                  <div className="font-heading text-2xl font-bold text-slate-navy border-b-2 border-deep-teal px-4 py-1">
+                    {name || 'Your Name Here'}
+                  </div>
+                  <div className="text-xs text-mid-grey mt-4">Completed {completionDate}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* What's next */}
+            <div className="bg-gradient-to-br from-deep-teal/10 to-slate-navy/10 rounded-xl p-8">
+              <h2 className="font-heading text-2xl font-bold text-slate-navy mb-6 text-center">
+                What&apos;s Next?
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <Link 
+                  href="/training/rcm-practitioner"
+                  className="bg-white rounded-xl p-6 shadow-sm border border-light-grey hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-industrial-amber/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-industrial-amber" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-xs bg-industrial-amber/20 text-industrial-amber px-2 py-0.5 rounded font-medium">Coming Soon</span>
+                      <h3 className="font-heading font-semibold text-lg text-slate-navy mt-2">RCM Practitioner Certification</h3>
+                      <p className="text-mid-grey text-sm mt-1">Take your skills to the next level with our comprehensive certification course.</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link 
+                  href="/products"
+                  className="bg-white rounded-xl p-6 shadow-sm border border-light-grey hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-deep-teal/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-deep-teal" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-semibold text-lg text-slate-navy">RCM Templates & Tools</h3>
+                      <p className="text-mid-grey text-sm mt-1">Put your knowledge into practice with our professional FMEA worksheets and analysis tools.</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link 
+                  href="/tools/rcm-decision-diagram"
+                  className="bg-white rounded-xl p-6 shadow-sm border border-light-grey hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-slate-navy/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-slate-navy" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-semibold text-lg text-slate-navy">Interactive Decision Diagram</h3>
+                      <p className="text-mid-grey text-sm mt-1">Practice task selection with our free interactive RCM decision diagram tool.</p>
+                    </div>
+                  </div>
+                </Link>
+
+                <Link 
+                  href="/training/fmea-masterclass"
+                  className="bg-white rounded-xl p-6 shadow-sm border border-light-grey hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded font-medium">Coming Soon</span>
+                      <h3 className="font-heading font-semibold text-lg text-slate-navy mt-2">FMEA Masterclass</h3>
+                      <p className="text-mid-grey text-sm mt-1">Deep dive into failure modes and effects analysis techniques.</p>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Print styles */}
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          .print\\:block,
+          .print\\:block * {
+            visibility: visible;
+          }
+          .print\\:block {
+            position: absolute;
+            left: 0;
+            top: 0;
+          }
+          @page {
+            size: A4 landscape;
+            margin: 0;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
