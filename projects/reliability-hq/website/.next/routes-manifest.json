@@ -1,0 +1,197 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/blog/[slug]",
+      "regex": "^/blog/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/blog/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/products/[slug]",
+      "regex": "^/products/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/products/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/training/rcm-fundamentals/[slug]",
+      "regex": "^/training/rcm\\-fundamentals/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/training/rcm\\-fundamentals/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/training/rcm-practitioner/[slug]",
+      "regex": "^/training/rcm\\-practitioner/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPslug": "nxtPslug"
+      },
+      "namedRegex": "^/training/rcm\\-practitioner/(?<nxtPslug>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/about",
+      "regex": "^/about(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about(?:/)?$"
+    },
+    {
+      "page": "/blog",
+      "regex": "^/blog(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blog(?:/)?$"
+    },
+    {
+      "page": "/contact",
+      "regex": "^/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/privacy",
+      "regex": "^/privacy(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/privacy(?:/)?$"
+    },
+    {
+      "page": "/products",
+      "regex": "^/products(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/products(?:/)?$"
+    },
+    {
+      "page": "/resources",
+      "regex": "^/resources(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/resources(?:/)?$"
+    },
+    {
+      "page": "/terms",
+      "regex": "^/terms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/terms(?:/)?$"
+    },
+    {
+      "page": "/tools/criticality-calculator",
+      "regex": "^/tools/criticality\\-calculator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tools/criticality\\-calculator(?:/)?$"
+    },
+    {
+      "page": "/tools/rcm-decision-diagram",
+      "regex": "^/tools/rcm\\-decision\\-diagram(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tools/rcm\\-decision\\-diagram(?:/)?$"
+    },
+    {
+      "page": "/tools/readiness-assessment",
+      "regex": "^/tools/readiness\\-assessment(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tools/readiness\\-assessment(?:/)?$"
+    },
+    {
+      "page": "/tools/roi-calculator",
+      "regex": "^/tools/roi\\-calculator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tools/roi\\-calculator(?:/)?$"
+    },
+    {
+      "page": "/training",
+      "regex": "^/training(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/training(?:/)?$"
+    },
+    {
+      "page": "/training/certificate",
+      "regex": "^/training/certificate(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/training/certificate(?:/)?$"
+    },
+    {
+      "page": "/training/fmea-masterclass",
+      "regex": "^/training/fmea\\-masterclass(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/training/fmea\\-masterclass(?:/)?$"
+    },
+    {
+      "page": "/training/rcm-fundamentals",
+      "regex": "^/training/rcm\\-fundamentals(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/training/rcm\\-fundamentals(?:/)?$"
+    },
+    {
+      "page": "/training/rcm-practitioner",
+      "regex": "^/training/rcm\\-practitioner(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/training/rcm\\-practitioner(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

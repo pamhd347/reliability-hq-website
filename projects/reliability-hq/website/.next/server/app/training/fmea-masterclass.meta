@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/training/layout,_N_T_/training/fmea-masterclass/layout,_N_T_/training/fmea-masterclass/page,_N_T_/training/fmea-masterclass"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/training/fmea-masterclass/__PAGE__",
+    "/training/fmea-masterclass",
+    "/training",
+    "/_index",
+    "/_head"
+  ]
+}

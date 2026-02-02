@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/training/layout,_N_T_/training/rcm-practitioner/layout,_N_T_/training/rcm-practitioner/page,_N_T_/training/rcm-practitioner"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/training/rcm-practitioner/__PAGE__",
+    "/training/rcm-practitioner",
+    "/training",
+    "/_index",
+    "/_head"
+  ]
+}

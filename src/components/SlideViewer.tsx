@@ -188,9 +188,10 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
   };
 
   return (
-    <div className="w-full">
-      {/* Progress bar */}
-      <div className="mb-6">
+    // Fixed-height container - ensures navigation buttons never move
+    <div className="w-full h-[700px] flex flex-col">
+      {/* Progress bar - fixed height */}
+      <div className="flex-shrink-0 mb-4">
         <div className="flex items-center justify-between text-sm text-mid-grey mb-2">
           <span>{lessonTitle}</span>
           <span>{currentSlide + 1} of {totalSlides}</span>
@@ -203,8 +204,8 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
         </div>
       </div>
 
-      {/* Progress dots */}
-      <div className="flex justify-center gap-1.5 mb-6">
+      {/* Progress dots - fixed height */}
+      <div className="flex-shrink-0 flex justify-center gap-1.5 mb-4">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -221,9 +222,9 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
         ))}
       </div>
 
-      {/* Slide card - fixed height for consistent button placement */}
+      {/* Slide card - takes remaining space */}
       <div 
-        className={`rounded-2xl shadow-lg p-8 md:p-12 h-[450px] flex flex-col transition-all duration-150 ${
+        className={`flex-grow rounded-2xl shadow-lg p-8 md:p-12 flex flex-col overflow-hidden transition-all duration-150 ${
           isAnimating 
             ? direction === 'next' 
               ? 'opacity-0 translate-x-4' 
@@ -253,8 +254,8 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="flex items-center justify-between mt-6">
+      {/* Navigation - fixed at bottom */}
+      <div className="flex-shrink-0 flex items-center justify-between mt-4 pt-2">
         <button
           onClick={prevSlide}
           disabled={currentSlide === 0}

@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/tools/layout,_N_T_/tools/rcm-decision-diagram/layout,_N_T_/tools/rcm-decision-diagram/page,_N_T_/tools/rcm-decision-diagram"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/tools/rcm-decision-diagram/__PAGE__",
+    "/tools/rcm-decision-diagram",
+    "/tools",
+    "/_index",
+    "/_head"
+  ]
+}
