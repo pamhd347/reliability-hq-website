@@ -2220,6 +2220,592 @@ With task selection complete, we turn to **facilitating RCM analyses**—next mo
   }
 ];
 
+// Module 9: Facilitating RCM Analyses - Slide-based content
+export const practitionerModule9Slides: Slide[] = [
+  {
+    id: 1,
+    title: "The Human Side of RCM",
+    type: 'intro',
+    content: `RCM methodology is rigorous, but it's implemented by people.
+
+Success depends as much on **facilitation skill** as on technical knowledge.
+
+A skilled facilitator:
+- Keeps the team focused and productive
+- Draws out knowledge from all participants
+- Manages disagreements constructively
+- Ensures methodology is followed correctly
+- Produces implementable results`
+  },
+  {
+    id: 2,
+    title: "Team Composition",
+    type: 'concept',
+    content: `**Core team members:**
+
+- **Facilitator** — Guides process, ensures methodology compliance
+- **Operations rep (1-2)** — Knows equipment behaviour, operating context
+- **Maintenance rep (1-2)** — Knows failure history, repair challenges
+- **Engineering/Technical (1)** — Understands design intent, failure mechanisms
+
+**Ideal team size:** 4-6 people
+**Minimum:** 3 (facilitator + operator + maintainer)
+**Maximum:** 8 (beyond this, discussions become inefficient)`
+  },
+  {
+    id: 3,
+    title: "Before the Analysis",
+    type: 'concept',
+    content: `**Preparation checklist:**
+
+1. **Select and bound system** — Clear boundaries on P&ID
+2. **Gather documentation** — P&IDs, data sheets, CMMS history, manuals
+3. **Define operating context** — Document before sessions
+4. **Prepare participants** — Brief on methodology, roles
+5. **Logistics** — Room, projection, CMMS access, whiteboard
+
+**Estimate effort:**
+- Simple equipment: 4-8 hours
+- Complex system: 20-40 hours
+- Complex process: 40-80 hours`
+  },
+  {
+    id: 4,
+    title: "Session Management",
+    type: 'concept',
+    content: `**Session duration:** 2-4 hours (longer loses effectiveness)
+**Frequency:** Daily or several per week for momentum
+
+**Starting each session:**
+1. Set context — objectives, progress
+2. Review previous work
+3. Preview today's goals
+4. Housekeeping — breaks, time management
+
+**Keep focus on the right level:**
+- Pull back discussions that go too detailed
+- Push for detail when too vague`
+  },
+  {
+    id: 5,
+    title: "Managing Discussion",
+    type: 'keypoint',
+    content: `**Manage dominant voices:**
+- Direct questions to quieter participants
+- *"Sarah, from operations, does that match what you see?"*
+- Rotate who speaks first
+
+**Handle disagreements:**
+- *"Let's capture both perspectives"*
+- *"What information would help resolve this?"*
+- Park items needing research
+
+**Maintain pace:**
+- Time-box difficult discussions
+- *"We've spent 15 minutes on this. Let's capture what we have."*`
+  },
+  {
+    id: 6,
+    title: "Common Challenges",
+    type: 'concept',
+    content: `**"The way we've always done it":**
+*"Let's apply the RCM criteria and see if analysis supports that approach."*
+
+**Strong opinion without evidence:**
+*"What evidence supports that? Let's capture both."*
+
+**Perfectionism:**
+*"Is this detail necessary to select the right task? If not, move on."*
+
+**Low energy:**
+Take a break. Change seating. Ask direct questions.`
+  },
+  {
+    id: 7,
+    title: "Disagreement Resolution",
+    type: 'concept',
+    content: `**Types of disagreement:**
+- **Data:** Different information → Find the data
+- **Interpretation:** Same data, different conclusions → Apply criteria explicitly
+- **Values:** Different risk tolerances → Escalate to management
+- **Experience:** Different contexts → Understand each situation
+
+**Resolution process:**
+1. Clarify the disagreement
+2. Identify common ground
+3. Understand the basis
+4. Seek resolution
+5. Document if unresolved`
+  },
+  {
+    id: 8,
+    title: "Quality Assurance",
+    type: 'concept',
+    content: `**During analysis—methodology checks:**
+- Functions have performance standards?
+- Failure modes at right detail level?
+- Effects include all elements?
+- Consequence classification follows sequence?
+- Task criteria properly applied?
+
+**After analysis:**
+- Peer review (methodology)
+- SME review (technical content)
+- Management review (business context)
+- Operator/maintainer validation (practicality)`
+  },
+  {
+    id: 9,
+    title: "Documentation Standards",
+    type: 'concept',
+    content: `**Essential documentation:**
+1. Operating context document
+2. System boundary (with diagram)
+3. Equipment list
+4. FMEA worksheets
+5. Task selection worksheets
+6. Action list (tasks, responsibilities, timing)
+7. Assumptions register
+8. Outstanding issues
+
+**Capture rationale, not just conclusions.** Future analysts need to understand WHY.`
+  },
+  {
+    id: 10,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- **Right team:** Operators + maintainers + engineering + facilitator
+- **Preparation matters:** Documentation, context, logistics
+- **Manage discussions:** Focus, pace, handle disagreements
+- **Quality assurance:** Check methodology and content
+- **Document thoroughly:** Rationale, not just conclusions
+
+With facilitation skills, you can lead teams to successful analyses. Next: **Implementation**.`
+  }
+];
+
+// Module 10: Implementation & Living Program - Slide-based content
+export const practitionerModule10Slides: Slide[] = [
+  {
+    id: 1,
+    title: "From Analysis to Action",
+    type: 'intro',
+    content: `RCM analysis without implementation is just expensive documentation.
+
+The real value comes from **translating recommendations into working maintenance practices**.
+
+This module covers:
+- Task definition and CMMS implementation
+- Rationalising with existing maintenance
+- Building a living program
+- Measuring success`
+  },
+  {
+    id: 2,
+    title: "Defining Tasks Completely",
+    type: 'keypoint',
+    content: `Each task needs full definition:
+
+**What:** Specific activities (not just "inspect pump")
+**When:** Interval or condition trigger
+**How:** Procedure or method reference
+**Who:** Skills and qualifications required
+**Resources:** Tools, parts, time estimate
+
+*"Vibration monitoring"* becomes:
+*"Measure vibration at motor and pump bearings using portable analyser. Quarterly. Trained vibration analyst. 30 minutes. Alert at 4.5 mm/s, alarm at 7.1 mm/s."*`
+  },
+  {
+    id: 3,
+    title: "CMMS Implementation",
+    type: 'concept',
+    content: `**Updates required:**
+
+- Create/modify PM work orders
+- Adjust frequencies
+- Update procedure references
+- Set up alerts and triggers
+- Configure spare parts linkages
+- Link to equipment records
+
+**Tip:** Test work orders before going live. Missing information causes problems in the field.`
+  },
+  {
+    id: 4,
+    title: "Rationalising Existing Tasks",
+    type: 'keypoint',
+    content: `**Compare RCM recommendations to current practices:**
+
+- What **new tasks** are needed?
+- What existing tasks to **remove/modify**?
+- What **frequencies** change?
+
+**Question tasks not supported by RCM:**
+- Was the failure mode missed? Add it.
+- Is the task unjustified? Remove/adjust it.
+- Has context changed? Update analysis.
+
+Don't just add RCM tasks on top—rationalise the whole program.`
+  },
+  {
+    id: 5,
+    title: "Change Management",
+    type: 'concept',
+    content: `RCM implementation is change. People resist change.
+
+**Address resistance:**
+- **Maintenance teams:** Involve in analysis, explain rationale
+- **Operations:** Show how RCM protects availability
+- **Management:** Track metrics, demonstrate ROI
+
+**Tactics:**
+- Involve stakeholders from the start
+- Communicate why and what's changing
+- Start with visible wins
+- Provide training
+- Address concerns promptly`
+  },
+  {
+    id: 6,
+    title: "Building Feedback Loops",
+    type: 'keypoint',
+    content: `RCM isn't a one-time project. Build feedback mechanisms:
+
+**Failure feedback loop:**
+1. Failure occurs
+2. Was failure mode in analysis?
+3. If yes: Was task effective?
+4. If no: Add failure mode?
+5. Update analysis and tasks
+
+**Triggers for update:**
+- Significant failure
+- Operating context change
+- Equipment modification
+- New information
+- Scheduled review`
+  },
+  {
+    id: 7,
+    title: "Age Exploration",
+    type: 'concept',
+    content: `For scheduled replacement tasks, track actual condition:
+
+- Was the replaced item near failure?
+- Was significant life remaining?
+
+**If items consistently have life remaining:**
+Consider extending the interval
+
+**If items are degraded/near failure:**
+Interval may be appropriate (or too long)
+
+This **optimises intervals over time** based on real data.`
+  },
+  {
+    id: 8,
+    title: "Metrics That Matter",
+    type: 'concept',
+    content: `**Leading indicators:**
+- Task completion rates
+- Inspection findings
+- Condition monitoring alerts
+
+**Lagging indicators:**
+- Unplanned downtime trends
+- MTBF by failure mode
+- Maintenance cost per output
+- PM/CM ratio
+
+**Business impact:**
+- Production availability
+- Safety incidents from equipment failure
+- Environmental exceedances`
+  },
+  {
+    id: 9,
+    title: "Sustaining Capability",
+    type: 'concept',
+    content: `For ongoing value:
+
+**Knowledge management:**
+- Document analyses thoroughly
+- Store in accessible system
+- Link to equipment records
+
+**Capability development:**
+- Train new facilitators
+- Maintain team member pool
+- Share lessons learned
+
+**Program governance:**
+- Clear ownership
+- Review schedule
+- Criteria for new analyses
+- Budgeted resources`
+  },
+  {
+    id: 10,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- **Define tasks completely** — What, when, how, who, resources
+- **Rationalise with existing** — Don't just add, optimise the whole program
+- **Change management** — Involve stakeholders, communicate, train
+- **Build feedback loops** — Failures drive updates
+- **Track metrics** — Demonstrate value, guide improvement
+
+Now test your knowledge with **Interactive Case Studies** — next module.`
+  }
+];
+
+// Module 11: Interactive Case Studies - Slide-based content
+export const practitionerModule11Slides: Slide[] = [
+  {
+    id: 1,
+    title: "Learn by Doing",
+    type: 'intro',
+    content: `Theory is necessary but not sufficient.
+
+This module presents **realistic case studies** where you'll apply RCM methodology.
+
+Each case includes:
+- Equipment context and conditions
+- Analysis decisions you'll make
+- Feedback on your choices
+- Complete worked solutions
+
+**Work through actively**—the learning happens in the struggle.`
+  },
+  {
+    id: 2,
+    title: "Case Study 1: Cooling Water Pump",
+    type: 'concept',
+    content: `**Scenario:**
+- Centrifugal pump, 75 kW motor, mechanical seal
+- Primary cooling water to heat exchangers
+- Continuous operation, outdoor installation
+- Standby pump auto-starts on low pressure
+- Current: Quarterly greasing, annual seal replacement
+
+**Your task:** Work through function definition, failure modes, consequences, and task selection.`
+  },
+  {
+    id: 3,
+    title: "Case 1: Function Definition",
+    type: 'example',
+    content: `**What is the primary function?**
+
+Think: What must this pump deliver? What parameters matter?
+
+**Answer:**
+*"To transfer cooling water from the sump to the heat exchanger headers at 450-550 m³/hr at 2.8-3.5 bar discharge pressure"*
+
+Notice: Specifies range, source/destination, flow AND pressure. This precision enables meaningful analysis.`
+  },
+  {
+    id: 4,
+    title: "Case 1: Failure Modes",
+    type: 'example',
+    content: `**For "unable to transfer any water," identify failure modes:**
+
+**Answer:**
+1. Motor electrical supply failure
+2. Motor winding insulation breakdown
+3. Motor bearing fatigue
+4. Pump bearing lubrication failure
+5. Mechanical seal catastrophic failure
+6. Impeller cavitation erosion (severe)
+7. Shaft fatigue
+8. Coupling elastomer degradation
+9. Suction strainer fouling
+
+Specific enough for maintenance selection, not excessively detailed.`
+  },
+  {
+    id: 5,
+    title: "Case 1: Consequence Evaluation",
+    type: 'example',
+    content: `**For "bearing fails due to lubrication failure":**
+
+1. Evident or hidden? **Evident** — Noise, vibration, temperature all observable
+
+2. Consequence category? **Operational**
+   - Not hidden
+   - Not safety/environmental
+   - Affects operations (pump stops, cooling interrupted)
+   - Backup starts, so production continues
+
+Need economically justified proactive task, or run-to-failure may be acceptable.`
+  },
+  {
+    id: 6,
+    title: "Case 1: Task Selection",
+    type: 'example',
+    content: `**Selected: On-condition vibration monitoring**
+
+**Rationale:**
+- Bearing degradation detectable via vibration
+- P-F interval: 2-8 weeks typically
+- Interval: Monthly (half of minimum P-F)
+
+**Supporting task:** Quarterly grease top-up (reduces lubrication failure probability)
+
+**Why not scheduled replacement?**
+Bearings have random failure patterns for many modes. Vibration monitoring catches problems regardless of pattern.`
+  },
+  {
+    id: 7,
+    title: "Case Study 2: Relief Valve",
+    type: 'concept',
+    content: `**Scenario:**
+- Pressure relief valve on reactor vessel
+- Set pressure: 15 bar
+- Vessel operates at 10 bar normally
+- Failure could mean overpressure (safety) or spurious lift (operational)
+
+**Key insight:** This is a protective device with hidden function.
+
+How would you know if it had failed? What task type applies?`
+  },
+  {
+    id: 8,
+    title: "Case 2: Analysis",
+    type: 'example',
+    content: `**Function:** Relieve vessel pressure at 15 bar ±3% to prevent overpressure
+
+**Failure modes:**
+1. Fails to lift at set pressure (hidden—safety)
+2. Lifts below set pressure (evident—spurious)
+3. Fails to reseat (evident—process loss)
+
+**FM1 is hidden with safety consequences:**
+- No proactive task can predict valve lift failure
+- Failure-finding required: Annual function test
+- Or: Scheduled restoration (refurbishment cycle)
+
+**Interval:** Based on multiple failure risk analysis.`
+  },
+  {
+    id: 9,
+    title: "Case Studies Summary",
+    type: 'concept',
+    content: `**Key lessons from case studies:**
+
+1. **Precise functions** enable precise analysis
+2. **Hidden failures** require failure-finding or scheduled tasks
+3. **On-condition preferred** when P-F interval allows
+4. **Consider all failure modes** — not just the obvious ones
+5. **Document rationale** — why this task, why this interval
+
+These patterns repeat across all equipment types.`
+  },
+  {
+    id: 10,
+    title: "Ready for Assessment",
+    type: 'summary',
+    content: `You've now worked through the full RCM methodology:
+
+✅ Operating context
+✅ Functions & performance standards
+✅ Functional failures
+✅ Failure modes
+✅ Failure effects
+✅ Consequences
+✅ Task selection
+✅ Default actions
+✅ Facilitation
+✅ Implementation
+
+**Next: Final Assessment** to demonstrate your practitioner competency.`
+  }
+];
+
+// Module 12: Final Assessment - Slide-based content
+export const practitionerModule12Slides: Slide[] = [
+  {
+    id: 1,
+    title: "Final Assessment",
+    type: 'intro',
+    content: `Congratulations on completing the RCM Practitioner course content.
+
+This final assessment tests your ability to apply RCM methodology comprehensively.
+
+**What to expect:**
+- Comprehensive questions covering all modules
+- Scenario-based problems
+- Minimum 80% required to pass
+- Certificate upon successful completion`
+  },
+  {
+    id: 2,
+    title: "Assessment Structure",
+    type: 'concept',
+    content: `**The assessment covers:**
+
+1. Operating context definition
+2. Function statement construction
+3. Functional failure identification
+4. Failure mode analysis
+5. Failure effects documentation
+6. Consequence classification
+7. Task selection criteria
+8. Default action decisions
+9. Implementation principles
+
+Each topic has weighted questions based on practitioner importance.`
+  },
+  {
+    id: 3,
+    title: "Preparation Tips",
+    type: 'keypoint',
+    content: `**Before taking the assessment:**
+
+- Review key takeaways from each module
+- Understand the RCM decision logic flow
+- Know the criteria for each task type
+- Practice with the case studies
+- Ensure you understand hidden vs. evident failures
+
+**Take your time.** Read questions carefully. Apply the methodology systematically.`
+  },
+  {
+    id: 4,
+    title: "After Passing",
+    type: 'concept',
+    content: `**Upon successful completion:**
+
+🎓 Downloadable certificate of completion
+📊 Your score and performance summary
+🔧 Ready to facilitate RCM analyses
+
+**Next steps:**
+- Apply RCM to equipment at your facility
+- Seek mentoring from experienced practitioners
+- Build your facilitation experience
+- Continue learning through practice`
+  },
+  {
+    id: 5,
+    title: "Begin Assessment",
+    type: 'summary',
+    content: `You're now ready to demonstrate your RCM practitioner knowledge.
+
+**Remember:**
+- Apply the methodology systematically
+- Consider all consequence categories
+- Match task types to failure patterns
+- Think like a facilitator
+
+**Good luck!**
+
+Click "Complete" to proceed to the assessment questions.`
+  }
+];
+
 // Map of lesson IDs to their slides
 export const practitionerLessonSlides: Record<number, Slide[]> = {
   1: practitionerModule1Slides,
@@ -2230,7 +2816,10 @@ export const practitionerLessonSlides: Record<number, Slide[]> = {
   6: practitionerModule6Slides,
   7: practitionerModule7Slides,
   8: practitionerModule8Slides,
-  // Future modules will be added here
+  9: practitionerModule9Slides,
+  10: practitionerModule10Slides,
+  11: practitionerModule11Slides,
+  12: practitionerModule12Slides,
 };
 
 // Helper function to check if a lesson has slides
