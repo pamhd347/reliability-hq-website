@@ -2587,7 +2587,7 @@ Remember: AI is a drafting tool, not an expert. Always apply your engineering ju
     featuredImage: '/blog/function-statements.svg',
     metaDescription: 'Learn how to write RCM function statements that actually improve your failure analysis. Includes 20 real examples across pumps, compressors, heat exchangers, valves, motors, and more.',
     relatedSlugs: ['7-rcm-questions-explained', 'what-is-rcm', 'fmea-step-by-step-guide'],
-    content: \`
+    content: `
 ## Why Function Statements Are Where RCM Lives or Dies
 
 I've reviewed hundreds of FMEA documents over the years. Want to know how I can tell within 30 seconds whether the analysis will be useful or garbage?
@@ -2953,7 +2953,7 @@ Take the time. Be specific. Your future FMEA self will thank you.
 ---
 
 *"The purpose of a function statement isn't to describe equipment. It's to define what failure means."*
-\`
+`
   },
   {
     slug: 'run-to-failure-right-strategy',
@@ -3218,6 +3218,292 @@ Or try our free **[RCM Decision Diagram tool](/tools/rcm-decision-diagram)**—p
 ---
 
 *The goal isn't zero failures. It's optimal maintenance—doing enough to manage risk, and not a task more. Sometimes, that means letting things break.*
+`
+  },
+  {
+    slug: '5-pump-failure-modes-every-engineer-should-know',
+    title: '5 Failure Modes Every Pump Engineer Should Know (And How to Detect Them)',
+    excerpt: 'I\'ve analysed over 200 pumps. The same five failure modes keep showing up—accounting for roughly 80% of pump failures. Here\'s your quick reference: what they are, how to spot them coming, and what actually works to catch them early.',
+    category: 'rcm-basics',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-05',
+    readTime: 8,
+    featured: false,
+    featuredImage: '/blog/pump-failure-modes.svg',
+    metaDescription: 'The 5 most common centrifugal pump failure modes with specific detection methods, P-F intervals, vibration thresholds, and recommended maintenance tasks. Quick reference for reliability engineers.',
+    relatedSlugs: ['what-is-rcm', '7-rcm-questions-explained', 'fmea-step-by-step-guide', 'how-to-write-function-statements'],
+    content: `
+## The Starting Five
+
+I've analysed over 200 centrifugal pumps across refineries, chemical plants, water utilities, and manufacturing facilities. Different industries, different manufacturers, different operating contexts.
+
+The same five failure modes keep showing up.
+
+Not the same equipment. Not the same root causes. But the same *patterns* of failure—accounting for roughly 80% of the pump failures I've documented. If you only memorise five things about pump reliability, make it these.
+
+This is your quick reference. Print it. Bookmark it. Keep it where you can find it at 2 AM when something's making a noise it shouldn't.
+
+---
+
+## 1. Bearing Failure
+
+**What it is:** Rolling element or journal bearing degradation leading to increased friction, heat, and eventual seizure or catastrophic failure.
+
+**Why it happens:**
+- **Lubrication problems** — Wrong lubricant, contamination, insufficient quantity, or degraded oil (accounts for ~40% of bearing failures)
+- **Misalignment** — Puts uneven load on bearing elements
+- **Overload** — Operating beyond design capacity
+- **Contamination** — Water ingress, particulates in lubricant
+- **Installation damage** — Improper fitting, incorrect preload
+
+**What you'll notice:**
+
+| Stage | Symptoms |
+|-------|----------|
+| Early | Slight temperature rise (5-10°C above baseline), subtle high-frequency vibration |
+| Developing | Audible noise (rumbling, grinding), temperature rise >15°C, vibration increase at bearing frequencies |
+| Advanced | Loud grinding, bearing temperature >85°C, visible smoke or discoloration, imminent seizure |
+
+**P-F Interval:** 1-3 months from first detectable vibration signature to functional failure. Can be weeks if contamination or lubrication failure is severe.
+
+**Detection methods:**
+
+| Method | What to look for | Trigger level |
+|--------|------------------|---------------|
+| Vibration analysis | Increase at ball pass frequencies (BPFO, BPFI, BSF), 2x and 3x harmonics | >4.5 mm/s RMS velocity, or 3x baseline |
+| Temperature monitoring | Bearing housing temperature rise | >80°C absolute, or >15°C above baseline |
+| Oil analysis | Wear metals (Fe, Cr), contamination, viscosity change | Fe >25 ppm, water >0.1% |
+| Acoustic emission | High-frequency stress waves | Significant increase from baseline |
+
+**What actually works:**
+
+✅ **Monthly vibration monitoring** — The gold standard. Catches most bearing faults 4-12 weeks before failure.
+
+✅ **Continuous temperature monitoring** on critical pumps — Simple, cheap, effective backup.
+
+✅ **Quarterly oil analysis** for oil-lubricated bearings — Catches contamination and degradation.
+
+❌ **Time-based bearing replacement** — Bearings don't fail on a schedule. You'll either replace good bearings or miss the ones failing early.
+
+---
+
+## 2. Mechanical Seal Failure
+
+**What it is:** Degradation or failure of the mechanical seal faces, elastomers, or springs, leading to excessive leakage.
+
+**Why it happens:**
+- **Dry running** — Seal faces need a fluid film; without it, they cook
+- **Thermal shock** — Rapid temperature changes crack seal faces
+- **Chemical attack** — Wrong materials for the service
+- **Abrasive particles** — Score the seal faces
+- **Installation errors** — Wrong setting, damaged faces during fitting
+- **Misalignment/vibration** — Seal faces can't maintain proper contact
+
+**What you'll notice:**
+
+| Stage | Symptoms |
+|-------|----------|
+| Early | Weeping (drops per minute), slight discoloration at seal area |
+| Developing | Steady drip (>10 mL/hour), visible fluid tracking |
+| Advanced | Continuous leak, seal flush flow increase, possible bearing contamination |
+
+**P-F Interval:** 2-8 weeks for gradual wear. Can be instantaneous for event-driven failures (dry running, thermal shock).
+
+**Detection methods:**
+
+| Method | What to look for | Trigger level |
+|--------|------------------|---------------|
+| Visual inspection | Drips, fluid tracking, discoloration | Any visible leak |
+| Seal flush monitoring | Flow rate, temperature, pressure changes | >20% change from baseline |
+| Vibration | 1x running speed increase (shaft deflection) | >4 mm/s at 1x |
+| Pump efficiency | Reduced flow, increased power | >10% efficiency drop |
+
+**What actually works:**
+
+✅ **Daily visual inspection** during operator rounds — Most seal failures are caught this way. Takes 30 seconds.
+
+✅ **Seal flush system monitoring** — Track flush water flow and temperature. Changes indicate problems.
+
+✅ **Proper operating procedures** — Don't run pumps dry. Don't thermally shock them. Train operators.
+
+❌ **Scheduled seal replacement** — Seal life varies wildly (6 months to 10+ years). Condition-based replacement beats calendar-based every time.
+
+**Pro tip:** If you're replacing the same seal more than once per year, stop replacing and start investigating. Something's wrong with the operating conditions, not the seal.
+
+---
+
+## 3. Impeller Wear/Erosion
+
+**What it is:** Material loss from impeller vanes, shrouds, or wear rings due to erosion, corrosion, or cavitation damage.
+
+**Why it happens:**
+- **Cavitation** — Bubble collapse blasts material off the impeller (see #4)
+- **Abrasive solids** — Sand, scale, particulates wear down surfaces
+- **Corrosion** — Chemical attack on impeller material
+- **Recirculation** — Operating at low flow causes internal recirculation damage
+
+**What you'll notice:**
+
+| Stage | Symptoms |
+|-------|----------|
+| Early | 2-5% performance degradation, subtle efficiency loss |
+| Developing | Noticeable flow/pressure reduction, increased power consumption, vibration increase |
+| Advanced | Unable to meet process requirements, severe imbalance, potential impeller breakup |
+
+**P-F Interval:** 3-18 months depending on severity and cause. Cavitation erosion can be faster (weeks to months). Corrosion is typically slower.
+
+**Detection methods:**
+
+| Method | What to look for | Trigger level |
+|--------|------------------|---------------|
+| Performance monitoring | Flow vs head vs power deviation from curve | >5% deviation |
+| Vibration | Imbalance (1x running speed) | >4 mm/s at 1x, increasing trend |
+| Visual inspection | Surface pitting, material loss (during overhaul) | Any visible damage |
+| Current monitoring | Motor amps vs baseline | >10% change at same duty |
+
+**What actually works:**
+
+✅ **Quarterly performance trending** — Plot actual flow, head, and power against pump curve. Degradation becomes obvious.
+
+✅ **Vibration monitoring for imbalance** — Worn impellers go out of balance. 1x vibration increase is the signal.
+
+✅ **Address the root cause** — If cavitation is eating your impeller, fix the NPSH problem. If solids are wearing it, add filtration. Stop treating symptoms.
+
+❌ **Ignoring performance degradation** — "It still pumps" isn't a strategy. A worn impeller wastes energy and may fail suddenly.
+
+---
+
+## 4. Cavitation Damage
+
+**What it is:** Vapour bubble formation and violent collapse within the pump, causing noise, vibration, and progressive material damage.
+
+**Why it happens:**
+- **Insufficient NPSH** — Not enough suction pressure to keep liquid from flashing to vapour
+- **Suction restrictions** — Blocked strainers, undersized piping, closed valves
+- **High liquid temperature** — Increases vapour pressure
+- **Operating off-curve** — Running at very low or very high flow
+- **Air entrainment** — Air drawn in through suction leaks or vortexing
+
+**What you'll notice:**
+
+| Stage | Symptoms |
+|-------|----------|
+| Mild | Crackling/popping noise ("gravel in the pump"), slight vibration increase |
+| Moderate | Loud rattling, erratic discharge pressure, reduced flow, efficiency drop |
+| Severe | Continuous noise, significant vibration, visible damage on impeller (pitting) |
+
+**P-F Interval:** Weeks to months if operating continuously in cavitation. Can stabilise if intermittent.
+
+**Detection methods:**
+
+| Method | What to look for | Trigger level |
+|--------|------------------|---------------|
+| Acoustic monitoring | High-frequency noise, crackling sound | Distinctive cavitation signature |
+| Vibration | Broadband vibration increase, random high-frequency content | >6 mm/s, especially >1 kHz |
+| Suction pressure | NPSH available vs required | NPSH margin <1 metre |
+| Performance | Unstable head/flow, erratic behaviour | Deviation from curve |
+
+**What actually works:**
+
+✅ **Fix the process conditions** — Cavitation is a symptom, not a disease. Increase suction pressure, reduce temperature, open valves, clean strainers.
+
+✅ **Operator training** — Teach operators what cavitation sounds like and what causes it. They're your first line of detection.
+
+✅ **NPSH monitoring** on critical pumps — Simple pressure instrumentation can catch problems early.
+
+❌ **Just replacing the damaged impeller** — If you don't fix the NPSH problem, you'll be replacing it again next year.
+
+**The cavitation test:** If it sounds like someone's pouring gravel through your pump, you've got cavitation. Find out why.
+
+---
+
+## 5. Shaft Misalignment
+
+**What it is:** Angular or offset misalignment between pump and driver shafts, causing excessive vibration, bearing loads, seal stress, and coupling wear.
+
+**Why it happens:**
+- **Poor initial alignment** — Not done properly during installation
+- **Thermal growth** — Hot pump grows; alignment changes
+- **Foundation movement** — Settling, soft foot, piping strain
+- **Coupling wear** — Allows more misalignment to develop
+- **Maintenance errors** — Alignment not rechecked after repairs
+
+**What you'll notice:**
+
+| Stage | Symptoms |
+|-------|----------|
+| Mild | Slight vibration increase at 1x and 2x, elevated coupling temperature |
+| Moderate | Audible vibration, premature bearing wear, seal problems, coupling element wear |
+| Severe | High vibration, rapid bearing/seal failure, coupling damage, shaft fatigue |
+
+**P-F Interval:** Highly variable. Minor misalignment causes gradual bearing/seal wear over months. Severe misalignment can destroy bearings in weeks.
+
+**Detection methods:**
+
+| Method | What to look for | Trigger level |
+|--------|------------------|---------------|
+| Vibration analysis | High 1x and 2x (axial and radial), phase relationship | >4 mm/s at 1x or 2x, axial > radial |
+| Temperature | Elevated coupling and bearing temperatures | >10°C above baseline |
+| Visual | Coupling wear pattern, flexible element deterioration | Any abnormal wear |
+| Laser alignment check | Angular and offset misalignment | >0.05 mm offset, >0.05 mm/100mm angular |
+
+**What actually works:**
+
+✅ **Laser alignment at installation and after any maintenance** — It takes 30 minutes and prevents months of problems.
+
+✅ **Thermal growth compensation** — Align cold, but account for where it'll be when hot. Equipment manufacturers provide growth data.
+
+✅ **Check for soft foot** — A pump that's not sitting flat on its baseplate can't stay aligned. Fix the foundation first.
+
+❌ **Assuming alignment "was fine last time"** — Alignment drifts. Foundations settle. Check it.
+
+**The alignment rule:** If you've had the coupling apart, you need to realign. No exceptions.
+
+---
+
+## Quick Reference Table
+
+| Failure Mode | P-F Interval | Primary Detection | Key Threshold |
+|--------------|--------------|-------------------|---------------|
+| **Bearing failure** | 1-3 months | Vibration analysis | >4.5 mm/s RMS |
+| **Seal failure** | 2-8 weeks | Visual inspection | Any visible leak |
+| **Impeller wear** | 3-18 months | Performance trending | >5% deviation from curve |
+| **Cavitation** | Weeks-months | Acoustic/operator | Characteristic noise |
+| **Misalignment** | Weeks-months | Vibration + laser check | >0.05 mm offset |
+
+---
+
+## The 80/20 of Pump Reliability
+
+These five failure modes won't cover every pump problem you'll ever see. You'll encounter phase-to-phase motor faults, suction valve failures, baseplate cracking, and a dozen other issues over your career.
+
+But master these five, and you've got 80% of centrifugal pump failures covered. The rest you can look up when they happen.
+
+**The pattern to remember:**
+
+1. **Bearings** → Vibration monitoring monthly
+2. **Seals** → Visual inspection daily
+3. **Impeller** → Performance trending quarterly
+4. **Cavitation** → Listen and fix the process
+5. **Alignment** → Laser check after any coupling work
+
+Simple. Repeatable. Effective.
+
+---
+
+## Build Your Failure Mode Library
+
+Want to go deeper? These five are just the start.
+
+Our **[Failure Mode Suggester](/ai-tools/failure-modes)** generates comprehensive failure mode lists for any equipment type—centrifugal pumps, positive displacement pumps, compressors, heat exchangers, you name it. Plug in your equipment, get a starting library, then refine it based on your operating context.
+
+Or grab our **[FMEA Template Pack](/products/rcm-fmea-template-pack)** to document your pump failure modes properly. It includes worksheets for functions, failure modes, effects, and recommended tasks—all in a format that feeds directly into your CMMS.
+
+Because knowing the failure modes is step one. Getting them into a maintenance programme that actually works is step two.
+
+---
+
+*Keep this reference handy. The next time a pump starts making that noise—the one that makes experienced operators wince—you'll know exactly what to check first.*
 `
   }
 ];
