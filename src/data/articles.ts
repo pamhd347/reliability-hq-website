@@ -2576,6 +2576,386 @@ Remember: AI is a drafting tool, not an expert. Always apply your engineering ju
 `
   },
   {
+    slug: 'how-to-write-function-statements',
+    title: 'How to Write Function Statements That Actually Help (With 20 Examples)',
+    excerpt: 'The function statement is the foundation of every RCM analysis—and the place where most analyses go wrong. Here\'s exactly how to write functions that make the rest of your FMEA actually useful, with 20 real examples across pumps, compressors, valves, and more.',
+    category: 'rcm-basics',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-10',
+    readTime: 11,
+    featured: true,
+    featuredImage: '/blog/function-statements.svg',
+    metaDescription: 'Learn how to write RCM function statements that actually improve your failure analysis. Includes 20 real examples across pumps, compressors, heat exchangers, valves, motors, and more.',
+    relatedSlugs: ['7-rcm-questions-explained', 'what-is-rcm', 'fmea-step-by-step-guide'],
+    content: \`
+## Why Function Statements Are Where RCM Lives or Dies
+
+I've reviewed hundreds of FMEA documents over the years. Want to know how I can tell within 30 seconds whether the analysis will be useful or garbage?
+
+I look at the function statements.
+
+Vague functions lead to vague failure modes lead to vague tasks lead to maintenance programmes that don't actually prevent failures. The entire RCM process is a chain, and function statements are the first link. Get them wrong, and everything downstream is compromised.
+
+Here's the uncomfortable truth: **most function statements I see are useless.** They're technically correct—yes, the pump does "pump fluid"—but they don't give you anything to work with. They're the maintenance equivalent of a job description that says "do work."
+
+This article is your reference guide for writing function statements that actually help. I'll show you the structure, the common mistakes, and 20 real examples you can adapt for your own equipment. Bookmark it. You'll need it.
+
+---
+
+## Why Functions Matter More Than You Think
+
+Before we get into the mechanics, let's talk about why this matters so much.
+
+In RCM, a **functional failure** is defined as the inability of an asset to fulfil a function to a standard acceptable to the user. Notice what that means: you can't define failure until you've defined success.
+
+If your function is "pump pumps fluid," then the only functional failure is "pump doesn't pump fluid." You've reduced a complex piece of machinery to a binary: working or not working.
+
+But pumps don't fail like light switches. They degrade. Flow decreases. Pressure drops. Efficiency worsens. Seals weep. Bearings get noisy. Each of these represents a different failure mode requiring different detection methods and different maintenance responses.
+
+A function statement like "Transfer cooling water at minimum 500 m³/h at discharge pressure not less than 4.5 bar" gives you failure modes like:
+- Unable to transfer any water (catastrophic)
+- Flow rate below 500 m³/h (degradation)
+- Discharge pressure below 4.5 bar (performance loss)
+
+Now you're working with something. Now you can build an analysis that catches degradation before it becomes catastrophe.
+
+**The function statement defines what failure means.** Everything else flows from there.
+
+---
+
+## The Anatomy of a Good Function Statement
+
+Every good function statement has three components:
+
+### 1. Verb (What action?)
+
+The verb describes what the equipment does. Common verbs in function statements:
+
+- Transfer, pump, convey, move (for equipment that moves things)
+- Contain, hold, store (for vessels, tanks, piping)
+- Regulate, control, maintain (for control equipment)
+- Indicate, display, transmit (for instrumentation)
+- Protect, prevent, isolate (for safety equipment)
+- Support, position, align (for structural equipment)
+- Heat, cool, exchange (for thermal equipment)
+
+Use active verbs. "To transfer" not "transferring." "To indicate" not "provides indication."
+
+### 2. Object (What does it act on?)
+
+The object specifies what's being moved, contained, regulated, or protected. Be specific:
+
+- Not "fluid" but "cooling water" or "process gas" or "hydraulic oil"
+- Not "product" but "granulated polymer" or "slurry" or "finished pallets"
+- Not "signal" but "4-20mA control signal" or "temperature reading"
+
+The object clarifies scope. A "cooling water pump" and a "sulphuric acid pump" are different beasts, even if the hardware is identical.
+
+### 3. Performance Standard (How well?)
+
+This is where most function statements fail. The performance standard makes the function measurable. Without it, you can't determine degradation.
+
+Good performance standards include:
+
+- **Quantity:** Flow rate, pressure, temperature, speed, capacity
+- **Quality:** Purity, concentration, tolerance, accuracy
+- **Time:** Response time, duration, cycle time
+- **Boundary conditions:** "during normal operation," "when called upon," "under emergency conditions"
+
+The performance standard should reflect what the user actually needs—not the design specification, not the nameplate rating, but the *operational requirement*.
+
+A pump rated at 600 m³/h but installed in a system that only needs 400 m³/h? Your function is 400 m³/h. The other 200 m³/h is design margin, not a functional requirement.
+
+---
+
+## The Formula
+
+Put it together and you get:
+
+**To [verb] [object] [performance standard]**
+
+Examples:
+- To transfer cooling water at minimum 500 m³/h at discharge pressure not less than 4.5 bar
+- To contain compressed air at pressure up to 10 bar with no external leakage
+- To indicate bearing temperature within ±2°C accuracy
+- To isolate process flow within 5 seconds of signal
+
+Notice the precision. Notice the measurability. Every one of these functions defines a clear standard against which you can measure failure.
+
+---
+
+## Primary vs Secondary Functions: Both Matter
+
+### Primary Functions
+
+Primary functions are why the equipment exists—the main reason it was purchased and installed. Most equipment has one or two primary functions.
+
+For a pump: transfer fluid.
+For a heat exchanger: transfer heat.
+For a valve: control or isolate flow.
+
+Easy enough. But stopping at primary functions misses half the analysis.
+
+### Secondary Functions
+
+Secondary functions are additional expectations beyond the primary purpose. SAE JA1012 (the RCM guide) identifies several categories:
+
+**Safety/Environmental Containment:** Equipment must contain its contents safely.
+- To contain process fluid with no external leaks exceeding 10 mL/hour
+- To vent overpressure without flame propagation
+
+**Control/Regulation:** Equipment must respond to commands.
+- To respond to 4-20mA signal proportionally within 2 seconds
+- To maintain setpoint within ±1% of range
+
+**Indication:** Equipment must communicate its status.
+- To indicate discharge pressure to local gauge within ±5% accuracy
+- To transmit running status to DCS within 1 second of state change
+
+**Efficiency:** Equipment must operate without excessive resource consumption.
+- To consume no more than 75 kW electrical power at rated duty
+- To operate at volumetric efficiency above 85%
+
+**Structural Integrity:** Equipment must support loads and resist forces.
+- To resist nozzle loads without excessive pipe strain
+- To maintain alignment within 0.05mm during operation
+
+**Appearance/Comfort:** Sometimes relevant for customer-facing equipment.
+- To operate at noise level below 75 dB(A) at 1 metre
+
+### Why Secondary Functions Catch What Primary Functions Miss
+
+Consider a pump with only its primary function documented: "Transfer fluid at 500 m³/h."
+
+You might analyse bearing failure and seal failure as failure modes because they stop the pump.
+
+But what about a seal leak that doesn't stop the pump? The pump still transfers fluid. It's still hitting 500 m³/h. But it's dumping product on the floor, creating a slip hazard, wasting material, and potentially causing environmental violations.
+
+If you haven't documented the secondary function "contain pumped fluid," you haven't documented that failure mode. Your FMEA has a hole in it.
+
+I've seen this pattern repeatedly: critical failure modes hiding in undocumented secondary functions.
+
+---
+
+## Common Mistakes (With Fixes)
+
+### Mistake 1: No Performance Standard
+
+**Bad:** To pump cooling water
+
+**Why it's bad:** At what flow rate? What pressure? This function is unfalsifiable—any amount of water movement satisfies it.
+
+**Better:** To transfer cooling water at minimum 500 m³/h at discharge pressure not less than 4.5 bar
+
+---
+
+### Mistake 2: Using Design Specs Instead of Operational Requirements
+
+**Bad:** To deliver 600 m³/h at 6 bar (copying the nameplate)
+
+**Why it's bad:** If your process only needs 450 m³/h at 5 bar, you've set the wrong standard. The pump could degrade significantly and still meet actual requirements—but your FMEA would call it a failure.
+
+**Better:** To deliver minimum 450 m³/h at minimum 5 bar during normal operation
+
+---
+
+### Mistake 3: Combining Multiple Functions
+
+**Bad:** To transfer, heat, and filter process fluid
+
+**Why it's bad:** Three functions means three sets of failure modes, three sets of consequences. Combining them muddles the analysis.
+
+**Better:** Three separate function statements:
+- To transfer process fluid at 200 L/min minimum
+- To heat process fluid to 65°C ±5°C
+- To remove particles above 25 microns from process fluid
+
+---
+
+### Mistake 4: Forgetting Context
+
+**Bad:** To maintain pressure at 5 bar
+
+**Why it's bad:** All the time? During startup? During shutdown? Under fault conditions? Context determines the real requirement.
+
+**Better:** To maintain system pressure at 5 bar ±0.5 bar during continuous operation
+
+---
+
+### Mistake 5: Missing Secondary Functions
+
+**Bad:** (Only documenting primary function for a motor-driven pump)
+- To transfer cooling water at 500 m³/h
+
+**Why it's bad:** What about containment? What about starting reliably? What about not setting the building on fire?
+
+**Better:** Include secondary functions:
+- To transfer cooling water at 500 m³/h minimum
+- To contain cooling water with no external leakage visible
+- To start within 5 seconds of receiving start command
+- To operate without bearing temperature exceeding 85°C
+- To operate without excessive vibration (< 4.5 mm/s RMS at bearings)
+
+---
+
+## 20 Function Statement Examples
+
+Here's your reference library. I've organised these by equipment type, with primary and secondary functions for each.
+
+### Pumps
+
+**1. Centrifugal Cooling Water Pump (Primary)**
+> To transfer cooling water from the cooling tower basin to process heat exchangers at minimum 800 m³/h at discharge pressure not less than 5 bar during continuous operation.
+
+**2. Centrifugal Cooling Water Pump (Secondary — Containment)**
+> To contain pumped fluid with no visible external leakage at pump casing, seal, or connections.
+
+**3. Positive Displacement Metering Pump (Primary)**
+> To inject corrosion inhibitor into the process stream at 2.5 ±0.1 litres per hour proportional to flow rate signal.
+
+---
+
+### Compressors
+
+**4. Reciprocating Air Compressor (Primary)**
+> To compress instrument air from atmospheric pressure to 8 bar at minimum 500 Nm³/h during continuous operation.
+
+**5. Centrifugal Gas Compressor (Primary)**
+> To compress process gas from 2.5 bar suction to 12 bar discharge at mass flow rate between 15,000 and 22,000 kg/h.
+
+**6. Screw Compressor (Secondary — Efficiency)**
+> To deliver compressed air at specific power consumption not exceeding 6.5 kW per m³/min of free air delivered.
+
+---
+
+### Heat Exchangers
+
+**7. Shell and Tube Heat Exchanger (Primary)**
+> To cool process fluid from 95°C to 45°C ±5°C at flow rates up to 150 m³/h using cooling water.
+
+**8. Plate Heat Exchanger (Secondary — Separation)**
+> To maintain separation between process fluid and cooling water with no cross-contamination detectable.
+
+**9. Air-Cooled Heat Exchanger (Primary)**
+> To condense process vapour at 180 kg/h minimum while maintaining outlet temperature below 60°C at ambient temperatures up to 35°C.
+
+---
+
+### Valves
+
+**10. Control Valve (Primary)**
+> To regulate process flow from 0-100% of design rate proportionally to 4-20mA signal with installed characteristic within ±5% of linear.
+
+**11. Ball Valve — Isolation (Primary)**
+> To isolate process flow within 2 seconds of manual actuation with bubble-tight shutoff at 10 bar differential pressure.
+
+**12. Safety Relief Valve (Primary)**
+> To protect the vessel from overpressure by relieving at 12 bar ±3% and reseating by 11.5 bar.
+
+---
+
+### Instruments
+
+**13. Pressure Transmitter (Primary)**
+> To transmit process pressure to the DCS as a 4-20mA signal proportional to 0-10 bar with accuracy within ±0.25% of span.
+
+**14. Level Indicator (Primary)**
+> To indicate tank level locally with accuracy within ±25mm across the 0-3 metre range.
+
+**15. Temperature Element (Secondary — Response)**
+> To detect temperature changes with response time (T90) not exceeding 10 seconds.
+
+---
+
+### Motors
+
+**16. Electric Motor — Pump Drive (Primary)**
+> To drive the coupled pump at 2950 RPM ±1% when energised, delivering minimum 55 kW shaft power.
+
+**17. Electric Motor (Secondary — Starting)**
+> To accelerate from rest to full speed within 8 seconds of receiving start command without tripping on overcurrent.
+
+---
+
+### Vessels
+
+**18. Pressure Vessel (Primary — Containment)**
+> To contain process fluid at operating pressures up to 15 bar and temperatures up to 180°C with no loss of integrity.
+
+**19. Storage Tank (Secondary — Level Indication)**
+> To allow accurate level measurement by maintaining internal conditions compatible with radar level measurement (no excessive foam or vapour).
+
+---
+
+### Conveyors
+
+**20. Belt Conveyor (Primary)**
+> To transfer finished product from packaging to palletising area at minimum rate of 30 cartons per minute during production.
+
+---
+
+## Using AI to Draft Functions
+
+AI tools can accelerate function statement drafting—but they need the same inputs you do. Here's how to prompt effectively:
+
+**Good prompt:**
+> Generate RCM function statements for a horizontal centrifugal pump. Primary purpose: transfer cooling water from basin to heat exchangers. Required flow: 500 m³/h minimum. Required pressure: 4.5 bar minimum. 24/7 operation. Include primary and secondary functions (containment, starting, vibration limits).
+
+**What to verify in AI output:**
+- Are performance standards realistic for your application?
+- Do secondary functions match your site requirements?
+- Are the standards what you *need*, not what the equipment can *theoretically* do?
+
+Our [Function Statement Generator](/ai-tools/function-generator) is trained specifically for this—try it with your equipment and see how it compares to starting from scratch.
+
+---
+
+## The 60-Second Function Statement Test
+
+Before you finalise a function statement, run it through this checklist:
+
+☐ **Does it have a verb?** (What action?)
+☐ **Does it have an object?** (What is acted upon?)
+☐ **Does it have a measurable performance standard?** (How well?)
+☐ **Does the standard reflect operational need, not design spec?**
+☐ **Could you objectively determine if this function has failed?**
+☐ **Have you documented secondary functions (containment, indication, efficiency)?**
+
+If you can't check all six boxes, your function statement needs work.
+
+---
+
+## Where Function Statements Lead
+
+Good function statements make the rest of RCM easier:
+
+- **Functional failures** become obvious (ways the function isn't met)
+- **Failure modes** get specific (what causes each functional failure)
+- **Failure effects** become traceable (what happens when each function is lost)
+- **Tasks** become justifiable (we're maintaining this because this function requires it)
+
+Skip the function statement work, and you'll spend the rest of your analysis guessing.
+
+---
+
+## Start Building Better Functions
+
+If you're ready to apply this properly, a few resources:
+
+- **[Function Statement Generator](/ai-tools/function-generator)** — Get AI-drafted functions to review and refine
+- **[RCM FMEA Template Pack](/products/rcm-fmea-template-pack)** — Worksheets with built-in function prompts
+- **[RCM Fundamentals Course](/courses/rcm-fundamentals)** — Deep dive into all seven RCM questions, including function definition
+
+The function statement is where RCM succeeds or fails. Get it right, and the rest follows. Get it wrong, and you're building on sand.
+
+Take the time. Be specific. Your future FMEA self will thank you.
+
+---
+
+*"The purpose of a function statement isn't to describe equipment. It's to define what failure means."*
+\`
+  },
+  {
     slug: 'run-to-failure-right-strategy',
     title: 'The Case for Run-to-Failure: When Letting Equipment Fail Is the Right Strategy',
     excerpt: 'Run-to-failure isn\'t neglect—it\'s often the smartest maintenance strategy. Here\'s the RCM logic that proves it, specific examples where RTF wins, and why your "PM everything" approach might be costing you money.',
