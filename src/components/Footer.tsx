@@ -24,28 +24,23 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Products */}
+          {/* Training */}
           <div>
-            <h3 className="font-heading font-semibold text-lg mb-4">Products</h3>
+            <h3 className="font-heading font-semibold text-lg mb-4">Training</h3>
             <ul className="space-y-2 text-gray-300">
               <li>
-                <Link href="/products?category=templates" className="hover:text-industrial-amber transition-colors">
-                  Templates
+                <Link href="/training" className="hover:text-industrial-amber transition-colors">
+                  All Courses
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=courses" className="hover:text-industrial-amber transition-colors">
-                  Courses
+                <Link href="/training/rcm-fundamentals" className="hover:text-industrial-amber transition-colors">
+                  RCM Fundamentals
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=tools" className="hover:text-industrial-amber transition-colors">
-                  Tools
-                </Link>
-              </li>
-              <li>
-                <Link href="/products?category=bundles" className="hover:text-industrial-amber transition-colors">
-                  Bundles
+                <Link href="/training/rcm-practitioner" className="hover:text-industrial-amber transition-colors">
+                  RCM Practitioner
                 </Link>
               </li>
             </ul>

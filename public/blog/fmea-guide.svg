@@ -1,0 +1,57 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#0D6E6E"/>
+  
+  <!-- FMEA Table representation -->
+  <g transform="translate(100, 80)">
+    <!-- Header -->
+    <rect x="0" y="0" width="600" height="40" rx="5" fill="#E67E22"/>
+    <text x="50" y="26" fill="white" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Function</text>
+    <text x="150" y="26" fill="white" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Failure</text>
+    <text x="250" y="26" fill="white" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Mode</text>
+    <text x="340" y="26" fill="white" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Effect</text>
+    <text x="430" y="26" fill="white" font-family="Inter, sans-serif" font-size="12" font-weight="bold">Action</text>
+    <text x="530" y="26" fill="white" font-family="Inter, sans-serif" font-size="12" font-weight="bold">S O D RPN</text>
+    
+    <!-- Rows -->
+    <rect x="0" y="45" width="600" height="35" fill="white" fill-opacity="0.1"/>
+    <rect x="0" y="85" width="600" height="35" fill="white" fill-opacity="0.05"/>
+    <rect x="0" y="125" width="600" height="35" fill="white" fill-opacity="0.1"/>
+    <rect x="0" y="165" width="600" height="35" fill="white" fill-opacity="0.05"/>
+    
+    <!-- Grid lines -->
+    <line x1="100" y1="0" x2="100" y2="200" stroke="white" stroke-opacity="0.2"/>
+    <line x1="200" y1="0" x2="200" y2="200" stroke="white" stroke-opacity="0.2"/>
+    <line x1="300" y1="0" x2="300" y2="200" stroke="white" stroke-opacity="0.2"/>
+    <line x1="400" y1="0" x2="400" y2="200" stroke="white" stroke-opacity="0.2"/>
+    <line x1="500" y1="0" x2="500" y2="200" stroke="white" stroke-opacity="0.2"/>
+  </g>
+  
+  <!-- Steps indicator -->
+  <g transform="translate(100, 320)">
+    <circle cx="50" cy="0" r="20" fill="#E67E22"/>
+    <text x="50" y="6" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">1</text>
+    <line x1="70" y1="0" x2="130" y2="0" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
+    
+    <circle cx="150" cy="0" r="20" fill="#E67E22"/>
+    <text x="150" y="6" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">2</text>
+    <line x1="170" y1="0" x2="230" y2="0" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
+    
+    <circle cx="250" cy="0" r="20" fill="#E67E22"/>
+    <text x="250" y="6" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">3</text>
+    <line x1="270" y1="0" x2="330" y2="0" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
+    
+    <circle cx="350" cy="0" r="20" fill="#E67E22"/>
+    <text x="350" y="6" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">4</text>
+    <line x1="370" y1="0" x2="430" y2="0" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
+    
+    <circle cx="450" cy="0" r="20" fill="#E67E22"/>
+    <text x="450" y="6" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">5</text>
+    <line x1="470" y1="0" x2="530" y2="0" stroke="white" stroke-width="2" stroke-dasharray="5 5"/>
+    
+    <circle cx="550" cy="0" r="20" fill="white"/>
+    <text x="550" y="6" text-anchor="middle" fill="#0D6E6E" font-family="Inter, sans-serif" font-size="14" font-weight="bold">✓</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="380" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="18" font-weight="bold">FMEA Step-by-Step Guide</text>
+</svg>

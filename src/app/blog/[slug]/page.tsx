@@ -116,6 +116,9 @@ function renderMarkdown(content: string): string {
     // Blockquotes
     .replace(/^&gt; (.+)$/gm, '<blockquote class="border-l-4 border-deep-teal pl-4 my-6 text-charcoal italic">$1</blockquote>')
     
+    // Images with alt text and optional caption
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<figure class="my-8"><img src="$2" alt="$1" class="w-full rounded-xl shadow-lg" /><figcaption class="text-center text-sm text-mid-grey mt-3">$1</figcaption></figure>')
+    
     // Paragraphs
     .replace(/\n\n([^<\n][^\n]+)\n\n/g, '\n\n<p class="text-charcoal leading-relaxed mb-6">$1</p>\n\n')
     .replace(/\n\n([^<\n][^\n]+)$/g, '\n\n<p class="text-charcoal leading-relaxed mb-6">$1</p>');

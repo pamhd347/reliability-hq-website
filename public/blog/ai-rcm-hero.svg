@@ -1,0 +1,50 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0D6E6E"/>
+  
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- AI Brain Icon -->
+  <g transform="translate(100, 150)">
+    <circle cx="150" cy="150" r="120" stroke="#E67E22" stroke-width="4" fill="none" stroke-dasharray="10 5"/>
+    <circle cx="150" cy="150" r="80" fill="#2C3E50" fill-opacity="0.5"/>
+    <!-- Neural network nodes -->
+    <circle cx="100" cy="100" r="15" fill="#E67E22"/>
+    <circle cx="200" cy="100" r="15" fill="#E67E22"/>
+    <circle cx="150" cy="150" r="20" fill="#E67E22"/>
+    <circle cx="100" cy="200" r="15" fill="#E67E22"/>
+    <circle cx="200" cy="200" r="15" fill="#E67E22"/>
+    <!-- Connections -->
+    <line x1="100" y1="100" x2="150" y2="150" stroke="white" stroke-width="2" stroke-opacity="0.6"/>
+    <line x1="200" y1="100" x2="150" y2="150" stroke="white" stroke-width="2" stroke-opacity="0.6"/>
+    <line x1="100" y1="200" x2="150" y2="150" stroke="white" stroke-width="2" stroke-opacity="0.6"/>
+    <line x1="200" y1="200" x2="150" y2="150" stroke="white" stroke-width="2" stroke-opacity="0.6"/>
+  </g>
+  
+  <!-- Gear Icon (RCM) -->
+  <g transform="translate(800, 150)">
+    <circle cx="150" cy="150" r="100" fill="none" stroke="white" stroke-width="4"/>
+    <circle cx="150" cy="150" r="60" fill="#2C3E50" fill-opacity="0.5"/>
+    <circle cx="150" cy="150" r="30" fill="#E67E22"/>
+    <!-- Gear teeth -->
+    <rect x="140" y="40" width="20" height="30" fill="white"/>
+    <rect x="140" y="230" width="20" height="30" fill="white"/>
+    <rect x="40" y="140" width="30" height="20" fill="white"/>
+    <rect x="230" y="140" width="30" height="20" fill="white"/>
+  </g>
+  
+  <!-- Connection arrow -->
+  <g transform="translate(450, 250)">
+    <line x1="0" y1="50" x2="250" y2="50" stroke="#E67E22" stroke-width="4" stroke-dasharray="15 10"/>
+    <polygon points="250,50 230,35 230,65" fill="#E67E22"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="600" y="480" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="48" font-weight="bold">AI + RCM Analysis</text>
+  <text x="600" y="530" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="24" opacity="0.8">Accelerate Your Reliability Engineering</text>
+</svg>

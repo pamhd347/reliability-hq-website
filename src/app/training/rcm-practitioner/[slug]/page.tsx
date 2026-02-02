@@ -13,8 +13,9 @@ import { hasPractitionerSlides, getPractitionerSlides } from '@/data/rcm-practit
 import { usePractitionerProgress } from '@/hooks/usePractitionerProgress';
 import PractitionerQuiz from '@/components/PractitionerQuiz';
 import SlideViewer from '@/components/SlideViewer';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function PractitionerLessonPage() {
+function PractitionerLessonContent() {
   const params = useParams();
   const slug = params?.slug as string;
   const lesson = getPractitionerLesson(slug);
@@ -608,5 +609,13 @@ export default function PractitionerLessonPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PractitionerLessonPage() {
+  return (
+    <ProtectedRoute>
+      <PractitionerLessonContent />
+    </ProtectedRoute>
   );
 }

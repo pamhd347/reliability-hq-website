@@ -8,8 +8,9 @@ import { hasSlides, getSlides } from '@/data/rcm-fundamentals-slides';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import Quiz from '@/components/Quiz';
 import SlideViewer from '@/components/SlideViewer';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
-export default function LessonPage() {
+function LessonContent() {
   const params = useParams();
   const slug = params?.slug as string;
   const lesson = getLesson(slug);
@@ -439,5 +440,13 @@ export default function LessonPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LessonPage() {
+  return (
+    <ProtectedRoute>
+      <LessonContent />
+    </ProtectedRoute>
   );
 }

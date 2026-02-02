@@ -1,0 +1,46 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#F8F9FA"/>
+  
+  <!-- Step boxes -->
+  <g transform="translate(50, 150)">
+    <!-- Step 1 -->
+    <rect x="0" y="0" width="120" height="100" rx="10" fill="#0D6E6E"/>
+    <text x="60" y="40" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">1. Input</text>
+    <text x="60" y="60" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Equipment</text>
+    <text x="60" y="75" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Details</text>
+    
+    <!-- Arrow 1 -->
+    <path d="M 130 50 L 165 50" stroke="#E67E22" stroke-width="3" marker-end="url(#arrow)"/>
+    
+    <!-- Step 2 -->
+    <rect x="175" y="0" width="120" height="100" rx="10" fill="#E67E22"/>
+    <text x="235" y="40" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">2. AI</text>
+    <text x="235" y="60" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Generates</text>
+    <text x="235" y="75" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Draft</text>
+    
+    <!-- Arrow 2 -->
+    <path d="M 305 50 L 340 50" stroke="#E67E22" stroke-width="3"/>
+    
+    <!-- Step 3 -->
+    <rect x="350" y="0" width="120" height="100" rx="10" fill="#2C3E50"/>
+    <text x="410" y="40" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">3. Review</text>
+    <text x="410" y="60" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Engineer</text>
+    <text x="410" y="75" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Validates</text>
+    
+    <!-- Arrow 3 -->
+    <path d="M 480 50 L 515 50" stroke="#E67E22" stroke-width="3"/>
+    
+    <!-- Step 4 -->
+    <rect x="525" y="0" width="120" height="100" rx="10" fill="#0D6E6E"/>
+    <text x="585" y="40" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="14" font-weight="bold">4. Output</text>
+    <text x="585" y="60" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Complete</text>
+    <text x="585" y="75" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="12">Analysis</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="60" text-anchor="middle" fill="#2C3E50" font-family="Inter, sans-serif" font-size="24" font-weight="bold">AI-Assisted RCM Workflow</text>
+  <text x="400" y="90" text-anchor="middle" fill="#6c757d" font-family="Inter, sans-serif" font-size="14">Human expertise + AI efficiency = Better results, faster</text>
+  
+  <!-- Bottom note -->
+  <text x="400" y="350" text-anchor="middle" fill="#6c757d" font-family="Inter, sans-serif" font-size="12">AI handles the grunt work. Engineers make the decisions.</text>
+</svg>

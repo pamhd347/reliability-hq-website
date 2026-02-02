@@ -1,0 +1,30 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#0D6E6E"/>
+  
+  <!-- Large 7 -->
+  <text x="120" y="280" fill="white" fill-opacity="0.1" font-family="Inter, sans-serif" font-size="300" font-weight="bold">7</text>
+  
+  <!-- Question marks floating -->
+  <text x="200" y="80" fill="#E67E22" font-family="Inter, sans-serif" font-size="40" opacity="0.8">?</text>
+  <text x="350" y="120" fill="#E67E22" font-family="Inter, sans-serif" font-size="30" opacity="0.6">?</text>
+  <text x="500" y="70" fill="#E67E22" font-family="Inter, sans-serif" font-size="50" opacity="0.9">?</text>
+  <text x="650" y="100" fill="#E67E22" font-family="Inter, sans-serif" font-size="35" opacity="0.7">?</text>
+  <text x="720" y="180" fill="#E67E22" font-family="Inter, sans-serif" font-size="45" opacity="0.8">?</text>
+  <text x="600" y="250" fill="#E67E22" font-family="Inter, sans-serif" font-size="38" opacity="0.6">?</text>
+  <text x="680" y="320" fill="#E67E22" font-family="Inter, sans-serif" font-size="42" opacity="0.7">?</text>
+  
+  <!-- List preview -->
+  <g transform="translate(300, 140)">
+    <rect x="0" y="0" width="400" height="200" rx="10" fill="white" fill-opacity="0.1"/>
+    <text x="20" y="35" fill="white" font-family="Inter, sans-serif" font-size="14">1. What are the functions?</text>
+    <text x="20" y="60" fill="white" font-family="Inter, sans-serif" font-size="14">2. How can it fail?</text>
+    <text x="20" y="85" fill="white" font-family="Inter, sans-serif" font-size="14">3. What causes failure?</text>
+    <text x="20" y="110" fill="white" font-family="Inter, sans-serif" font-size="14">4. What happens when it fails?</text>
+    <text x="20" y="135" fill="white" font-family="Inter, sans-serif" font-size="14">5. Does it matter?</text>
+    <text x="20" y="160" fill="white" font-family="Inter, sans-serif" font-size="14">6. Can we prevent it?</text>
+    <text x="20" y="185" fill="white" font-family="Inter, sans-serif" font-size="14">7. What if we can't?</text>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="380" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="18" font-weight="bold">The 7 RCM Questions Explained</text>
+</svg>

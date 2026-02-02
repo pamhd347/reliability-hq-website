@@ -65,21 +65,31 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  // Process inline markdown
-  const processMarkdown = (text: string): string => {
+  // Process inline markdown - isDark controls text colors for dark backgrounds
+  const processMarkdown = (text: string, isDark: boolean = false): string => {
+    const strongClass = isDark ? 'font-semibold text-white' : 'font-semibold text-slate-navy';
+    const codeClass = isDark 
+      ? 'bg-white/20 px-1.5 py-0.5 rounded text-sm font-mono text-white' 
+      : 'bg-off-white px-1.5 py-0.5 rounded text-sm font-mono text-slate-navy';
+    const linkClass = isDark ? 'text-white underline hover:text-white/80' : 'text-deep-teal hover:underline';
+    
     return text
-      .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-slate-navy">$1</strong>')
+      .replace(/\*\*(.+?)\*\*/g, `<strong class="${strongClass}">$1</strong>`)
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-deep-teal hover:underline">$1</a>')
-      .replace(/`(.+?)`/g, '<code class="bg-off-white px-1.5 py-0.5 rounded text-sm font-mono text-slate-navy">$1</code>');
+      .replace(/\[(.+?)\]\((.+?)\)/g, `<a href="$2" class="${linkClass}">$1</a>`)
+      .replace(/`(.+?)`/g, `<code class="${codeClass}">$1</code>`);
   };
 
-  // Render slide content
-  const renderContent = (content: string) => {
+  // Render slide content - isDark controls text colors for dark backgrounds
+  const renderContent = (content: string, isDark: boolean = false) => {
     const lines = content.trim().split('\n');
     const elements: React.ReactElement[] = [];
     let currentList: string[] = [];
     let isNumberedList = false;
+    
+    const textClass = isDark ? 'text-white/90' : 'text-charcoal';
+    const numberBgClass = isDark ? 'bg-white/20 text-white' : 'bg-deep-teal text-white';
+    const checkIconClass = isDark ? 'text-white/70' : 'text-deep-teal';
 
     const flushList = () => {
       if (currentList.length > 0) {
@@ -88,12 +98,12 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
             <ol key={`list-${elements.length}`} className="space-y-3 my-4">
               {currentList.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-7 h-7 bg-deep-teal text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                  <span className={`flex-shrink-0 w-7 h-7 ${numberBgClass} rounded-full flex items-center justify-center text-sm font-semibold`}>
                     {i + 1}
                   </span>
                   <span 
-                    className="text-charcoal pt-0.5"
-                    dangerouslySetInnerHTML={{ __html: processMarkdown(item) }}
+                    className={`${textClass} pt-0.5`}
+                    dangerouslySetInnerHTML={{ __html: processMarkdown(item, isDark) }}
                   />
                 </li>
               ))}
@@ -104,12 +114,12 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
             <ul key={`list-${elements.length}`} className="space-y-3 my-4">
               {currentList.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-deep-teal flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <svg className={`w-5 h-5 ${checkIconClass} flex-shrink-0 mt-0.5`} fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span 
-                    className="text-charcoal"
-                    dangerouslySetInnerHTML={{ __html: processMarkdown(item) }}
+                    className={textClass}
+                    dangerouslySetInnerHTML={{ __html: processMarkdown(item, isDark) }}
                   />
                 </li>
               ))}
@@ -137,8 +147,8 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
         elements.push(
           <p 
             key={`p-${elements.length}`} 
-            className="text-charcoal text-lg leading-relaxed my-4"
-            dangerouslySetInnerHTML={{ __html: processMarkdown(line) }}
+            className={`${textClass} text-lg leading-relaxed my-4`}
+            dangerouslySetInnerHTML={{ __html: processMarkdown(line, isDark) }}
           />
         );
       }
@@ -249,8 +259,8 @@ export default function SlideViewer({ slides, lessonTitle, onComplete }: SlideVi
         )}
 
         {/* Slide content - scrollable if needed */}
-        <div className={`flex-grow overflow-y-auto ${slide.type === 'intro' ? '[&_p]:text-white/90 [&_strong]:text-white' : ''}`}>
-          {renderContent(slide.content)}
+        <div className="flex-grow overflow-y-auto">
+          {renderContent(slide.content, slide.type === 'intro')}
         </div>
       </div>
 

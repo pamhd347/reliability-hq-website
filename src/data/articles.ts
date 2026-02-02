@@ -3,13 +3,14 @@ export interface Article {
   title: string;
   excerpt: string;
   content: string;
-  category: 'rcm-basics' | 'implementation' | 'case-studies' | 'industry-news';
+  category: 'rcm-basics' | 'implementation' | 'case-studies' | 'industry-news' | 'ai-tools';
   author: string;
   publishDate: string;
   readTime: number; // minutes
   featured: boolean;
   metaDescription: string;
   relatedSlugs: string[];
+  featuredImage?: string;
 }
 
 export const categoryLabels: Record<Article['category'], string> = {
@@ -17,6 +18,7 @@ export const categoryLabels: Record<Article['category'], string> = {
   'implementation': 'Implementation',
   'case-studies': 'Case Studies',
   'industry-news': 'Industry News',
+  'ai-tools': 'AI & Tools',
 };
 
 export const articles: Article[] = [
@@ -29,6 +31,7 @@ export const articles: Article[] = [
     publishDate: '2026-01-15',
     readTime: 12,
     featured: true,
+    featuredImage: '/blog/what-is-rcm.svg',
     metaDescription: 'Learn what RCM (Reliability Centred Maintenance) is, its history from aviation to industry, the 7 RCM questions, SAE JA1011 compliance, and how to implement it effectively.',
     relatedSlugs: ['7-rcm-questions-explained', 'rcm-vs-pm-optimization', 'fmea-step-by-step-guide'],
     content: `
@@ -235,6 +238,7 @@ RCM isn't a quick fix—it requires investment in training and time. But for cri
     publishDate: '2026-01-20',
     readTime: 10,
     featured: false,
+    featuredImage: '/blog/rcm-vs-pm.svg',
     metaDescription: 'Compare RCM and PM Optimisation methodologies. Learn the key differences, advantages, disadvantages, and how to choose the right approach for your maintenance strategy.',
     relatedSlugs: ['what-is-rcm', 'rcm-implementation-mistakes', '7-rcm-questions-explained'],
     content: `
@@ -473,6 +477,7 @@ If you're unsure, start with criticality analysis to identify your most importan
     publishDate: '2026-01-25',
     readTime: 15,
     featured: true,
+    featuredImage: '/blog/7-questions.svg',
     metaDescription: 'Master the 7 RCM questions with practical examples from industrial settings. Learn how to apply each question to pumps, motors, valves, and other equipment.',
     relatedSlugs: ['what-is-rcm', 'fmea-step-by-step-guide', 'rcm-implementation-mistakes'],
     content: `
@@ -858,6 +863,7 @@ The seven questions form a rigorous logic that ensures maintenance is justified,
     publishDate: '2026-01-28',
     readTime: 11,
     featured: false,
+    featuredImage: '/blog/rcm-mistakes.svg',
     metaDescription: 'Avoid the common RCM implementation mistakes that derail maintenance improvement programmes. Learn from real-world failures and practical solutions.',
     relatedSlugs: ['what-is-rcm', '7-rcm-questions-explained', 'rcm-vs-pm-optimization'],
     content: `
@@ -1141,6 +1147,7 @@ Start small, learn as you go, document everything, and implement what you analys
     publishDate: '2026-02-01',
     readTime: 14,
     featured: true,
+    featuredImage: '/blog/fmea-guide.svg',
     metaDescription: 'Learn how to create effective FMEA documentation with this step-by-step guide. Includes practical examples, templates, and tips for industrial equipment analysis.',
     relatedSlugs: ['what-is-rcm', '7-rcm-questions-explained', 'rcm-implementation-mistakes'],
     content: `
@@ -1535,6 +1542,768 @@ Our [RCM FMEA Template Pack](/products/rcm-fmea-template-pack) includes:
 FMEA is a skill that improves with practice. Your first analysis will be slower and rougher than your tenth. The key is to start, learn, and continuously improve. Every completed analysis makes your maintenance programme stronger and builds your team's capability.
 
 Good luck—and thorough analysis!
+`
+  },
+  {
+    slug: 'how-to-use-ai-for-rcm-analysis',
+    title: 'How to Use AI for RCM Analysis: A Practical Guide',
+    excerpt: 'Learn how to leverage AI tools to accelerate your RCM analysis without compromising quality. Practical tips, workflows, and examples.',
+    category: 'ai-tools',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-02',
+    readTime: 10,
+    featured: true,
+    featuredImage: '/blog/ai-rcm-hero.svg',
+    metaDescription: 'A practical guide to using AI for RCM analysis. Learn workflows, best practices, and how AI tools can help reliability engineers work faster while maintaining quality.',
+    relatedSlugs: ['what-is-rcm', 'fmea-step-by-step-guide'],
+    content: `
+## Introduction
+
+Artificial Intelligence is transforming how reliability engineers approach RCM analysis. But there's a right way and a wrong way to use these tools. Used correctly, AI can dramatically accelerate your work while improving completeness. Used poorly, it can introduce errors and undermine the integrity of your analysis.
+
+This guide shows you how to use AI effectively in your RCM work—based on real experience and practical application.
+
+![AI-Assisted RCM Workflow](/blog/ai-workflow.svg)
+
+## What AI Can (and Can't) Do for RCM
+
+### What AI Does Well
+
+- **Generating first drafts:** Function statements, failure mode lists, and effect descriptions
+- **Pattern recognition:** Suggesting failure modes you might have missed based on equipment type
+- **Consistency:** Applying standard formats and terminology across your analysis
+- **Speed:** Producing initial content in seconds rather than hours
+- **Completeness prompts:** Reminding you to consider aspects you might overlook
+
+### What AI Can't Do
+
+- **Make engineering judgments:** Only you know your operating context
+- **Validate technical accuracy:** AI can hallucinate plausible-sounding but incorrect information
+- **Replace experience:** Understanding why failures matter requires domain expertise
+- **Know your specific equipment:** AI works from general patterns, not your exact configuration
+
+## The AI-Assisted RCM Workflow
+
+The key to success is treating AI as a drafting assistant, not an analyst. Here's the workflow that works:
+
+### Step 1: Provide Good Input
+
+AI outputs are only as good as your inputs. Before using any AI tool, gather:
+
+- **Equipment name and type** (be specific: "Centrifugal cooling water pump" not just "pump")
+- **Operating context** (duty, environment, criticality)
+- **Performance requirements** (flow rates, pressures, temperatures)
+- **Known history** (common problems, past failures)
+
+### Step 2: Generate the Draft
+
+Use AI tools to generate:
+
+1. **Function statements** with performance standards
+2. **Failure modes** for each function
+3. **Failure effects** (local, system, and end effects)
+4. **Detection methods** and P-F intervals
+
+### Step 3: Engineer Review (Critical!)
+
+This is where your expertise matters. For each AI-generated item:
+
+- **Is it technically correct?** Does this failure mode actually occur on this equipment type?
+- **Is it credible in this context?** Would this happen in your specific operating environment?
+- **Is it complete?** What has the AI missed that you know from experience?
+- **Is it relevant?** Some failure modes aren't worth analysing for your situation
+
+### Step 4: Refine and Complete
+
+Edit, add, remove, and refine until the analysis reflects reality. The AI draft should save you time, not replace your judgment.
+
+## Practical Examples
+
+### Example 1: Function Statement Generation
+
+**Poor prompt:**
+> "Write functions for a pump"
+
+**Better prompt:**
+> "Generate RCM function statements for a horizontal centrifugal cooling water pump. Primary function: transfer cooling water from the cooling tower basin to the heat exchangers. Flow rate: 500 m³/h. Discharge pressure: 4 bar. 24/7 operation."
+
+**AI Output (to be reviewed):**
+1. To transfer cooling water from the cooling tower basin to the heat exchangers at a flow rate of 500 m³/h minimum
+2. To maintain discharge pressure at 4 bar or greater
+3. To contain pumped fluid with no external leakage visible
+4. To operate continuously without unplanned stoppages
+
+**Your review:** Add performance standards specific to your site. Remove or modify functions that don't apply.
+
+### Example 2: Failure Mode Identification
+
+When using AI to suggest failure modes:
+
+1. **Start with equipment type** — AI has good general knowledge of common failure modes
+2. **Review for completeness** — Add site-specific failure modes from your maintenance history
+3. **Remove non-credible modes** — Exclude failures that can't occur in your operating context
+4. **Verify technical accuracy** — Don't trust AI claims about materials, temperatures, or physics
+
+## Best Practices
+
+### Do's
+
+- **Use AI for the "grunt work"** — generating lists, formatting, initial drafts
+- **Always review AI output** — treat everything as a first draft to be validated
+- **Maintain engineering judgment** — you make the decisions, AI provides options
+- **Keep records** — document which parts were AI-generated and how they were validated
+- **Iterate** — use AI outputs as starting points for discussion, not final answers
+
+### Don'ts
+
+- **Don't blindly accept AI output** — errors will creep in
+- **Don't skip the review step** — this is where quality comes from
+- **Don't use AI for safety-critical decisions without thorough validation**
+- **Don't assume AI understands your specific context** — it doesn't
+- **Don't let AI replace facilitated RCM sessions** — the discussion process has value
+
+## Tools Available
+
+At Reliability HQ, we've built free AI tools specifically for RCM work:
+
+- **[Function Statement Generator](/ai-tools/function-generator)** — Transform equipment descriptions into proper function statements
+- **[Failure Mode Suggester](/ai-tools/failure-modes)** — Get comprehensive failure mode lists by equipment type
+- **[Consequence Classifier](/ai-tools/consequence-classifier)** — Walk through RCM decision logic interactively
+- **[P-F Interval Estimator](/ai-tools/pf-interval)** — Determine monitoring intervals based on detection techniques
+- **[FMEA Row Helper](/ai-tools/fmea-helper)** — Generate causes, effects, and detection methods
+- **[RCM Analysis Wizard](/ai-tools/rcm-wizard)** — Complete end-to-end analysis workflow
+
+These tools are designed to assist engineers, not replace them. Every output needs your expert review.
+
+## Common Mistakes to Avoid
+
+### Mistake 1: Copy-Paste Without Review
+
+**Problem:** Taking AI output directly into your FMEA without checking.
+
+**Solution:** Treat every AI output as a draft. Read it, question it, verify it, then accept or modify it.
+
+### Mistake 2: Wrong Level of Detail
+
+**Problem:** AI might generate failure modes at the wrong level—too detailed or too vague.
+
+**Solution:** Specify the level you want. "Component-level failure modes" vs "system-level failure modes."
+
+### Mistake 3: Ignoring Operating Context
+
+**Problem:** AI generates failure modes based on generic equipment, not your specific situation.
+
+**Solution:** Always filter AI suggestions through your operating context. A pump in a clean-room operates very differently from one in a mining application.
+
+### Mistake 4: Over-Reliance on AI
+
+**Problem:** Using AI for everything and losing the value of human discussion and expertise.
+
+**Solution:** Use AI to prepare for facilitated sessions, not to replace them. The discussion process often reveals insights that neither AI nor individual analysis would find.
+
+## Measuring Success
+
+How do you know if AI is helping your RCM work?
+
+**Time metrics:**
+- Time to produce initial function statements
+- Time to generate failure mode lists
+- Total time per equipment analysis
+
+**Quality metrics:**
+- Number of failure modes identified (completeness)
+- Percentage of AI suggestions accepted vs rejected (relevance)
+- Feedback from maintenance teams (practicality)
+
+If AI is saving time without reducing quality, you're doing it right.
+
+## Conclusion
+
+AI is a powerful tool for RCM analysis—when used correctly. The key principles:
+
+1. **AI generates, engineers validate**
+2. **Good inputs lead to good outputs**
+3. **Context matters more than content**
+4. **Review everything before acceptance**
+5. **Use AI to augment expertise, not replace it**
+
+Start with our [free AI tools](/ai-tools), apply these principles, and see how much time you can save while maintaining or improving the quality of your reliability analysis.
+
+---
+
+*Ready to try AI-assisted RCM? Start with our [RCM Analysis Wizard](/ai-tools/rcm-wizard)—it's free and walks you through the complete process.*
+`
+  },
+  {
+    slug: 'ai-assisted-fmea-guide',
+    title: 'AI-Assisted FMEA: A Step-by-Step Guide',
+    excerpt: 'Learn how to use AI to accelerate your FMEA process while maintaining rigour. Complete workflow from equipment selection to task recommendations.',
+    category: 'ai-tools',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-02',
+    readTime: 12,
+    featured: false,
+    featuredImage: '/blog/ai-fmea-process.svg',
+    metaDescription: 'Step-by-step guide to AI-assisted FMEA analysis. Learn how to use AI tools to generate failure modes, effects, and maintenance tasks while maintaining engineering rigour.',
+    relatedSlugs: ['how-to-use-ai-for-rcm-analysis', 'fmea-step-by-step-guide'],
+    content: `
+## Introduction
+
+Failure Mode and Effects Analysis (FMEA) is one of the most time-consuming parts of RCM. A single piece of equipment can have dozens of failure modes, each requiring causes, effects, and task recommendations. This is exactly where AI assistance shines.
+
+This guide walks you through a complete AI-assisted FMEA workflow—from equipment definition to final task recommendations.
+
+![AI-Assisted FMEA Process](/blog/ai-fmea-process.svg)
+
+## The Traditional FMEA Challenge
+
+A typical FMEA row requires:
+
+- **Function** being analysed
+- **Functional failure** (loss of function)
+- **Failure mode** (how it fails)
+- **Failure cause** (why it fails)
+- **Local effect** (immediate consequence)
+- **System effect** (broader impact)
+- **End effect** (ultimate consequence)
+- **Detection method** (how we'd find it)
+- **Recommended task** (what to do about it)
+
+Completing this for 20-50 failure modes per equipment item takes hours. AI can help with most of these fields.
+
+## Step 1: Define the Equipment Clearly
+
+Before involving AI, document:
+
+**Equipment identification:**
+- Full name and tag number
+- Equipment type (be specific)
+- Manufacturer and model if relevant
+
+**Operating context:**
+- What does it do in your process?
+- How critical is it? (redundancy, consequences)
+- Operating environment (temperature, humidity, contaminants)
+- Duty cycle (continuous, intermittent, standby)
+
+**Performance requirements:**
+- Key parameters (flow, pressure, temperature, speed)
+- Acceptable tolerances
+- Required availability
+
+**The better your input, the better AI output you'll get.**
+
+## Step 2: Generate Functions
+
+Use our [Function Statement Generator](/ai-tools/function-generator) or craft prompts manually.
+
+### Good function statement structure:
+
+**To [verb] [noun] [performance standard]**
+
+Examples:
+- To transfer cooling water at 500 m³/h minimum
+- To maintain discharge pressure at 4 bar or greater
+- To contain pumped fluid with no visible external leakage
+
+### AI prompt example:
+
+> Generate RCM function statements for a centrifugal cooling water pump (P-101A). Primary purpose: transfer cooling water from basin to heat exchangers. Required flow: 500 m³/h. Required pressure: 4 bar. Operates 24/7. Include primary and secondary functions.
+
+### Review checklist:
+- [ ] All primary functions captured?
+- [ ] Secondary functions included (safety, containment, environmental)?
+- [ ] Performance standards are measurable?
+- [ ] Standards match actual requirements, not nameplate?
+
+## Step 3: Identify Failure Modes
+
+This is where AI really helps. Use our [Failure Mode Suggester](/ai-tools/failure-modes) or similar tools.
+
+### For each function, identify:
+- **Functional failures** (ways the function can be lost or degraded)
+- **Failure modes** (specific mechanisms causing each functional failure)
+
+### AI assistance approach:
+
+1. **Start broad:** Get AI to suggest all possible failure modes for the equipment type
+2. **Filter by context:** Remove modes that aren't credible in your specific situation
+3. **Add from experience:** Include failure modes you've seen that AI missed
+4. **Verify technical accuracy:** Don't trust AI claims without validation
+
+### Common filtering questions:
+- Has this failure mode occurred on similar equipment in our facility?
+- Is this failure mode possible given our operating conditions?
+- Is this failure mode significant enough to analyse?
+
+## Step 4: Document Effects
+
+For each failure mode, AI can help draft:
+
+### Local Effect
+The immediate, observable consequence at the equipment
+
+**AI prompt:** "What are the immediate local effects when [failure mode] occurs on [equipment type]?"
+
+### System Effect
+The broader impact on the system or process
+
+**AI prompt:** "What system-level effects result from [failure mode] on [equipment] in a [process type] system?"
+
+### End Effect
+The ultimate consequence (safety, environmental, operational, cost)
+
+**AI prompt:** "What are the end effects and consequences of [failure mode] on [equipment] if left unaddressed?"
+
+### Review tips:
+- Ensure effects are specific to your context
+- Verify safety and environmental consequences are accurate
+- Check that end effects align with your consequence classification
+
+## Step 5: Classify Consequences
+
+Use our [Consequence Classifier](/ai-tools/consequence-classifier) to walk through the RCM decision logic:
+
+1. **Is the failure evident?** (Hidden vs Evident)
+2. **Does it affect safety?**
+3. **Does it affect environment?**
+4. **Does it affect operations?**
+
+The consequence category determines which maintenance strategies are acceptable.
+
+## Step 6: Determine Detection and Tasks
+
+### Detection Methods
+AI can suggest monitoring techniques based on failure mode type:
+
+- Vibration analysis for bearing failures
+- Temperature monitoring for overheating
+- Oil analysis for wear
+- Visual inspection for leaks
+- Performance monitoring for degradation
+
+Use our [P-F Interval Estimator](/ai-tools/pf-interval) to determine appropriate intervals.
+
+### Task Selection
+Based on consequence category:
+
+**Safety/Environmental consequences:**
+- Must find an effective proactive task
+- If none exists, redesign is mandatory
+
+**Operational consequences:**
+- Proactive task must be cost-justified
+- Run-to-failure acceptable if cheaper
+
+**Non-operational consequences:**
+- Proactive task only if cheaper than failure
+- Run-to-failure often optimal
+
+## Complete Workflow Example
+
+**Equipment:** Cooling Water Pump P-101A
+
+**Step 1 - Context:**
+- Centrifugal pump, 500 m³/h, 4 bar
+- Supplies cooling water to critical heat exchangers
+- No installed spare, 2-hour impact on production if failed
+
+**Step 2 - Functions (AI-assisted):**
+1. Transfer cooling water at 500 m³/h minimum
+2. Maintain discharge pressure at 4 bar
+3. Contain pumped fluid with no external leakage
+4. Start on demand within 30 seconds
+
+**Step 3 - Failure Modes (AI-suggested, engineer-filtered):**
+- Bearing: Worn due to fatigue
+- Bearing: Failed due to lubrication loss
+- Seal: Leaking due to wear
+- Impeller: Eroded due to cavitation
+
+**Step 4 - Effects (AI-drafted, engineer-reviewed):**
+
+| Mode | Local | System | End |
+|------|-------|--------|-----|
+| Bearing worn | Vibration, noise | Pump efficiency reduced | Production impact, repair cost |
+| Seal leaking | External drip | Water loss, slip hazard | Minor cleanup, seal replacement |
+
+**Step 5 - Consequences:**
+- Bearing failure: Operational (affects production)
+- Seal leak: Non-operational (repair cost only)
+
+**Step 6 - Tasks:**
+- Bearing: Vibration monitoring monthly (P-F = 2-8 weeks)
+- Seal: Visual inspection weekly
+
+## Quality Assurance
+
+After AI assistance, verify:
+
+- [ ] All failure modes are technically accurate
+- [ ] Effects are specific to your context
+- [ ] Consequence classifications are correct
+- [ ] Task intervals match P-F intervals (task ≤ P-F/2)
+- [ ] Nothing critical was missed
+
+## Time Savings
+
+| Activity | Traditional | AI-Assisted |
+|----------|-------------|-------------|
+| Function statements | 15-30 min | 5-10 min |
+| Failure mode identification | 30-60 min | 10-15 min |
+| Effects documentation | 20-40 min | 10-15 min |
+| **Total per equipment** | **1-2 hours** | **25-40 min** |
+
+**That's 50-70% time savings** while maintaining or improving quality.
+
+## Tools Summary
+
+Use these free tools for your AI-assisted FMEA:
+
+1. **[Function Statement Generator](/ai-tools/function-generator)** — Step 2
+2. **[Failure Mode Suggester](/ai-tools/failure-modes)** — Step 3
+3. **[FMEA Row Helper](/ai-tools/fmea-helper)** — Steps 4-5
+4. **[Consequence Classifier](/ai-tools/consequence-classifier)** — Step 5
+5. **[P-F Interval Estimator](/ai-tools/pf-interval)** — Step 6
+6. **[RCM Analysis Wizard](/ai-tools/rcm-wizard)** — Complete workflow
+
+## Conclusion
+
+AI-assisted FMEA isn't about replacing engineering judgment—it's about eliminating the tedious drafting work so you can focus on what matters: making good decisions about your equipment.
+
+The key principles:
+- **AI drafts, you decide**
+- **Context is everything**
+- **Always validate AI output**
+- **Use the time savings for better analysis, not just faster analysis**
+
+Start with a single equipment item, follow this workflow, and see how much time you save.
+
+---
+
+*Try the complete workflow with our [RCM Analysis Wizard](/ai-tools/rcm-wizard)—it guides you through every step.*
+`
+  },
+  {
+    slug: 'prompt-templates-reliability-engineers',
+    title: 'Prompt Templates for Reliability Engineers',
+    excerpt: 'Copy-paste prompts that actually work for RCM, FMEA, and maintenance strategy tasks. Tested templates for ChatGPT, Claude, and other AI tools.',
+    category: 'ai-tools',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-02',
+    readTime: 8,
+    featured: false,
+    featuredImage: '/blog/prompt-templates.svg',
+    metaDescription: 'Ready-to-use AI prompt templates for reliability engineers. Copy-paste prompts for function statements, failure modes, FMEA, maintenance tasks, and more.',
+    relatedSlugs: ['how-to-use-ai-for-rcm-analysis', 'ai-assisted-fmea-guide'],
+    content: `
+## Introduction
+
+The difference between useful AI output and garbage often comes down to how you ask. These prompt templates have been tested and refined for reliability engineering tasks. Copy them, fill in the blanks, and get useful results.
+
+![Prompt Templates for Reliability Engineers](/blog/prompt-templates.svg)
+
+## How to Use These Templates
+
+1. **Copy the template**
+2. **Replace [BRACKETED TEXT]** with your specific information
+3. **Paste into ChatGPT, Claude, or your preferred AI tool**
+4. **Review and refine the output**
+
+The more specific your inputs, the better your outputs.
+
+---
+
+## Function Statement Prompts
+
+### Basic Function Statement Generator
+
+\`\`\`
+Generate RCM function statements for the following equipment:
+
+Equipment: [EQUIPMENT NAME AND TAG]
+Type: [EQUIPMENT TYPE - be specific]
+Primary purpose: [WHAT IT DOES IN YOUR PROCESS]
+Key parameters: [FLOW RATE, PRESSURE, TEMPERATURE, ETC.]
+Operating context: [24/7, INTERMITTENT, STANDBY, ETC.]
+
+Please provide:
+1. Primary function with measurable performance standard
+2. Secondary functions (safety, containment, control)
+3. All functions in the format: "To [verb] [noun] [performance standard]"
+\`\`\`
+
+### Function Statement Review
+
+\`\`\`
+Review these function statements for completeness and correctness:
+
+Equipment: [EQUIPMENT NAME]
+Context: [OPERATING CONTEXT]
+
+Current functions:
+[PASTE YOUR EXISTING FUNCTIONS]
+
+Please identify:
+1. Missing functions
+2. Functions without measurable standards
+3. Suggested improvements
+4. Any technical inaccuracies
+\`\`\`
+
+---
+
+## Failure Mode Prompts
+
+### Comprehensive Failure Mode List
+
+\`\`\`
+List all credible failure modes for:
+
+Equipment type: [SPECIFIC EQUIPMENT TYPE]
+Operating environment: [DESCRIBE CONDITIONS]
+Age/condition: [NEW, MATURE, AGING]
+Criticality: [HIGH, MEDIUM, LOW]
+
+For each failure mode, provide:
+- Failure mode description
+- Typical cause(s)
+- Observable symptoms
+- Typical P-F interval
+- Common detection methods
+
+Focus on failure modes that are credible in [INDUSTRY/APPLICATION].
+\`\`\`
+
+### Failure Mode Verification
+
+\`\`\`
+For a [EQUIPMENT TYPE] with the following failure mode:
+
+Failure mode: [DESCRIBE THE FAILURE MODE]
+Claimed cause: [THE CAUSE YOU'VE DOCUMENTED]
+
+Please verify:
+1. Is this failure mode technically accurate?
+2. Are the causes complete and correct?
+3. What other causes should be considered?
+4. Are there any technical errors in my description?
+\`\`\`
+
+---
+
+## Failure Effects Prompts
+
+### Complete Effects Chain
+
+\`\`\`
+For the following failure:
+
+Equipment: [EQUIPMENT NAME]
+Function: [THE FUNCTION BEING LOST]
+Failure mode: [HOW IT'S FAILING]
+Operating context: [WHERE AND HOW IT'S USED]
+
+Describe the effects at three levels:
+
+1. LOCAL EFFECT: The immediate, observable consequence at the equipment
+2. SYSTEM EFFECT: The impact on connected systems or processes
+3. END EFFECT: The ultimate consequence (safety, environmental, production, cost)
+
+Be specific to the context provided.
+\`\`\`
+
+### Safety Consequence Assessment
+
+\`\`\`
+Assess the safety implications of this failure:
+
+Equipment: [EQUIPMENT NAME]
+Failure mode: [FAILURE DESCRIPTION]
+Location: [WHERE IN THE FACILITY]
+People exposure: [WHO MIGHT BE NEARBY]
+Energy sources: [PRESSURE, TEMPERATURE, ELECTRICITY, ETC.]
+
+Questions to answer:
+1. Could this failure directly injure someone?
+2. Could it lead to a secondary event that causes injury?
+3. What is the worst credible safety consequence?
+4. What safeguards exist?
+\`\`\`
+
+---
+
+## Maintenance Task Prompts
+
+### Task Selection Helper
+
+\`\`\`
+Recommend maintenance tasks for:
+
+Failure mode: [DESCRIBE THE FAILURE MODE]
+Consequence category: [SAFETY/ENVIRONMENTAL/OPERATIONAL/NON-OPERATIONAL]
+P-F interval: [ESTIMATED TIME FROM DETECTABLE TO FUNCTIONAL FAILURE]
+Current detection capability: [WHAT MONITORING EXISTS]
+
+Consider:
+1. On-condition tasks (predictive maintenance)
+2. Scheduled restoration tasks
+3. Scheduled discard tasks
+4. Failure-finding tasks (if hidden failure)
+5. Run-to-failure (if appropriate)
+
+For each recommended task, explain why it's suitable.
+\`\`\`
+
+### Task Interval Calculation
+
+\`\`\`
+Help me determine the appropriate task interval:
+
+Failure mode: [DESCRIBE]
+Detection method: [HOW WE'LL FIND IT]
+Estimated P-F interval: [YOUR ESTIMATE]
+Evidence for P-F: [WHY YOU BELIEVE THIS]
+
+Please:
+1. Validate or challenge my P-F interval estimate
+2. Recommend appropriate task interval
+3. Explain the relationship between P-F and task interval
+4. Identify any factors that might affect the interval
+\`\`\`
+
+---
+
+## FMEA Row Prompts
+
+### Complete FMEA Row Generator
+
+\`\`\`
+Generate a complete FMEA row for:
+
+Equipment: [EQUIPMENT NAME]
+Function: [THE FUNCTION]
+Failure mode: [HOW IT FAILS]
+Operating context: [CONTEXT DETAILS]
+
+Please provide:
+| Field | Content |
+|-------|---------|
+| Functional failure | [How the function is lost] |
+| Failure mode | [Specific mechanism] |
+| Failure cause | [Root cause(s)] |
+| Local effect | [Immediate consequence] |
+| System effect | [Broader impact] |
+| End effect | [Ultimate consequence] |
+| Detection method | [How we'd find it] |
+| P-F interval | [Estimated time] |
+| Recommended task | [What to do] |
+| Task interval | [How often] |
+\`\`\`
+
+### FMEA Quality Check
+
+\`\`\`
+Review this FMEA row for completeness and accuracy:
+
+[PASTE YOUR FMEA ROW]
+
+Check for:
+1. Technical accuracy of failure mode and cause
+2. Completeness of effect chain (local → system → end)
+3. Appropriate detection method
+4. Reasonable P-F interval
+5. Task matches consequence category
+6. Task interval appropriate for P-F interval
+\`\`\`
+
+---
+
+## Operating Context Prompts
+
+### Operating Context Definition
+
+\`\`\`
+Help me define the operating context for:
+
+Equipment: [EQUIPMENT NAME]
+Location: [WHERE IN THE FACILITY]
+Process: [WHAT PROCESS IT SUPPORTS]
+
+Please provide a structured operating context covering:
+1. Operating environment (temperature, humidity, contaminants)
+2. Duty cycle (continuous, batch, standby)
+3. Criticality (redundancy, consequence of failure)
+4. Load profile (steady, variable, peaks)
+5. Maintenance access (easy, restricted, hazardous)
+6. Regulatory requirements
+7. Any other relevant factors
+\`\`\`
+
+---
+
+## General Best Practices
+
+### Making Prompts More Effective
+
+**Be specific:**
+- Bad: "failure modes for a pump"
+- Good: "failure modes for a horizontal centrifugal pump with mechanical seal, handling clean water at 80°C"
+
+**Provide context:**
+- Include industry (oil & gas, pharmaceutical, manufacturing)
+- Mention relevant standards (API, ISO, etc.)
+- Describe operating environment
+
+**Ask for structure:**
+- Request tables for comparative information
+- Ask for numbered lists for sequential steps
+- Specify the format you want
+
+**Request validation:**
+- Ask AI to identify uncertainties
+- Request sources or reasoning
+- Ask "What might I be missing?"
+
+### Red Flags in AI Output
+
+Watch out for:
+- Overly confident claims about specific numbers
+- Generic content that doesn't match your context
+- Technical claims that seem wrong
+- Missing obvious failure modes
+- Unrealistic P-F intervals
+
+**When in doubt, verify with:**
+- Equipment manuals
+- Maintenance history
+- Manufacturer data
+- Industry standards
+- Experienced colleagues
+
+---
+
+## Quick Reference Card
+
+| Task | Key Prompt Elements |
+|------|-------------------|
+| Functions | Equipment type, purpose, parameters, context |
+| Failure modes | Equipment type, environment, age, criticality |
+| Effects | Equipment, function, failure mode, context |
+| Tasks | Failure mode, consequence, P-F interval |
+| Intervals | Detection method, P-F evidence |
+
+---
+
+## Conclusion
+
+These templates are starting points. The best prompts are the ones you refine based on what works for your specific needs. Keep notes on what produces good results and what doesn't.
+
+Remember: AI is a drafting tool, not an expert. Always apply your engineering judgment to the output.
+
+---
+
+*Want to skip the prompts? Try our purpose-built [AI tools for reliability engineers](/ai-tools)—they're free and designed specifically for RCM work.*
 `
   }
 ];

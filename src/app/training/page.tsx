@@ -7,11 +7,12 @@ import { useState } from 'react';
 const courses = [
   {
     title: 'RCM Fundamentals',
-    subtitle: 'Free Mini-Course',
+    subtitle: 'Introduction Course',
     description: 'Master the core principles of Reliability Centred Maintenance in 5 practical lessons. Perfect for beginners or as a refresher.',
     lessons: 5,
     duration: '2-3 hours',
     price: 'Free',
+    originalPrice: null,
     href: '/training/rcm-fundamentals',
     badge: 'Start Learning',
     badgeColor: 'bg-green-500',
@@ -23,9 +24,10 @@ const courses = [
     description: 'Become a confident RCM practitioner with our comprehensive training program. Lead RCM analyses with confidence.',
     lessons: 12,
     duration: '8-10 hours',
-    price: '£399',
+    price: 'Free',
+    originalPrice: '£399',
     href: '/training/rcm-practitioner',
-    badge: 'Coming Soon',
+    badge: 'Free for Limited Time',
     badgeColor: 'bg-industrial-amber',
     features: ['12 in-depth modules', 'Real-world case studies', 'Final assessment', 'Lifetime access'],
   },
@@ -36,9 +38,10 @@ const courses = [
     lessons: 8,
     duration: '5-6 hours',
     price: '£199',
+    originalPrice: null,
     href: '/training/fmea-masterclass',
     badge: 'Coming Soon',
-    badgeColor: 'bg-industrial-amber',
+    badgeColor: 'bg-slate-navy',
     features: ['8 focused modules', 'FMEA templates included', 'Expert techniques', 'Practical exercises'],
   },
 ];
@@ -186,7 +189,12 @@ export default function TrainingPage() {
                     <span className={`${course.badgeColor} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
                       {course.badge}
                     </span>
-                    <span className="text-2xl font-heading font-bold text-deep-teal">{course.price}</span>
+                    <div className="text-right">
+                      {course.originalPrice && (
+                        <span className="text-sm text-mid-grey line-through mr-2">{course.originalPrice}</span>
+                      )}
+                      <span className="text-2xl font-heading font-bold text-deep-teal">{course.price}</span>
+                    </div>
                   </div>
                   <h3 className="font-heading text-xl font-bold text-slate-navy mb-1">{course.title}</h3>
                   <p className="text-sm text-deep-teal font-medium mb-3">{course.subtitle}</p>
@@ -218,16 +226,18 @@ export default function TrainingPage() {
                     ))}
                   </ul>
 
-                  <Link
-                    href={course.href}
-                    className={`block w-full text-center py-3 px-4 rounded-lg font-semibold transition-colors ${
-                      course.price === 'Free'
-                        ? 'bg-deep-teal text-white hover:bg-slate-navy'
-                        : 'bg-light-grey text-charcoal hover:bg-mid-grey hover:text-white'
-                    }`}
-                  >
-                    {course.price === 'Free' ? 'Start Free Course' : 'Learn More'}
-                  </Link>
+                  {course.badge === 'Coming Soon' ? (
+                    <span className="block w-full text-center py-3 px-4 rounded-lg font-semibold bg-light-grey text-mid-grey cursor-not-allowed">
+                      Coming Soon
+                    </span>
+                  ) : (
+                    <Link
+                      href={course.href}
+                      className="block w-full text-center py-3 px-4 rounded-lg font-semibold transition-colors bg-deep-teal text-white hover:bg-slate-navy"
+                    >
+                      Start Free Course
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
@@ -278,74 +288,52 @@ export default function TrainingPage() {
         </div>
       </section>
 
-      {/* Testimonials Placeholder */}
+      {/* Early Access / Feedback Request */}
       <section className="bg-off-white section-padding">
         <div className="container-max">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-slate-navy">
-              What Engineers Say
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="w-16 h-16 bg-industrial-amber/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-industrial-amber" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+              </svg>
+            </div>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-slate-navy mb-4">
+              Help Us Improve
             </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-light-grey">
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-industrial-amber" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            <p className="text-lg text-mid-grey mb-6">
+              We&apos;ve just launched and we&apos;re offering our courses free while we gather feedback from real reliability professionals.
+            </p>
+            <div className="bg-white rounded-xl p-6 border border-light-grey inline-block text-left">
+              <p className="text-charcoal mb-4">After completing a course, we&apos;d love to hear:</p>
+              <ul className="space-y-2 text-mid-grey">
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-deep-teal flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                   </svg>
-                ))}
-              </div>
-              <p className="text-mid-grey text-sm mb-4">
-                &quot;Finally, RCM training that doesn&apos;t put you to sleep. Practical examples, clear explanations, and the quizzes really helped cement the concepts.&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-deep-teal rounded-full flex items-center justify-center text-white font-semibold">M</div>
-                <div>
-                  <p className="font-semibold text-slate-navy text-sm">Mike T.</p>
-                  <p className="text-xs text-mid-grey">Maintenance Manager</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-light-grey">
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-industrial-amber" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  What was most useful?
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-deep-teal flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                   </svg>
-                ))}
-              </div>
-              <p className="text-mid-grey text-sm mb-4">
-                &quot;Used the fundamentals course to bring my team up to speed before starting an RCM project. Saved us weeks of training time.&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-industrial-amber rounded-full flex items-center justify-center text-white font-semibold">S</div>
-                <div>
-                  <p className="font-semibold text-slate-navy text-sm">Sarah K.</p>
-                  <p className="text-xs text-mid-grey">Reliability Engineer</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-light-grey">
-              <div className="flex items-center gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-industrial-amber" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  What would you add or change?
+                </li>
+                <li className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-deep-teal flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
                   </svg>
-                ))}
-              </div>
-              <p className="text-mid-grey text-sm mb-4">
-                &quot;The interactive decision diagram tool is brilliant. Finally understand when to use condition-based vs. scheduled replacement.&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-navy rounded-full flex items-center justify-center text-white font-semibold">J</div>
-                <div>
-                  <p className="font-semibold text-slate-navy text-sm">James R.</p>
-                  <p className="text-xs text-mid-grey">Asset Manager</p>
-                </div>
-              </div>
+                  Would you recommend it to colleagues?
+                </li>
+              </ul>
+              <a 
+                href="mailto:hello@reliabilityhq.com?subject=Course%20Feedback" 
+                className="inline-flex items-center gap-2 mt-6 text-deep-teal font-semibold hover:underline"
+              >
+                Share your feedback
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>

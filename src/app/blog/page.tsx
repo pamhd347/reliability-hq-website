@@ -2,22 +2,32 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { articles, categoryLabels, formatDate, type Article } from '@/data/articles';
 
-const categories = ['all', 'rcm-basics', 'implementation', 'case-studies', 'industry-news'] as const;
+const categories = ['all', 'rcm-basics', 'implementation', 'case-studies', 'industry-news', 'ai-tools'] as const;
 type CategoryFilter = typeof categories[number];
 
 function ArticleCard({ article }: { article: Article }) {
   return (
     <Link href={`/blog/${article.slug}`} className="group">
       <article className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden h-full flex flex-col">
-        {/* Image placeholder */}
-        <div className="h-48 bg-gradient-to-br from-deep-teal/10 to-slate-navy/10 flex items-center justify-center">
-          <div className="text-deep-teal/30">
-            <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
+        {/* Image */}
+        <div className="h-48 bg-gradient-to-br from-deep-teal/10 to-slate-navy/10 flex items-center justify-center relative overflow-hidden">
+          {article.featuredImage ? (
+            <Image
+              src={article.featuredImage}
+              alt={article.title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          ) : (
+            <div className="text-deep-teal/30">
+              <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+          )}
         </div>
         
         <div className="p-6 flex flex-col flex-grow">
@@ -52,13 +62,22 @@ function FeaturedArticle({ article }: { article: Article }) {
     <Link href={`/blog/${article.slug}`} className="group block">
       <article className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
         <div className="md:flex">
-          {/* Image placeholder */}
-          <div className="md:w-2/5 h-64 md:h-auto bg-gradient-to-br from-deep-teal/20 to-slate-navy/20 flex items-center justify-center">
-            <div className="text-deep-teal/40">
-              <svg className="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
+          {/* Image */}
+          <div className="md:w-2/5 h-64 md:h-auto min-h-[250px] bg-gradient-to-br from-deep-teal/20 to-slate-navy/20 flex items-center justify-center relative overflow-hidden">
+            {article.featuredImage ? (
+              <Image
+                src={article.featuredImage}
+                alt={article.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            ) : (
+              <div className="text-deep-teal/40">
+                <svg className="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            )}
           </div>
           
           <div className="md:w-3/5 p-6 md:p-8">
