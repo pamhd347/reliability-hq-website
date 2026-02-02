@@ -693,10 +693,604 @@ Master functions, and everything else in your RCM analysis flows from a solid fo
   }
 ];
 
+// Module 3: Functional Failure Analysis - Slide-based content
+export const practitionerModule3Slides: Slide[] = [
+  {
+    id: 1,
+    title: "From Functions to Failures",
+    type: 'intro',
+    content: `With functions precisely defined, we can now identify **functional failures**—the states where equipment no longer meets its required performance standards.
+
+This sounds straightforward, but it's where many analyses go wrong.
+
+Miss a functional failure and you'll miss all the failure modes that cause it. Include irrelevant failures and you'll waste analysis time.`
+  },
+  {
+    id: 2,
+    title: "What Is a Functional Failure?",
+    type: 'concept',
+    content: `A functional failure is a **state** where equipment cannot fulfil a function to the required performance standard.
+
+**Key insight:** Functional failure is about the state, not the cause. The cause is the failure mode (next module).
+
+For: *"Transfer cooling water at 480-550 m³/hr at 2.8-3.2 bar"*
+
+Functional failures include:
+- Unable to transfer any water (total failure)
+- Transfers less than 480 m³/hr (insufficient)
+- Transfers more than 550 m³/hr (excessive)
+- Pressure outside 2.8-3.2 bar range`
+  },
+  {
+    id: 3,
+    title: "Complete vs Partial Failure",
+    type: 'concept',
+    content: `**Complete failure:** Function entirely lost
+*"Unable to transfer any cooling water"*
+
+**Partial failure:** Function degraded but not completely lost
+*"Transfers less than 480 m³/hr (but some flow exists)"*
+
+**Both are valid functional failures.**
+
+Don't assume "failure" means complete loss. Partial failures often provide warning time and different maintenance opportunities.`
+  },
+  {
+    id: 4,
+    title: "State vs Rate Failures",
+    type: 'concept',
+    content: `**State failure:** Equipment is in a failed state
+*"Pump will not start"*
+
+**Rate failure:** Equipment performs below required rate
+*"Pump delivers only 350 m³/hr (below required 480 m³/hr)"*
+
+**Intermittent failure:** Failure comes and goes
+*"Pump occasionally trips on high vibration, then restarts normally"*
+
+Intermittent failures are often hardest to diagnose—but they still need analysis.`
+  },
+  {
+    id: 5,
+    title: "Functional Failure Notation",
+    type: 'concept',
+    content: `Systematic notation ensures completeness:
+
+**Letter/Number System:**
+- F1 = Function 1
+- FF1A = Functional Failure A of Function 1
+- FF1B = Functional Failure B of Function 1
+
+**Matrix Approach:**
+
+| Function | Functional Failure |
+|----------|-------------------|
+| F1: Transfer water at 480-550 m³/hr | FF1A: Unable to transfer any water |
+| | FF1B: Transfers less than 480 m³/hr |
+| | FF1C: Pressure below 2.8 bar |`
+  },
+  {
+    id: 6,
+    title: "Systematic Derivation",
+    type: 'keypoint',
+    content: `For each function, ask:
+
+1. **Can the function be completely lost?**
+   → Total/complete failures
+
+2. **Can the function be partially lost?**
+   → Degraded performance failures
+
+3. **Can the function be exceeded?**
+   → Over-performance failures
+
+4. **Can the function fail intermittently?**
+   → Often missed
+
+5. **Can failure create a hazard?**
+   → Safety-related failures`
+  },
+  {
+    id: 7,
+    title: "Over-Performance Failures",
+    type: 'keypoint',
+    content: `**"Delivers too much" can be as problematic as "delivers too little."**
+
+- Excessive pressure can damage downstream equipment
+- Excessive flow can flood systems
+- Excessive temperature can harm products
+
+If the performance standard specifies a maximum, exceeding it is a functional failure.
+
+Example: *"Discharge pressure exceeds 3.2 bar maximum"*`
+  },
+  {
+    id: 8,
+    title: "Worked Example: Gauge Function",
+    type: 'example',
+    content: `**Function:** To indicate discharge pressure (0-6 bar) via local gauge with accuracy ±0.1 bar
+
+**Functional Failures:**
+1. Does not indicate any pressure (gauge reads zero regardless of actual)
+2. Indicates high—reading overstates pressure
+3. Indicates low—reading understates pressure
+4. Indication unreadable (damaged dial, fogged glass)
+
+**Note:** We distinguish reading high vs. low because consequences and failure modes differ.`
+  },
+  {
+    id: 9,
+    title: "Protective Function Failures",
+    type: 'keypoint',
+    content: `Protective functions have TWO types of failure:
+
+**Function:** *"Stop pump automatically if pressure exceeds 5 bar"*
+
+**Failures:**
+1. **Fails to protect:** Doesn't stop pump when pressure exceeds 5 bar
+2. **Spurious trip:** Stops pump when pressure is below 5 bar
+
+Both matter:
+- Failure to protect → Safety/equipment consequence
+- Spurious trip → Operational consequence (unnecessary shutdown)
+
+Different failure modes cause each; different maintenance may apply.`
+  },
+  {
+    id: 10,
+    title: "When to Separate Failures",
+    type: 'concept',
+    content: `**Separate when:**
+- Consequences differ significantly
+- Failure modes differ
+- Different maintenance tasks would apply
+
+**Combine when:**
+- Difference is trivial
+- Same failure modes cause both
+- Same maintenance addresses both
+
+Example: "Delivers 475 m³/hr" vs "Delivers 470 m³/hr" vs "Delivers 460 m³/hr"—unless step changes in consequence, treat as one failure: *"Delivers less than minimum."*`
+  },
+  {
+    id: 11,
+    title: "Documentation Requirements",
+    type: 'concept',
+    content: `Good documentation includes:
+
+1. **Clear statement of failed state** — Not the cause, just the state
+
+2. **Reference to function** — Which function does this relate to?
+
+3. **How evident** — What would operators observe?
+
+4. **Relationship to other failures** — Does this affect other systems?
+
+| ID | Function | Functional Failure | How Evident |
+|----|----------|-------------------|-------------|
+| FF1A | F1: Transfer water | Unable to transfer any | No flow, pressure drop |
+| FF1B | F1: Transfer water | Less than 480 m³/hr | Reduced flow indication |`
+  },
+  {
+    id: 12,
+    title: "Pitfall: Confusing Mode & Failure",
+    type: 'concept',
+    content: `**Wrong:** "Bearing seizure"
+*(This is a failure MODE—the cause)*
+
+**Right:** "Unable to transfer any cooling water"
+*(This is the functional FAILURE—the state)*
+
+The distinction matters:
+- Functional failure = WHAT is the failed state?
+- Failure mode = WHY did it fail?
+
+Multiple failure modes can cause the same functional failure.`
+  },
+  {
+    id: 13,
+    title: "Pitfall: Missing Partial Failures",
+    type: 'concept',
+    content: `Many analyses only capture complete failures.
+
+But partial failures often:
+- Provide **warning time** before total failure
+- Enable **different maintenance** opportunities
+- Have **different consequences** than complete failures
+
+A pump delivering 400 m³/hr (vs required 480) may allow continued operation with degraded performance—unlike a pump delivering zero.`
+  },
+  {
+    id: 14,
+    title: "Pitfall: Missing Intermittent Failures",
+    type: 'concept',
+    content: `**"The equipment usually works"** isn't good enough.
+
+Intermittent failures:
+- Are real operational problems
+- Often indicate developing issues
+- Deserve analysis
+
+Example: Pump occasionally trips on vibration, then restarts normally.
+
+The failure mode causing this intermittent behavior needs identification and maintenance consideration.`
+  },
+  {
+    id: 15,
+    title: "Context Matters",
+    type: 'concept',
+    content: `Functional failures must be evaluated within **operating context**.
+
+**Function:** To start within 10 seconds of demand signal
+
+- **Normal operation:** Pump runs continuously—this function isn't relevant
+- **Standby mode:** This function matters critically
+
+The functional failure "fails to start within 10 seconds" only applies in standby mode.
+
+Your analysis should reflect which modes each failure applies to.`
+  },
+  {
+    id: 16,
+    title: "Expert Tip: Trace to Requirements",
+    type: 'keypoint',
+    content: `**Every functional failure should clearly relate to a documented function.**
+
+If you have orphan failures, either:
+- The function is missing (add it)
+- The failure is spurious (remove it)
+
+This traceability ensures your analysis is complete and well-organized.`
+  },
+  {
+    id: 17,
+    title: "Expert Tip: Test with Operators",
+    type: 'keypoint',
+    content: `Ask operators: *"In what conditions would you consider this equipment to have failed?"*
+
+Their answers often reveal:
+- Failures you missed
+- Partial failures that matter operationally
+- Intermittent issues that aren't documented
+
+Operators live with equipment daily—use their knowledge.`
+  },
+  {
+    id: 18,
+    title: "Expert Tip: Think Consequences",
+    type: 'keypoint',
+    content: `While formal consequence evaluation comes later, thinking about **"So what?"** helps identify whether a functional failure is worth detailed analysis.
+
+If you can't articulate any consequence:
+- Maybe it's not a real failure
+- Maybe the function isn't needed
+- Maybe the performance standard is wrong
+
+Use this test to focus effort on failures that matter.`
+  },
+  {
+    id: 19,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- Functional failure is the **state** of not meeting a function—distinct from failure modes (causes)
+- Include **complete, partial, over-performance, and intermittent** failures
+- Protective functions have **two failure types**: fails to protect and spurious activation
+- **Separate** failures when consequences or maintenance differ
+- **Document** linkage to functions and how failures are evident
+
+With functional failures identified, we're ready to ask: What **causes** each one? That's failure modes—next module.`
+  }
+];
+
+// Module 4: Expert Failure Mode Identification - Slide-based content
+export const practitionerModule4Slides: Slide[] = [
+  {
+    id: 1,
+    title: "The Heart of RCM Analysis",
+    type: 'intro',
+    content: `Failure mode identification is where RCM gets real.
+
+Up to now, we've described what equipment should do and what constitutes failure. Now we answer: **Why does it fail?**
+
+Get it right, and your maintenance strategy will be robust. Get it wrong—miss key failure modes or drown in irrelevant ones—and the analysis loses value.`
+  },
+  {
+    id: 2,
+    title: "What Is a Failure Mode?",
+    type: 'concept',
+    content: `A failure mode is a **single event or condition** that causes a functional failure.
+
+**Critical attributes:**
+- Single event (not multiple events combined)
+- Specific enough to identify a maintenance response
+- Describes what failed, not just that it failed
+
+**Good examples:**
+- "Bearing fails due to fatigue"
+- "Seal fails due to dry running"
+- "Impeller erodes due to cavitation"`
+  },
+  {
+    id: 3,
+    title: "Poor Failure Mode Statements",
+    type: 'example',
+    content: `These need improvement:
+
+- **"Pump fails"** — Too vague. Dozens of failure modes could cause this.
+
+- **"Multiple problems occur"** — Not a single event.
+
+- **"Bearing"** — Just a noun, not a failure mode.
+
+- **"Maintenance error"** — Too vague. What specific error?
+
+Each of these leaves you unable to identify appropriate maintenance.`
+  },
+  {
+    id: 4,
+    title: "Sources: Equipment History",
+    type: 'concept',
+    content: `**Your CMMS and maintenance records are gold**—they reflect your actual operating context.
+
+**Look for:**
+- Work orders describing corrective maintenance
+- Breakdown reports and root cause analyses
+- Repeated repairs on similar equipment
+- Near-misses and close calls
+
+**Limitation:** Only shows what HAS failed, not what COULD fail. New equipment has no history.`
+  },
+  {
+    id: 5,
+    title: "Sources: People Knowledge",
+    type: 'concept',
+    content: `**Tacit knowledge that isn't in any database.**
+
+The technician who's worked on that pump for 20 years knows things no manual contains.
+
+**Capture through:**
+- Structured interviews
+- Analysis team participation
+- Walkdowns and discussions at the equipment
+
+**Limitation:** Subject to bias, memory gaps, and "we've always done it this way" thinking.`
+  },
+  {
+    id: 6,
+    title: "Sources: Manufacturer & Databases",
+    type: 'concept',
+    content: `**Manufacturer documentation:**
+- Manuals, maintenance recommendations
+- Technical bulletins, service alerts
+- Known issues and failure mode listings
+
+**Generic databases:**
+- OREDA (Offshore/Onshore Reliability Data)
+- IEEE Gold Book (electrical)
+- Military handbooks
+
+**Limitation:** Generic data may not reflect YOUR specific conditions. Must be validated for your context.`
+  },
+  {
+    id: 7,
+    title: "The 'Reasonably Likely' Criteria",
+    type: 'keypoint',
+    content: `You cannot analyse every conceivable failure mode. Use "reasonably likely" to filter.
+
+**Include failure modes that:**
+- Have occurred before (here or similar equipment)
+- Are known to occur in your industry
+- Could reasonably occur given your context
+- Would have significant consequences (even if low probability)
+
+**When in doubt, include it.** Better to analyse and decide no task is needed than to miss something significant.`
+  },
+  {
+    id: 8,
+    title: "What to Exclude",
+    type: 'concept',
+    content: `**Exclude failure modes that:**
+
+- Are extremely improbable in your context (tornado damage where there are no tornadoes)
+
+- Require multiple simultaneous independent failures
+
+- Are already prevented by design features (corrosion of stainless steel in fresh water)
+
+- Have never occurred and have no credible mechanism
+
+This keeps analysis focused and practical.`
+  },
+  {
+    id: 9,
+    title: "Level of Detail: Too High",
+    type: 'example',
+    content: `**Too high-level:**
+
+*"Motor fails"*
+
+This could mean dozens of things:
+- Bearing failure?
+- Winding insulation breakdown?
+- Shaft fracture?
+- Cooling system failure?
+
+Each has different failure patterns and requires different maintenance. Can't select a task from this.`
+  },
+  {
+    id: 10,
+    title: "Level of Detail: Too Low",
+    type: 'example',
+    content: `**Too detailed:**
+
+*"Third ball in motor drive-end bearing inner race develops subsurface fatigue crack at 34,000 hours due to inclusion at steel surface initiated by improper heat treatment"*
+
+This is metallurgical forensics, not RCM.
+
+Way more detail than needed for maintenance task selection.`
+  },
+  {
+    id: 11,
+    title: "Level of Detail: Just Right",
+    type: 'keypoint',
+    content: `**Just right:**
+
+*"Motor drive-end bearing fails due to fatigue"*
+
+This is specific enough to:
+- Understand the failure mechanism (fatigue)
+- Identify the affected component (drive-end bearing)
+- Select appropriate maintenance (vibration monitoring, scheduled replacement, lubrication)
+
+**Rule:** Specific enough to select a task, not metallurgical forensics.`
+  },
+  {
+    id: 12,
+    title: "Classification by Mechanism",
+    type: 'concept',
+    content: `Organising by failure mechanism helps ensure completeness:
+
+- **Wear** — Erosion, abrasion, adhesion
+- **Fatigue** — Cyclic stress, crack propagation
+- **Corrosion** — Chemical/electrochemical degradation
+- **Overload** — Stress exceeding limits
+- **Degradation** — Ageing of polymers, insulation
+- **Contamination** — Foreign material
+- **Loosening** — Fastener/connection failure
+- **Blockage** — Flow restriction from deposits`
+  },
+  {
+    id: 13,
+    title: "Classification by Cause",
+    type: 'concept',
+    content: `Another useful classification:
+
+- **Design-related** — Inherent to the equipment design
+- **Manufacturing-related** — Quality defects
+- **Installation-related** — Commissioning problems
+- **Operations-related** — Caused by operating practices
+- **Maintenance-related** — Caused by maintenance activities
+- **Environmental** — Caused by operating environment
+
+This helps identify what type of control is needed.`
+  },
+  {
+    id: 14,
+    title: "Maintenance-Induced Failures",
+    type: 'keypoint',
+    content: `**Some failure modes are CAUSED by maintenance.** These deserve explicit consideration.
+
+Examples:
+- Bearing fails due to contamination introduced during maintenance
+- Seal fails due to improper installation
+- Fastener fails due to incorrect torque
+- System fails due to isolation valve left closed
+
+**Why it matters:**
+- May be more frequent than design failures
+- Require procedural/training controls, not inspections
+- Explain why equipment fails right after maintenance`
+  },
+  {
+    id: 15,
+    title: "Worked Example: Total Failure",
+    type: 'example',
+    content: `**Function:** Transfer water at 480-550 m³/hr at 2.8-3.2 bar
+**Functional Failure:** Unable to transfer any water
+
+**Failure Modes:**
+1. Motor fails to start (electrical supply)
+2. Motor fails to start (control circuit)
+3. Motor fails (winding breakdown)
+4. Motor fails (bearing failure)
+5. Coupling fails (elastomer degradation)
+6. Shaft fails (fatigue)
+7. Impeller fails (erosion/corrosion)
+8. Mechanical seal fails catastrophically
+9. Suction blocked (strainer fouling)`
+  },
+  {
+    id: 16,
+    title: "Worked Example: Partial Failure",
+    type: 'example',
+    content: `**Functional Failure:** Delivers less than 480 m³/hr
+
+**Failure Modes:**
+1. Impeller partially worn (erosion)
+2. Impeller damaged (cavitation)
+3. Wear ring clearance excessive
+4. Internal recirculation (damaged gasket)
+5. Suction partially blocked
+6. Air ingress through seal/gasket
+7. Incorrect impeller installed
+8. Motor running at reduced speed
+
+Notice how **functional failure shapes** which failure modes are relevant.`
+  },
+  {
+    id: 17,
+    title: "Avoiding Analysis Paralysis",
+    type: 'concept',
+    content: `Complex equipment can have hundreds of failure modes. How to avoid months of analysis?
+
+1. **Focus on dominant failures** — Frequent or significant first
+2. **Group similar modes** — Same pattern, same maintenance = analyse together
+3. **Use templates** — Start with validated lists, customise
+4. **Set time limits** — Don't let perfect defeat good
+5. **Iterate** — Three passes: quick capture, research, expert review`
+  },
+  {
+    id: 18,
+    title: "Expert Tip: Look Beyond the Database",
+    type: 'keypoint',
+    content: `**Your CMMS shows what you've repaired.**
+
+It doesn't show:
+- Failure modes you've prevented
+- Failure modes that haven't occurred yet
+- Near-misses that weren't formally recorded
+
+Think about what's NOT in the database. Long-lived equipment may have hidden degradation that hasn't manifested—yet.`
+  },
+  {
+    id: 19,
+    title: "Expert Tip: Transients Matter",
+    type: 'keypoint',
+    content: `**Consider startup and shutdown specifically.**
+
+Many failure modes occur during transients, not steady-state:
+- Thermal stress during startup
+- Water hammer during valve operations
+- Surge during pump starting
+- Control instability during mode changes
+
+If you only analyse normal operation, you'll miss these.`
+  },
+  {
+    id: 20,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- Failure modes must be **single events**, specific enough for task selection
+- Use **multiple sources**: history, people, manufacturers, databases
+- Apply **"reasonably likely"** criteria—don't analyse everything
+- **Goldilocks zone**: Not too vague, not metallurgical forensics
+- Don't forget **maintenance-induced** failures
+- **Avoid paralysis**: Focus, group, use templates, set limits
+
+With failure modes identified, next we document what happens when they occur—failure effects.`
+  }
+];
+
 // Map of lesson IDs to their slides
 export const practitionerLessonSlides: Record<number, Slide[]> = {
   1: practitionerModule1Slides,
   2: practitionerModule2Slides,
+  3: practitionerModule3Slides,
+  4: practitionerModule4Slides,
   // Future modules will be added here
 };
 
