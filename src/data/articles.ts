@@ -2574,6 +2574,271 @@ Remember: AI is a drafting tool, not an expert. Always apply your engineering ju
 
 *Want to skip the prompts? Try our purpose-built [AI tools for reliability engineers](/ai-tools)—they're free and designed specifically for RCM work.*
 `
+  },
+  {
+    slug: 'run-to-failure-right-strategy',
+    title: 'The Case for Run-to-Failure: When Letting Equipment Fail Is the Right Strategy',
+    excerpt: 'Run-to-failure isn\'t neglect—it\'s often the smartest maintenance strategy. Here\'s the RCM logic that proves it, specific examples where RTF wins, and why your "PM everything" approach might be costing you money.',
+    category: 'rcm-basics',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-02',
+    readTime: 9,
+    featured: false,
+    featuredImage: '/blog/run-to-failure.svg',
+    metaDescription: 'Learn when run-to-failure (RTF) is the correct maintenance strategy. RCM decision logic, real equipment examples, SAE JA1011 criteria, and why preventing all failures costs more than it saves.',
+    relatedSlugs: ['what-is-rcm', '7-rcm-questions-explained', 'rcm-vs-pm-optimization'],
+    content: `
+## The Uncomfortable Truth About Preventive Maintenance
+
+Here's something that will make many maintenance managers uncomfortable: **letting equipment fail is often the right strategy**.
+
+Not neglect. Not deferred maintenance. Not "we'll get to it eventually." I mean a deliberate, documented decision that says: "This failure mode doesn't justify preventive action. We will run this equipment until it fails, then repair it."
+
+I've watched reliability engineers squirm when I say this. I've seen plant managers physically recoil. There's something deeply unsettling about *planning* for failure—it feels irresponsible, unprofessional, even dangerous.
+
+But here's the thing: **RCM—the most rigorous maintenance methodology we have—explicitly includes run-to-failure as a valid maintenance strategy.** Not as a fallback when budgets get tight. As a legitimate, first-choice answer for certain failure modes.
+
+If that surprises you, keep reading. By the end of this article, you'll understand exactly when RTF is correct, why it's often *better* than PM, and how to make the decision without the psychological baggage.
+
+---
+
+## The "PM Everything" Fallacy
+
+Most plants operate under an unspoken assumption: maintenance prevents failures, therefore more maintenance equals fewer failures, therefore we should maintain everything.
+
+It sounds logical. It's also wrong.
+
+The data has been clear since the 1960s. When United Airlines analysed aircraft component failures for what became MSG-1 (the precursor to RCM), they discovered something that shattered conventional wisdom: **only 11% of failure modes showed a predictable age-related pattern.** The other 89%? Random.
+
+Let that sink in. For nine out of ten failure modes, scheduled replacement or overhaul doesn't prevent failure—because there's no consistent age at which failure occurs.
+
+Worse, preventive maintenance can actually *cause* failures. Every time you open a pump, you introduce the possibility of:
+- Installation errors
+- Contamination
+- Gasket damage
+- Incorrect reassembly
+- Infant mortality in new components
+
+I once worked with a chemical plant that had a "proactive" bearing replacement program. Every 18 months, they'd pull motors and replace bearings—regardless of condition. Their bearing failure rate? Higher than a sister plant that only replaced bearings when vibration analysis indicated a problem.
+
+They were creating failures in the name of preventing them.
+
+---
+
+## What RCM Actually Says About Run-to-Failure
+
+SAE JA1011, the international standard that defines RCM, doesn't treat run-to-failure as a last resort. It treats RTF as **the default answer for a specific category of failure modes**.
+
+Here's the logic, straight from the decision framework:
+
+**Step 1: Is the failure evident?**
+
+If operators would know the equipment has failed under normal circumstances, it's an evident failure. (Hidden failures—like standby equipment or safety systems—have different rules. More on that later.)
+
+**Step 2: Does the failure have safety or environmental consequences?**
+
+If failure could injure someone or breach environmental regulations, you need proactive maintenance or redesign. Full stop.
+
+**Step 3: Does the failure have operational consequences?**
+
+If failure affects production, quality, or customer service beyond just the repair cost, you evaluate whether proactive maintenance is cost-effective.
+
+**Step 4: If there are no safety, environmental, or significant operational consequences...**
+
+Run-to-failure is the correct answer. Proactive maintenance is only justified if it's *worth doing*—and for non-operational failures, it often isn't.
+
+This isn't laziness. It's mathematics. If the cost of preventing a failure exceeds the cost of letting it happen, prevention is waste.
+
+---
+
+## The Math That Changes Everything
+
+Let's make this concrete.
+
+**Example: Solenoid Valve in Non-Critical Service**
+
+Consider a solenoid valve controlling a non-critical auxiliary cooling flow. The valve costs £85. Replacement takes 30 minutes (half an hour of technician time, say £25). There's no safety hazard. If it fails, the process continues with slightly reduced cooling efficiency until someone fixes it on the next shift.
+
+**Total cost of failure:** £110 (parts + labour), maybe once every 4-5 years.
+
+**Cost of annual PM:**
+- Annual inspection: 20 minutes = £17
+- Test function: 15 minutes = £12
+- Replace solenoid every 3 years: £85 / 3 = £28/year amortised
+
+**Total annual PM cost:** ~£57/year, or £228-285 over the 4-5 year failure interval.
+
+You're spending £228-285 to prevent £110 of damage.
+
+This is value destruction dressed up as reliability.
+
+---
+
+## Equipment That Belongs on the RTF List
+
+Based on the RCM decision logic, here are categories of equipment and failure modes where run-to-failure is typically the correct answer:
+
+### 1. Indicating Lights and Visual Indicators
+
+A pilot light burns out. You notice it's dark. You replace it.
+
+- **Evident?** Yes—you can see it's not lit
+- **Safety consequence?** No (assuming it's not a critical alarm indicator)
+- **Operational consequence?** Minor or none
+
+PM on indicator lights is indefensible. Yet I've seen plants with quarterly "lamp check" PMs on hundreds of lights.
+
+### 2. Non-Critical Instruments and Gauges
+
+The pressure gauge on a sample cooler reads a bit low. You tap it, notice it's stuck, replace it.
+
+- **Evident?** Yes—abnormal reading visible
+- **Safety consequence?** No (process has other instrumentation)
+- **Operational consequence?** Negligible
+
+I'm not talking about safety-critical instruments here. But general indication? Let them fail.
+
+### 3. Redundant Equipment (While Backup is Available)
+
+If you have two pumps in parallel duty and one fails, the other takes over. The failure is evident, there's no safety issue, and there's no operational impact—assuming you fix it before the second one fails.
+
+This is conditional RTF: run to failure on the primary failure mode, but with a requirement to repair before redundancy is lost.
+
+### 4. Low-Consequence Seals and Gaskets
+
+A small drip from a non-hazardous, non-critical service. The drip is visible. The fluid isn't dangerous. The leak rate is acceptable.
+
+Why would you schedule seal replacements to prevent a condition that you can tolerate when it occurs?
+
+### 5. Electronic Components with Random Failure Patterns
+
+Control cards, power supplies, PLCs—these don't wear out predictably. They either work or they don't. There's no PM task that prevents random electronic failure.
+
+Keep a spare on the shelf. Let it fail. Swap it.
+
+---
+
+## The Psychological Resistance (And How to Overcome It)
+
+If RTF is often the right answer, why is it so hard to implement?
+
+### The "Maintenance Exists to Prevent Failures" Identity
+
+Many maintenance professionals define their job as preventing failures. Suggesting that some failures shouldn't be prevented feels like an attack on their purpose. It isn't—but it feels that way.
+
+The reframe: **Your job isn't to prevent all failures. It's to manage asset risk cost-effectively.** Sometimes that means prevention. Sometimes it means planned response.
+
+### The Fear of Being Blamed
+
+When equipment on a PM schedule fails, nobody asks questions. "It was on the schedule—we did everything right."
+
+When equipment on an RTF strategy fails, people point fingers. "Why wasn't that on the PM list?"
+
+This is cultural, not logical. The solution is documentation. When your FMEA explicitly shows that RTF is the selected strategy based on RCM logic, you've made a defensible decision—not a negligent one.
+
+### The Illusion of Control
+
+Scheduled maintenance feels proactive. Run-to-failure feels reactive. But consider: which is actually more controlled?
+
+- **Scenario A:** We inspect this monthly because we always have, with no analysis of whether it adds value.
+- **Scenario B:** We deliberately chose RTF because the RCM analysis showed the failure is evident, has no safety consequences, and costs less to repair than to prevent.
+
+Scenario B is more rigorous, more documented, and more defensible than Scenario A. It just doesn't *feel* as proactive.
+
+### The Hidden Cost Blindness
+
+PM costs are invisible because they're budgeted and expected. Nobody questions the cost of 400 quarterly inspections—it's just "what maintenance costs."
+
+Failure costs are visible because they're unplanned. A £500 breakdown repair gets scrutinised while £50,000 of unnecessary PMs slides past unexamined.
+
+The solution: calculate the cost of your PM program per failure mode, and compare it honestly to the cost of letting failures occur.
+
+---
+
+## What RTF is NOT
+
+Let me be very clear about the boundaries.
+
+**RTF is NOT appropriate for:**
+
+### Hidden Failures
+If you can't tell something has failed without a specific check, it's not evident—and RTF doesn't apply. Fire suppression systems, standby pumps, safety interlocks: these need failure-finding tasks.
+
+### Safety-Critical Equipment
+If failure could hurt someone, RTF is never the answer. SAE JA1011 is explicit: safety consequences require either proactive maintenance or redesign.
+
+### Failures with Secondary Damage
+If a bearing seizes and damages the shaft, housing, and seals, the cost of failure isn't just the bearing—it's everything downstream. Consider total failure cost, not just component cost.
+
+### Equipment with Long Lead Times
+If the spare takes 12 weeks to arrive and the failure shuts down production, "run to failure and fix it" isn't realistic. Factor in spares availability.
+
+---
+
+## Implementing RTF Properly
+
+If you decide run-to-failure is appropriate, do it properly:
+
+### 1. Document the Decision
+
+Your FMEA should explicitly show:
+- The failure mode
+- The consequence assessment (evident, no safety/environmental, non-operational)
+- The decision: RTF selected
+- The rationale
+
+This isn't optional. Undocumented RTF is neglect. Documented RTF is strategy.
+
+### 2. Ensure Spares Availability
+
+RTF doesn't mean "ignore until it breaks and then panic." It means having parts available for prompt repair.
+
+Calculate required spares: how many failures per year, what's the acceptable response time, what lead time for parts?
+
+### 3. Set Up Corrective Work Orders
+
+Your CMMS should have standing corrective tasks ready. When the equipment fails, the work order already exists—just schedule it.
+
+### 4. Track Failure Frequency
+
+If you predicted one failure every two years and you're seeing one every six months, reassess. Either your consequence assessment was wrong, or something has changed in the operating context.
+
+### 5. Review Periodically
+
+Operating contexts change. What was non-critical becomes critical. What had redundancy loses it. Review your RTF decisions annually.
+
+---
+
+## The Liberating Question
+
+Here's a question that can transform your maintenance program:
+
+**"If we stopped doing this PM task, what would actually happen?"**
+
+For some tasks, the answer is scary: equipment would fail dangerously, expensively, or frequently.
+
+For other tasks, the honest answer is: "Probably nothing. Maybe a minor failure eventually. We'd fix it."
+
+Those tasks are candidates for RTF.
+
+I'm not suggesting you blindly eliminate PMs. I'm suggesting you *evaluate* them against actual consequences. The RCM decision logic gives you a rigorous framework for doing exactly that.
+
+---
+
+## Where to Go From Here
+
+If this article made you uncomfortable, good. Discomfort is often the first sign that an assumption needs examining.
+
+If you want to apply this thinking rigorously, you need to understand RCM decision logic—not just the theory, but how to walk through it systematically for your equipment.
+
+Our **[RCM Fundamentals course](/courses/rcm-fundamentals)** covers exactly this, including the decision diagrams from SAE JA1011 and JA1012, consequence assessment, and how to select (or not select) maintenance tasks. You'll leave knowing not just when RTF is appropriate, but how to defend that decision when someone questions it.
+
+Or try our free **[RCM Decision Diagram tool](/tools/rcm-decision-diagram)**—plug in a failure mode and walk through the logic yourself. You might be surprised how often it leads to RTF.
+
+---
+
+*The goal isn't zero failures. It's optimal maintenance—doing enough to manage risk, and not a task more. Sometimes, that means letting things break.*
+`
   }
 ];
 
