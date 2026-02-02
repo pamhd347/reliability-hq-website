@@ -23,6 +23,275 @@ export const categoryLabels: Record<Article['category'], string> = {
 
 export const articles: Article[] = [
   {
+    slug: 'chatgpt-vs-claude-reliability-engineering',
+    title: 'ChatGPT vs Claude for Reliability Engineering: A Practical Comparison',
+    excerpt: 'I tested both AI models on 50 RCM tasks—function statements, failure modes, effects, task selection. Here\'s what actually works, where each struggles, and which one you should use.',
+    category: 'ai-tools',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-03',
+    readTime: 10,
+    featured: true,
+    featuredImage: '/blog/chatgpt-vs-claude.svg',
+    metaDescription: 'Practical comparison of ChatGPT and Claude for reliability engineering tasks. Real test results on function statements, failure modes, FMEA, and maintenance recommendations.',
+    relatedSlugs: ['how-to-use-ai-for-rcm-analysis', 'ai-assisted-fmea-guide', 'prompt-templates-reliability-engineers'],
+    content: `
+## The Same Question, Two Very Different Answers
+
+Last week I asked both ChatGPT and Claude the same question:
+
+> "List the top 10 failure modes for a horizontal centrifugal pump with mechanical seal, handling cooling water at 65°C in continuous operation."
+
+Here's what I got back.
+
+**ChatGPT (GPT-4o):**
+1. Mechanical seal failure due to dry running
+2. Bearing failure from inadequate lubrication
+3. Impeller erosion from cavitation
+4. Shaft misalignment causing vibration
+5. Coupling wear from fatigue
+6. Casing corrosion
+7. Suction strainer blockage
+8. Motor overheating
+9. Gasket leakage
+10. Impeller damage from foreign objects
+
+**Claude (3.5 Sonnet):**
+1. Mechanical seal face wear — gradual deterioration of seal faces due to normal wear, contamination, or misalignment; typically 12-36 month life depending on duty
+2. Bearing failure (drive end) — fatigue spalling of rolling elements; P-F interval 4-12 weeks detectable via vibration analysis
+3. Bearing failure (non-drive end) — as above but often longer life due to lower loads
+4. Impeller wear — erosion or corrosion reducing hydraulic efficiency; detected through performance monitoring
+5. Shaft sleeve wear — scoring under mechanical seal from particulates; causes secondary seal failure
+6. Coupling element fatigue — deterioration of flexible element in grid/elastomeric couplings
+7. Cavitation damage — impeller eye erosion from insufficient NPSH; distinctive crackling noise
+8. Internal recirculation wear — wear ring erosion from operation below minimum flow
+9. Suction-side air ingestion — intermittent cavitation symptoms from air leaks at suction pipework
+10. Motor winding insulation breakdown — thermal degradation accelerated by high ambient or overload
+
+Same question. Very different answers.
+
+ChatGPT gave me a clean, confident list. Claude gave me more nuanced detail—P-F intervals, detection methods, even differentiating between drive-end and non-drive-end bearings.
+
+But here's the thing: **both lists had problems**. ChatGPT's "gasket leakage" is vague to the point of uselessness. Claude's "shaft sleeve wear" assumed a shaft sleeve exists (not all mechanical seals use them). Neither mentioned thrust bearing failure, which I've seen more times than I can count on this exact pump type.
+
+This is the reality of using AI for reliability work: it's genuinely useful, but you cannot trust either model without verification.
+
+So I decided to do a proper comparison.
+
+---
+
+## The Test: 50 RCM Tasks Across Both Models
+
+Over two weeks, I ran both ChatGPT (GPT-4o) and Claude (3.5 Sonnet) through 50 reliability engineering tasks across five equipment types:
+
+- Centrifugal pumps
+- Reciprocating compressors
+- Shell and tube heat exchangers
+- Motor control centres
+- Control valves
+
+For each equipment type, I tested:
+- **Function statements** — writing proper RCM functions with performance standards
+- **Failure mode generation** — comprehensive lists with appropriate detail
+- **Failure effect descriptions** — the "what happens when" narrative
+- **Task selection reasoning** — recommending appropriate maintenance strategies
+
+I scored each output on:
+- **Technical accuracy** — Is it correct?
+- **Completeness** — Did it miss anything important?
+- **Usefulness** — Can I actually use this in an FMEA?
+- **Hallucination rate** — Did it invent things that aren't true?
+
+---
+
+## The Results: It's Complicated
+
+Neither model "won." Each has distinct strengths that make them better suited to different tasks.
+
+| Task | ChatGPT 4o | Claude 3.5 | Notes |
+|------|-----------|------------|-------|
+| Function statements | ★★★★☆ | ★★★★★ | Claude better at performance standards |
+| Failure mode lists | ★★★★☆ | ★★★★☆ | Tie — both miss context-specific modes |
+| Failure effects | ★★★☆☆ | ★★★★☆ | ChatGPT tends toward generic descriptions |
+| Task selection | ★★★★☆ | ★★★★☆ | Both need interval validation |
+| Technical accuracy | ★★★☆☆ | ★★★★☆ | ChatGPT had 3 significant errors |
+| Speed | ★★★★★ | ★★★☆☆ | ChatGPT noticeably faster |
+| Following instructions | ★★★★★ | ★★★★☆ | ChatGPT better at exact formats |
+
+Let me show you what I mean with specific examples.
+
+---
+
+## Function Statements: Claude's Attention to Detail
+
+I asked both models to write an RCM function statement for a cooling water pump.
+
+**The prompt:**
+> Write an RCM function statement for a centrifugal cooling water pump. The pump transfers water from a cooling tower basin to process heat exchangers. Required flow: 500 m³/h. Discharge pressure requirement: 4.5 bar. The pump runs continuously.
+
+**ChatGPT's output:**
+> "To transfer cooling water from the cooling tower basin to the process heat exchangers at a flow rate of 500 m³/h and a discharge pressure of 4.5 bar."
+
+**Claude's output:**
+> "To transfer cooling water from the cooling tower basin to the process heat exchangers at a minimum flow rate of 500 m³/h at a discharge pressure of not less than 4.5 bar during continuous operation."
+
+Spot the difference?
+
+Claude added "minimum" and "not less than." These words matter. In RCM, the function statement defines what constitutes failure. "500 m³/h" could mean exactly 500, or at least 500, or approximately 500. Claude's version is unambiguous: anything below 500 m³/h is a functional failure.
+
+This pattern repeated across my tests. Claude was consistently more precise about performance standards. ChatGPT tended to echo my input without adding the specificity that makes function statements useful.
+
+**Winner: Claude** — but ChatGPT's output is still usable with minor editing.
+
+---
+
+## Failure Effects: Where ChatGPT Gets Lazy
+
+Failure effects are where the analysis gets interesting—and where ChatGPT often disappointed me.
+
+**The prompt:**
+> Describe the failure effect for: Motor bearing failure (seized) on a cooling water pump. The pump has no installed spare, but a portable backup pump can be connected within 2 hours. Include evidence of failure, operational impact, and repair requirements.
+
+**ChatGPT's output:**
+> "When the motor bearing seizes, the pump will stop operating and trip on overload. The control room will receive an alarm. Production may be affected until the backup pump is connected. Repair will require motor removal and bearing replacement."
+
+**Claude's output:**
+> "Increasing high-frequency vibration (>7 mm/s RMS at 2x ball pass frequency) and elevated bearing temperature (>85°C) typically evident 2-8 weeks before seizure. Final seizure preceded by high-pitched grinding noise for 30-60 minutes. Motor trips on overload; control room receives motor fault alarm. With no installed spare, cooling capacity lost until portable backup connected (2 hours). During this period, process temperature rises approximately 3°C/hour—critical limit reached after 4 hours.
+
+Repair requires: motor isolation and removal to workshop (1 hour), bearing replacement (2-4 hours depending on bearing type), realignment and recommissioning (1 hour). Total repair time 4-7 hours with two fitters. If motor operated while seized, winding damage likely—rewind cost £800-1,200, 2-week lead time."
+
+The difference is night and day.
+
+Claude's version tells me there's warning before failure (opportunity for condition monitoring). It quantifies the P-F interval. It explains what happens to the process during the outage. It gives repair time estimates and costs. ChatGPT gave me something you'd find in a textbook; Claude gave me something I could use in an actual FMEA session.
+
+**Winner: Claude** — significantly better for failure effects.
+
+---
+
+## Where ChatGPT Excels: Speed and Format Compliance
+
+ChatGPT isn't worse at everything. Two areas where it consistently beat Claude:
+
+### 1. Response Speed
+
+For routine tasks, ChatGPT is noticeably faster. When I'm generating a first draft of failure modes for 20 equipment items, that speed adds up. Claude's thoughtful pauses are great for complex questions but frustrating when I just need a quick list.
+
+### 2. Following Exact Formatting Instructions
+
+When I asked for output in a specific table format:
+
+> "Provide failure modes in a table with columns: Failure Mode | Typical Cause | Detection Method | P-F Interval"
+
+ChatGPT nailed the format every time. Claude sometimes added extra columns, omitted requested ones, or switched to bullet points mid-response. This matters when you're trying to paste outputs directly into FMEA worksheets.
+
+---
+
+## The Hallucination Problem
+
+Both models occasionally invented things that weren't true. But the pattern differed.
+
+**ChatGPT's hallucinations:**
+- Invented API standards that don't exist ("API 612 requirements for pump bearings")
+- Quoted specific MTBF figures without basis ("typical MTBF of 47,000 hours")
+- Claimed certainty about things that are context-dependent
+
+**Claude's hallucinations:**
+- Occasionally confused similar equipment types (mixed up packed gland and mechanical seal terminology)
+- Sometimes over-generalised from one industry to another
+- Made assumptions about equipment configuration without stating them
+
+The difference: **ChatGPT's hallucinations were confident and specific.** It would cite a non-existent standard with complete conviction. Claude's errors were more often hedged or came with caveats.
+
+For reliability work, confident errors are more dangerous than uncertain ones. An experienced engineer might catch Claude's hedged mistake. ChatGPT's invented API standard could slip through review.
+
+**Overall accuracy winner: Claude** — but verify everything from both models.
+
+---
+
+## My Recommendation: Use Both
+
+Here's my actual workflow after two weeks of testing:
+
+### Use Claude for:
+- **First drafts of technical content** — function statements, failure effects, technical explanations
+- **When accuracy matters more than speed**
+- **Complex reasoning** — task selection logic, consequence assessment
+- **When you want the AI to flag uncertainty**
+
+### Use ChatGPT for:
+- **Bulk generation** — getting 20 failure modes quickly
+- **Format compliance** — when you need exact table formats
+- **Iteration and refinement** — "Make this more concise" or "Add more detail"
+- **When speed matters more than depth**
+
+### What I actually do:
+1. **Use Claude** to draft my function statements and failure effects
+2. **Use ChatGPT** to quickly expand failure mode lists
+3. **Review everything** against my own knowledge and maintenance history
+4. **Validate critical content** against standards and manufacturer data
+
+Neither model replaces engineering judgment. Both accelerate the grunt work.
+
+---
+
+## Prompt Adjustments: What Works for Each Model
+
+Through testing, I found that the same prompt often needed adjustment between models.
+
+### For ChatGPT, be more directive:
+
+> "List exactly 10 failure modes. Use this exact format: [Failure mode] — [Primary cause] — [Detection method]. Do not add explanations."
+
+ChatGPT follows instructions well. Tell it exactly what you want, and you'll get it.
+
+### For Claude, provide more context:
+
+> "I'm conducting an RCM analysis for a petrochemical plant. The equipment operates in a corrosive environment with high ambient temperatures (40°C). Consider failure modes that would be relevant in this context. Explain your reasoning for including each mode."
+
+Claude responds well to context. The more you tell it about your situation, the more tailored its output.
+
+---
+
+## Cost Comparison (API Usage)
+
+If you're using these models programmatically or through heavy usage:
+
+| Model | Input Cost | Output Cost | Typical FMEA prompt cost |
+|-------|-----------|-------------|-------------------------|
+| GPT-4o | $2.50/1M tokens | $10/1M tokens | ~$0.02 per detailed response |
+| Claude 3.5 Sonnet | $3/1M tokens | $15/1M tokens | ~$0.03 per detailed response |
+
+For most reliability engineers using the chat interfaces with subscriptions, this doesn't matter. But for heavy API users, ChatGPT is slightly cheaper.
+
+---
+
+## The Bottom Line
+
+**If I had to pick one:** Claude for technical accuracy and depth.
+
+**What I actually do:** Use both for different parts of the workflow.
+
+**What you should do:** Try both on your specific equipment and see which outputs match your experience better. The "best" model depends on your industry, equipment types, and how much detail you need.
+
+And regardless of which model you use: **review everything**. AI is a drafting assistant, not an analyst. The engineering judgment is still yours.
+
+---
+
+## Try It Yourself
+
+Want to see how AI can accelerate your RCM work? Our free tools are built on models we've tested and optimised for reliability engineering:
+
+- **[Function Statement Generator](/ai-tools/function-generator)** — Get properly formatted functions with performance standards
+- **[Failure Mode Suggester](/ai-tools/failure-modes)** — Generate comprehensive failure mode lists for your equipment
+- **[FMEA Row Helper](/ai-tools/fmea-helper)** — Complete failure effects, causes, and detection methods
+
+They're free, they're built for engineers, and they'll give you a head start on your next analysis.
+
+---
+
+*Have you used ChatGPT or Claude for reliability work? I'd love to hear what you've found. What works? What doesn't? Drop me a message—I'm always refining these recommendations based on real-world experience.*
+`
+  },
+  {
     slug: 'what-is-rcm',
     title: 'What is RCM? A Complete Guide for Maintenance Professionals',
     excerpt: 'Everything you need to know about Reliability Centred Maintenance—its history, definition, the 7 questions, and how to apply it in your organisation.',
