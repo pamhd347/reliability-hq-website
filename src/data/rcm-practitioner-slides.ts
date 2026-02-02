@@ -1285,12 +1285,951 @@ With failure modes identified, next we document what happens when they occur—f
   }
 ];
 
+// Module 5: Failure Effects Documentation - Slide-based content
+export const practitionerModule5Slides: Slide[] = [
+  {
+    id: 1,
+    title: "Why Failure Effects Matter",
+    type: 'intro',
+    content: `Failure effects answer: **What happens when this failure mode occurs?**
+
+This isn't just documentation—it's the evidence base for consequence evaluation and task selection.
+
+Poor failure effect descriptions lead to poor decisions. Complete descriptions enable confident maintenance strategy development.`
+  },
+  {
+    id: 2,
+    title: "The Four Elements",
+    type: 'keypoint',
+    content: `A complete failure effect includes:
+
+1. **Evidence of Failure** — What do operators observe?
+2. **Immediate Effects** — What happens right away?
+3. **Secondary Effects** — What damage or impacts result?
+4. **Repair Requirements** — What's needed to restore function?
+
+Miss any element and your consequence evaluation will be incomplete.`
+  },
+  {
+    id: 3,
+    title: "Element 1: Evidence",
+    type: 'concept',
+    content: `What does the operating crew observe? How do they know failure has occurred?
+
+**Physical evidence:**
+- Visible: leaks, smoke, discolouration
+- Audible: noise, alarms, unusual sounds
+- Measurable: pressure, temperature, flow readings
+- System behaviour: trips, alarms, shutdowns
+
+*"Abnormal noise from pump housing. Vibration increases from 2.5 to >6 mm/s. High vibration alarm on local panel and DCS."*`
+  },
+  {
+    id: 4,
+    title: "Element 2: Immediate Effects",
+    type: 'concept',
+    content: `What happens right away when failure occurs?
+
+- Does equipment stop or continue running?
+- Is process affected immediately?
+- Are there automatic responses?
+
+*"Pump continues running initially. Bearing temperature rises. If not addressed, seizure occurs within 2-8 hours causing immediate pump trip."*`
+  },
+  {
+    id: 5,
+    title: "Element 3: Secondary Effects",
+    type: 'concept',
+    content: `What damage or impacts result from the failure?
+
+- Damage to other components
+- Damage to downstream equipment
+- Production impacts
+- Safety hazards created
+- Environmental releases
+
+*"If seizure occurs, shaft damage likely. Seal may be compromised. Motor may sustain locked rotor damage."*`
+  },
+  {
+    id: 6,
+    title: "Element 4: Repair Requirements",
+    type: 'concept',
+    content: `What's needed to restore function?
+
+- Actions required
+- Resources needed (parts, tools, personnel)
+- Typical repair time
+- Special requirements
+
+*"Requires pump shutdown and isolation. Bearing replacement: 4-6 hours with parts available. If shaft damaged, lead time 2-3 weeks."*`
+  },
+  {
+    id: 7,
+    title: "Be Specific, Not Vague",
+    type: 'example',
+    content: `**Poor:** "Pump stops working"
+
+**Good:** "Flow indication drops to zero. Low flow alarm activates within 30 seconds. Downstream heat exchanger temperature rises above setpoint within 5 minutes, triggering high temperature alarm."
+
+Specific effects enable specific decisions.`
+  },
+  {
+    id: 8,
+    title: "Include Timing",
+    type: 'keypoint',
+    content: `Timing determines whether intervention is possible.
+
+**Poor:** "Temperature rises"
+
+**Good:** "Heat exchanger outlet temperature rises ~2°C per minute until protective shutdown at +15°C above setpoint (approximately 7-8 minutes from failure)"
+
+A bearing degrading over weeks allows intervention. One failing in seconds doesn't.`
+  },
+  {
+    id: 9,
+    title: "Trace the Full Cascade",
+    type: 'concept',
+    content: `Many failures have cascading effects. Trace the full sequence:
+
+1. Initial failure symptom
+2. Process response
+3. Operator/automatic actions
+4. Secondary effects if not addressed
+5. Ultimate consequence
+
+Ask repeatedly: **"Then what happens?"**`
+  },
+  {
+    id: 10,
+    title: "Evident vs Hidden",
+    type: 'keypoint',
+    content: `This distinction is crucial for consequence classification:
+
+**Evident:** "Leak visible at seal housing. Drip tray collects leakage. Operators observe during rounds."
+
+**Hidden:** "No indication under normal operation. Backup pump failure only evident when primary fails and backup doesn't start."
+
+Hidden failures require failure-finding tasks.`
+  },
+  {
+    id: 11,
+    title: "Gradual Degradation Effects",
+    type: 'concept',
+    content: `**Pattern:** Performance deteriorates over time
+
+**Focus on:**
+- How degradation manifests
+- Rate of change
+- When it crosses failure threshold
+- Early warning indicators
+
+*"Flow decreases ~2-3% per month as impeller erodes. Operators may notice higher motor current. When flow drops below 480 m³/hr, temperature control becomes marginal."*`
+  },
+  {
+    id: 12,
+    title: "Sudden Failure Effects",
+    type: 'concept',
+    content: `**Pattern:** Little/no warning before functional failure
+
+**Focus on:**
+- Immediate symptoms
+- How quickly impact occurs
+- Automatic responses
+- Immediate hazards
+
+*"Coupling fails—immediate loss of power transmission. Pump stops instantly. No prior warning. Impact noise at moment of failure."*`
+  },
+  {
+    id: 13,
+    title: "Multi-Level Effects",
+    type: 'concept',
+    content: `Consider effects at multiple levels:
+
+**Local:** Impact on failed equipment (damage, symptoms)
+
+**System:** Impact on broader system (upstream, downstream, parallel equipment)
+
+**Plant/Business:** Impact on operation (production, quality, revenue)
+
+*"Local: Seal fails. System: Cooling water reduced. Plant: 30% throughput reduction = £6,000/hour lost."*`
+  },
+  {
+    id: 14,
+    title: "Quantify Where Possible",
+    type: 'keypoint',
+    content: `Numbers make effects concrete:
+
+**Production:**
+- Poor: "Causes production problems"
+- Better: "30% throughput reduction"
+- Best: "30% reduction = £6,000/hour lost revenue"
+
+**Repair time:**
+- Poor: "Requires repair"
+- Better: "4-6 hours"
+- Best: "4-6 hours if parts in stock; 2-3 weeks if shaft replacement needed"`
+  },
+  {
+    id: 15,
+    title: "Documentation Format",
+    type: 'concept',
+    content: `Structured format ensures completeness:
+
+| Failure Mode | Evidence | Immediate | Secondary | Repair |
+|--------------|----------|-----------|-----------|--------|
+| Bearing fatigue | Noise, vibration >6 mm/s, temp rise | Continues running, degrades over hours | Seizure → shaft/seal/motor damage | 4-6 hrs; +2-3 wks if shaft |
+
+This format makes gaps obvious.`
+  },
+  {
+    id: 16,
+    title: "Expert Tip: Mental Walk-Through",
+    type: 'keypoint',
+    content: `**Close your eyes and imagine the failure happening.**
+
+What would you see? Hear? Smell?
+What would happen next?
+How would operators respond?
+
+This exercise reveals details you might miss from just reading procedures or P&IDs.`
+  },
+  {
+    id: 17,
+    title: "Common Mistake: Too Brief",
+    type: 'concept',
+    content: `**"Pump stops"** tells you almost nothing useful.
+
+It doesn't say:
+- How operators would know
+- What happens to the process
+- What secondary damage occurs
+- How long repair takes
+
+Without these, you can't properly evaluate consequences or select tasks.`
+  },
+  {
+    id: 18,
+    title: "Common Mistake: Missing Progression",
+    type: 'concept',
+    content: `Many failures don't cause instant complete loss—they progress from detectable degradation to functional failure.
+
+**Missing this means:**
+- Missing on-condition maintenance opportunities
+- Overestimating consequences (assuming worst case)
+- Not quantifying P-F interval
+
+Document the progression, not just the end state.`
+  },
+  {
+    id: 19,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- Complete effects include **evidence, immediate, secondary, and repair**
+- **Distinguish evident from hidden** — drives consequence classification
+- Consider effects at **local, system, and plant** levels
+- **Quantify** where possible — numbers enable decisions
+- Include **timing** — determines intervention opportunity
+
+With failure effects documented, we can now evaluate **consequences** — next module.`
+  }
+];
+
+// Module 6: Consequence Evaluation - Slide-based content
+export const practitionerModule6Slides: Slide[] = [
+  {
+    id: 1,
+    title: "Why Consequences Drive Everything",
+    type: 'intro',
+    content: `Consequence evaluation is where RCM becomes strategic.
+
+Not all failures are equal. A bearing failure on a critical pump has different consequences than the same failure on a backup system.
+
+**The consequence category determines how much effort is justified to prevent the failure.** Get this wrong and you'll either over-maintain (waste resources) or under-maintain (accept unacceptable risk).`
+  },
+  {
+    id: 2,
+    title: "The Four Consequence Categories",
+    type: 'keypoint',
+    content: `RCM categorises consequences into four types:
+
+1. **Hidden failure consequences** — Not evident under normal operation
+2. **Safety/Environmental consequences** — Could hurt people or environment
+3. **Operational consequences** — Affects production, quality, service
+4. **Non-operational consequences** — Only direct repair cost
+
+The category determines the decision logic for task selection.`
+  },
+  {
+    id: 3,
+    title: "First Question: Is It Hidden?",
+    type: 'keypoint',
+    content: `**The first question is always: Will the failure be evident to operators under normal circumstances?**
+
+If NO → It's a hidden failure
+If YES → Proceed to evaluate safety/operational/non-operational
+
+Hidden failures are special because they can lie dormant until another failure occurs—then consequences multiply.`
+  },
+  {
+    id: 4,
+    title: "Hidden Failures",
+    type: 'concept',
+    content: `Hidden failures affect protective devices and standby equipment:
+
+- Backup pumps that only run when primary fails
+- Relief valves that only lift during overpressure
+- Emergency systems waiting for emergencies
+- Alarms and trips for abnormal conditions
+
+**The danger:** You don't know it's failed until you need it—and then it's too late.`
+  },
+  {
+    id: 5,
+    title: "Multiple Failure Scenarios",
+    type: 'keypoint',
+    content: `Hidden failures matter because of **multiple failure scenarios**.
+
+Example:
+1. Backup pump has failed (hidden—nobody knows)
+2. Primary pump fails
+3. No pumping capability at all
+
+Without the hidden failure, primary pump failure = minor inconvenience.
+With the hidden failure, primary pump failure = crisis.
+
+**Always evaluate: What happens if this hidden failure exists AND another failure occurs?**`
+  },
+  {
+    id: 6,
+    title: "Safety Consequences",
+    type: 'concept',
+    content: `**Safety consequences** — The failure mode could hurt or kill someone.
+
+Consider:
+- Direct injury (contact with moving parts, electrical shock)
+- Indirect injury (process release, fire, explosion)
+- Delayed injury (toxic exposure, cumulative harm)
+
+**Key test:** On its own, could this failure mode injure or kill someone?
+
+For hidden failures: Could the multiple failure scenario injure or kill?`
+  },
+  {
+    id: 7,
+    title: "Environmental Consequences",
+    type: 'concept',
+    content: `**Environmental consequences** — The failure could breach regulations or cause ecological damage.
+
+Consider:
+- Releases to air, water, or ground
+- Permit violations
+- Reportable quantities
+- Ecological impact
+
+Environmental and safety consequences get the same treatment: **proactive maintenance is mandatory**.`
+  },
+  {
+    id: 8,
+    title: "Operational Consequences",
+    type: 'concept',
+    content: `**Operational consequences** — Affects output, quality, or service.
+
+These have economic impact:
+- Production loss or reduction
+- Product quality degradation
+- Delivery delays
+- Customer impacts
+
+**Key principle:** For operational consequences, compare the cost of prevention against the cost of failure.
+
+If prevention costs more than it saves, don't do it.`
+  },
+  {
+    id: 9,
+    title: "Non-Operational Consequences",
+    type: 'concept',
+    content: `**Non-operational consequences** — The only impact is direct repair cost.
+
+Equipment doesn't directly affect:
+- Production
+- Quality
+- Safety
+- Environment
+
+Examples: Redundant equipment, non-critical auxiliaries.
+
+**Run to failure is often the right answer** for non-operational consequences.`
+  },
+  {
+    id: 10,
+    title: "Consequence Decision Flow",
+    type: 'keypoint',
+    content: `**Evaluate in this order:**
+
+1. Is failure evident? → If NO = Hidden
+2. For hidden: Does multiple failure have S&E consequences?
+3. For evident: Does failure have safety consequences?
+4. Does failure have environmental consequences?
+5. Does failure have operational consequences?
+6. If none above → Non-operational
+
+The first "yes" determines the consequence category.`
+  },
+  {
+    id: 11,
+    title: "What Category Means for Tasks",
+    type: 'concept',
+    content: `**Hidden:** Must have task (failure-finding or proactive) to ensure protection
+
+**Safety/Environmental:** Must have task that reduces risk to acceptable level—or redesign
+
+**Operational:** Task must be economically justified
+
+**Non-operational:** Task only if it costs less than run-to-failure
+
+The category sets the **burden of proof** for task selection.`
+  },
+  {
+    id: 12,
+    title: "Quantifying Operational Consequences",
+    type: 'concept',
+    content: `For operational failures, quantify to enable economic comparison:
+
+- **Production loss rate:** £/hour during outage
+- **Probability of failure:** How often per year?
+- **Duration of outage:** Hours to repair?
+- **Secondary costs:** Overtime, expedited parts
+
+**Expected annual cost = Probability × (Production loss + Repair cost)**
+
+Compare this to the cost of prevention.`
+  },
+  {
+    id: 13,
+    title: "Expert Tip: Challenge Hidden Classification",
+    type: 'keypoint',
+    content: `Some failures classified as "hidden" could be made evident:
+
+- Add indication (gauge, alarm, monitoring)
+- Change operating procedures (regular function tests)
+- Modify equipment (make protective device self-checking)
+
+If making it evident is practical, the failure becomes easier to manage.
+
+Always ask: **Could we make this evident?**`
+  },
+  {
+    id: 14,
+    title: "Expert Tip: Safety Requires Rigour",
+    type: 'keypoint',
+    content: `Safety consequence evaluation requires careful thought:
+
+- Consider **credible worst case**, not just typical case
+- Consider **all people at risk** (operators, maintainers, public)
+- Consider **realistic scenarios**, not just theoretical ones
+- Get **input from safety professionals** when uncertain
+
+When in doubt about safety, err on the side of caution.`
+  },
+  {
+    id: 15,
+    title: "Common Mistake: Everything is Critical",
+    type: 'concept',
+    content: `**If everything is critical, nothing is.**
+
+Avoid classifying every failure as safety/environmental. This:
+- Overwhelms maintenance resources
+- Dilutes focus on truly critical items
+- Makes the analysis less useful
+
+Apply consequence categories honestly. Most failures are operational or non-operational—that's okay.`
+  },
+  {
+    id: 16,
+    title: "Common Mistake: Ignoring Hidden Failures",
+    type: 'concept',
+    content: `Hidden failures are easy to overlook:
+- Equipment is working (as far as you know)
+- No alarms, no visible problems
+- "It'll work when we need it"
+
+But hidden failures can turn minor events into disasters.
+
+**Always ask for protective/standby equipment: How would we know if this had failed?**`
+  },
+  {
+    id: 17,
+    title: "Documentation",
+    type: 'concept',
+    content: `Document consequence evaluation clearly:
+
+| Failure Mode | Evident? | S/E? | Operational? | Category | Rationale |
+|--------------|----------|------|--------------|----------|-----------|
+| Bearing fails | Yes (noise, vibration) | No | Yes (production loss) | Operational | £6k/hr production impact |
+| Backup pump fails | No (standby) | Yes (if primary also fails) | - | Hidden S&E | Total cooling loss if both fail |
+
+Rationale explains the classification.`
+  },
+  {
+    id: 18,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- **Four categories:** Hidden, Safety/Environmental, Operational, Non-operational
+- **First question:** Is it evident? Hidden failures need special treatment
+- **Safety/Environmental:** Proactive tasks mandatory
+- **Operational:** Economic justification required
+- **Non-operational:** Run-to-failure often appropriate
+
+With consequences classified, we can now select **proactive maintenance tasks** — next module.`
+  }
+];
+
+// Module 7: Proactive Task Selection - Slide-based content
+export const practitionerModule7Slides: Slide[] = [
+  {
+    id: 1,
+    title: "Selecting the Right Approach",
+    type: 'intro',
+    content: `With consequences classified, we now select maintenance tasks. This is where RCM becomes practical—translating analysis into action.
+
+**Proactive tasks** are performed BEFORE failure to either prevent it or provide warning.
+
+Three types:
+1. On-condition tasks (predictive)
+2. Scheduled restoration (overhaul)
+3. Scheduled discard (replacement)
+
+Each has specific criteria. Let's master task selection.`
+  },
+  {
+    id: 2,
+    title: "On-Condition Tasks",
+    type: 'concept',
+    content: `**On-condition tasks** detect that failure is in progress, with enough warning to act.
+
+Equipment degrades through stages:
+1. **Good as new** — No detectable degradation
+2. **Potential failure (P)** — Degradation becomes detectable
+3. **Functional failure (F)** — No longer meets function
+
+The time between P and F is the **P-F interval**—your warning period.
+
+**On-condition**: Inspect at intervals shorter than P-F. Detect at P, act before F.`
+  },
+  {
+    id: 3,
+    title: "On-Condition Criteria",
+    type: 'keypoint',
+    content: `**Technical feasibility:**
+1. Definable potential failure condition exists
+2. P-F interval is reasonably consistent
+3. Practical to monitor at intervals < P-F
+4. Net P-F (after detection-to-action time) allows action
+
+**Worth doing** (operational/non-operational):
+5. Task cost over time < cost of failures prevented
+
+All criteria must be met.`
+  },
+  {
+    id: 4,
+    title: "The P-F Interval",
+    type: 'keypoint',
+    content: `Different techniques detect degradation at different stages:
+
+| Detection Method | Typical P-F |
+|-----------------|-------------|
+| Ultrasonic | 1-3 months |
+| Vibration analysis | 1-6 weeks |
+| Thermography | 1-3 weeks |
+| Audible noise | 1-7 days |
+| Touch temperature | Hours-2 days |
+
+Early detection = longer P-F = more time to respond.`
+  },
+  {
+    id: 5,
+    title: "Task Interval Rule",
+    type: 'keypoint',
+    content: `**Rule: Inspection interval ≤ P-F interval ÷ 2**
+
+Why half?
+- You might inspect just before P
+- Next inspection would be at P + interval
+- If interval = P-F, you'd inspect exactly at F—too late
+
+**Example:**
+- P-F interval: 6 weeks
+- Maximum interval: 3 weeks
+- If P-F is 1 week, inspect every 3-4 days`
+  },
+  {
+    id: 6,
+    title: "Common On-Condition Techniques",
+    type: 'concept',
+    content: `| Technique | Detects | P-F |
+|-----------|---------|-----|
+| Vibration | Rotating equipment degradation | 1-6 weeks |
+| Oil analysis | Contamination, wear | 2-8 weeks |
+| Thermography | Hot spots, insulation | 1-4 weeks |
+| Ultrasonic | Leaks, early wear, arcing | 1-12 weeks |
+| Visual | Corrosion, leaks, wear | Variable |
+| Performance trending | Efficiency loss | Weeks-months |`
+  },
+  {
+    id: 7,
+    title: "Scheduled Restoration",
+    type: 'concept',
+    content: `**Scheduled restoration** restores capability at fixed intervals regardless of condition.
+
+Examples:
+- Rebuild gearbox every 5 years
+- Rewind motor every 10 years
+- Repack valve every 2 years
+
+**Criteria:**
+1. Identifiable age where reliability decreases
+2. Most items survive to that age
+3. Task restores acceptable capability
+4. Cost justified (for operational/non-operational)`
+  },
+  {
+    id: 8,
+    title: "The 11% Problem",
+    type: 'keypoint',
+    content: `**Scheduled restoration only works for age-related failure.**
+
+Research shows only **11%** of items exhibit wear-out patterns where scheduled overhaul reduces failure probability.
+
+For the other **89%**, scheduled overhaul may:
+- Add no value (random failure patterns)
+- Actually introduce problems (infant mortality)
+
+**Always ask:** What evidence shows this item has age-related failure?`
+  },
+  {
+    id: 9,
+    title: "Scheduled Discard",
+    type: 'concept',
+    content: `**Scheduled discard** replaces items at fixed intervals regardless of condition.
+
+Examples:
+- Replace seals every 2 years
+- Replace coupling elements every 3 years
+- Replace batteries every 5 years
+
+Same criteria as restoration. Use discard when:
+- Replacement more practical than overhaul
+- Item not repairable
+- Restoration quality uncertain`
+  },
+  {
+    id: 10,
+    title: "Task Type Selection Hierarchy",
+    type: 'keypoint',
+    content: `When multiple types could apply:
+
+**1. On-condition preferred when:**
+- P-F interval allows practical monitoring
+- Technology is mature for this failure mode
+- Cost-effective
+
+**2. Scheduled restoration/discard when:**
+- On-condition not feasible
+- Age-reliability relationship well-established
+
+**Why on-condition often preferred:**
+- Only replaces items that need it
+- Works for random failure patterns
+- Provides warning for planned intervention`
+  },
+  {
+    id: 11,
+    title: "Task Selection by Pattern",
+    type: 'concept',
+    content: `| Pattern | On-Condition | Scheduled |
+|---------|--------------|-----------|
+| Wear-out (age-related) | ✓ If detectable | ✓ If age known |
+| Random (constant rate) | ✓ If detectable | ✗ No benefit |
+| Infant mortality | ✓ After run-in | ✗ May worsen |
+| Fatigue | ✓ Usually possible | ✓ If life known |
+
+**Key:** For random patterns (most common), on-condition is the only valid proactive option.`
+  },
+  {
+    id: 12,
+    title: "Worked Example: Pump Seal",
+    type: 'example',
+    content: `**Failure mode:** Seal fails due to wear
+
+1. **Detectable potential failure?** Yes—increasing leakage, temperature rise
+2. **P-F interval?** Visual: 2-4 weeks; Temperature: 1-2 weeks
+3. **On-condition feasible?** Yes—weekly inspection, continuous temp monitoring
+4. **Age-reliability?** Partial—seals wear, but many fail from random causes
+5. **Scheduled discard?** Wasteful—many replaced unnecessarily
+
+**Selected:** Weekly visual inspection + temperature monitoring`
+  },
+  {
+    id: 13,
+    title: "Combining Tasks",
+    type: 'concept',
+    content: `Sometimes combinations provide better coverage:
+
+**Example—Rotating Equipment:**
+- On-condition: Continuous vibration monitoring
+- On-condition: Quarterly oil analysis
+- Scheduled: Annual alignment check
+- Scheduled discard: Coupling element every 5 years
+
+Each addresses different failure modes or provides complementary detection.`
+  },
+  {
+    id: 14,
+    title: "Expert Tip: Match Technique to Mode",
+    type: 'keypoint',
+    content: `**Select the right tool for each failure mode:**
+
+- Vibration catches bearing wear—not corrosion
+- Oil analysis catches contamination—not electrical faults
+- Thermography catches hot spots—not mechanical looseness
+
+No single technique covers everything. Match technique to the specific failure mode you're trying to detect.`
+  },
+  {
+    id: 15,
+    title: "Expert Tip: The Whole P-F Chain",
+    type: 'keypoint',
+    content: `Detection is only valuable if you can act in time.
+
+Consider the full chain:
+- Detection time
+- Analysis/diagnosis time
+- Decision time
+- Parts lead time
+- Scheduling time
+- Repair time
+
+If P-F is 2 weeks but parts take 8 weeks, you have a problem. Plan the whole response, not just detection.`
+  },
+  {
+    id: 16,
+    title: "Expert Tip: Question Scheduled Tasks",
+    type: 'keypoint',
+    content: `If proposing scheduled restoration or discard, ask:
+
+*"What evidence shows age-related failure occurs?"*
+
+Many scheduled tasks exist because "we've always done it" rather than technical validity.
+
+**Watch for maintenance-induced failures:** Every intervention risks introducing problems. Scheduled tasks should reduce overall failure risk, not just shift it.`
+  },
+  {
+    id: 17,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- **On-condition** detects potential failure—P-F interval is key
+- Task interval ≤ **P-F ÷ 2** ensures detection before failure
+- **Scheduled tasks** only work for age-related patterns (11% of failures)
+- **On-condition preferred** when feasible—only replaces what needs it
+- **Combine tasks** when different techniques cover different failure modes
+
+When no proactive task works, we need **default actions**—next module.`
+  }
+];
+
+// Module 8: Default Actions & Redesign - Slide-based content
+export const practitionerModule8Slides: Slide[] = [
+  {
+    id: 1,
+    title: "When Proactive Tasks Don't Work",
+    type: 'intro',
+    content: `Sometimes no proactive task is technically applicable or worth doing.
+
+This isn't failure—it's a valid outcome of rigorous analysis.
+
+**Default actions** are what you do when scheduled or on-condition tasks aren't the answer:
+- Failure-finding tasks (for hidden failures)
+- Redesign (mandatory for some consequences)
+- Run to failure (acceptable for some consequences)`
+  },
+  {
+    id: 2,
+    title: "Failure-Finding Tasks",
+    type: 'keypoint',
+    content: `**Failure-finding tasks** check whether a hidden function is still working.
+
+These apply ONLY to hidden failures—things you wouldn't notice during normal operation.
+
+Examples:
+- Test backup generator monthly
+- Function-test relief valves annually
+- Exercise standby pumps weekly
+- Test emergency shutdowns quarterly
+
+The purpose: Confirm the protection is available before you need it.`
+  },
+  {
+    id: 3,
+    title: "Failure-Finding Intervals",
+    type: 'concept',
+    content: `The interval depends on:
+- Required availability of the protected function
+- Consequence severity if both fail
+- Mean Time Between Failures of the hidden item
+
+**Calculation approach:**
+If 95% availability is required and MTBF is 5 years:
+Interval = MTBF × (1 - Required Availability)²
+= 5 × 0.05² = 0.0125 years ≈ weekly
+
+More conservative = shorter intervals.`
+  },
+  {
+    id: 4,
+    title: "When Redesign is Mandatory",
+    type: 'keypoint',
+    content: `**Redesign is mandatory when:**
+
+- Failure has safety/environmental consequences AND
+- No proactive task reduces risk to acceptable levels
+
+You cannot simply accept safety consequences. If you can't maintain safety through tasks, you must change the design to:
+- Eliminate the failure mode
+- Reduce the consequences
+- Make failure evident
+- Add protection`
+  },
+  {
+    id: 5,
+    title: "Redesign Options",
+    type: 'concept',
+    content: `**Redesign can mean:**
+
+- **Change the design** — Different materials, components, configuration
+- **Add protection** — Safety devices, barriers, interlocks
+- **Change the process** — Different operating conditions
+- **Add redundancy** — Backup systems
+- **Make hidden failures evident** — Add indication, alarms
+- **Reduce consequences** — Containment, fire protection
+
+The goal: Make the failure mode acceptable through design, not just maintenance.`
+  },
+  {
+    id: 6,
+    title: "Run to Failure",
+    type: 'concept',
+    content: `**Run to failure** is a legitimate strategy—when consequences allow.
+
+**Acceptable for:**
+- Non-operational consequences (only repair cost matters)
+- Some operational consequences (when prevention costs more than failure)
+
+**Never acceptable for:**
+- Safety/environmental consequences
+- Hidden failures protecting against safety/environmental events
+
+Run to failure is a **conscious decision**, not neglect.`
+  },
+  {
+    id: 7,
+    title: "The No Scheduled Maintenance Decision",
+    type: 'concept',
+    content: `"No scheduled maintenance" means:
+- No proactive task is technically valid, OR
+- No proactive task is economically justified
+
+**This requires documentation:**
+- Why no task is feasible
+- What consequences are accepted
+- What will happen when failure occurs
+- How failures will be managed reactively
+
+It's a decision, not an omission.`
+  },
+  {
+    id: 8,
+    title: "Default Action Decision Flow",
+    type: 'keypoint',
+    content: `**For hidden failures:**
+1. Can a proactive task prevent/detect? → If yes, use it
+2. If no → Failure-finding task feasible? → If yes, use it
+3. If no → Is risk acceptable? → If no, redesign mandatory
+
+**For evident failures:**
+1. Safety/Environmental: Task or redesign mandatory
+2. Operational: Task if economically justified, else run to failure
+3. Non-operational: Task if economic, else run to failure`
+  },
+  {
+    id: 9,
+    title: "Documenting Default Actions",
+    type: 'concept',
+    content: `Document clearly why no proactive task was selected:
+
+| Failure Mode | Consequence | Proactive Task? | Default Action | Rationale |
+|--------------|-------------|-----------------|----------------|-----------|
+| Bulb fails | Non-op | No cost-effective task | Run to failure | Replace when noticed; £5 repair |
+| Safety valve fails to lift | Hidden S&E | No condition indicator | Failure-finding (annual) | Test annually per insurance |
+| Tank corrosion | S&E, no warning | No feasible task | Redesign | Add corrosion-resistant lining |`
+  },
+  {
+    id: 10,
+    title: "Expert Tip: Challenge 'No Task'",
+    type: 'keypoint',
+    content: `Before accepting "no scheduled maintenance," challenge:
+
+- **Are we sure no on-condition task exists?** Technology advances—new monitoring methods emerge.
+- **Have we considered all scheduled options?** Sometimes a simple inspection catches problems.
+- **Is redesign truly impractical?** Sometimes small changes make big differences.
+
+"No task" should be a last resort, not a default.`
+  },
+  {
+    id: 11,
+    title: "Expert Tip: Run to Failure ≠ Ignore",
+    type: 'keypoint',
+    content: `**Run to failure still requires:**
+
+- Spare parts availability (or fast procurement)
+- Reactive maintenance capability
+- Contingency plans for outage period
+- Acceptance that failure will occur
+
+It's not "do nothing until it breaks then panic." It's "we've planned for this failure and are ready."`
+  },
+  {
+    id: 12,
+    title: "Module Summary",
+    type: 'summary',
+    content: `**Key takeaways:**
+
+- **Failure-finding tasks** check hidden functions are working
+- **Redesign is mandatory** for safety/environmental when tasks don't work
+- **Run to failure** is legitimate for non-operational and some operational
+- **"No scheduled maintenance"** must be documented with rationale
+- Default actions are **conscious decisions**, not omissions
+
+With task selection complete, we turn to **facilitating RCM analyses**—next module.`
+  }
+];
+
 // Map of lesson IDs to their slides
 export const practitionerLessonSlides: Record<number, Slide[]> = {
   1: practitionerModule1Slides,
   2: practitionerModule2Slides,
   3: practitionerModule3Slides,
   4: practitionerModule4Slides,
+  5: practitionerModule5Slides,
+  6: practitionerModule6Slides,
+  7: practitionerModule7Slides,
+  8: practitionerModule8Slides,
   // Future modules will be added here
 };
 
