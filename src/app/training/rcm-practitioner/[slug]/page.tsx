@@ -9,8 +9,10 @@ import {
   getPreviousPractitionerLesson, 
   practitionerLessons 
 } from '@/data/rcm-practitioner';
+import { hasPractitionerSlides, getPractitionerSlides } from '@/data/rcm-practitioner-slides';
 import { usePractitionerProgress } from '@/hooks/usePractitionerProgress';
 import PractitionerQuiz from '@/components/PractitionerQuiz';
+import SlideViewer from '@/components/SlideViewer';
 
 export default function PractitionerLessonPage() {
   const params = useParams();
@@ -32,6 +34,7 @@ export default function PractitionerLessonPage() {
   const [showQuiz, setShowQuiz] = useState(false);
   const [hasMarkedComplete, setHasMarkedComplete] = useState(false);
   const [activeTab, setActiveTab] = useState<'lesson' | 'exercises'>('lesson');
+  const [slidesCompleted, setSlidesCompleted] = useState(false);
 
   const nextLesson = lesson ? getNextPractitionerLesson(lesson.id) : undefined;
   const prevLesson = lesson ? getPreviousPractitionerLesson(lesson.id) : undefined;
@@ -39,16 +42,33 @@ export default function PractitionerLessonPage() {
   const isLessonComplete = lesson ? completedLessons.includes(lesson.id) : false;
   const isQuizComplete = lesson ? completedQuizzes.includes(lesson.id) : false;
 
-  // Mark lesson as complete after reading time
+  // Check if this lesson has slides
+  const lessonHasSlides = lesson ? hasPractitionerSlides(lesson.id) : false;
+  const slides = lesson ? getPractitionerSlides(lesson.id) : undefined;
+
+  // Mark lesson as complete (for regular content after 10s, for slides after completion)
   useEffect(() => {
     if (lesson && isLoaded && !hasMarkedComplete) {
-      const timer = setTimeout(() => {
-        completeLesson(lesson.id);
-        setHasMarkedComplete(true);
-      }, 10000); // Mark complete after 10 seconds on page
-      return () => clearTimeout(timer);
+      if (lessonHasSlides) {
+        // For slide-based lessons, mark complete when slides are done
+        if (slidesCompleted) {
+          completeLesson(lesson.id);
+          setHasMarkedComplete(true);
+        }
+      } else {
+        // For regular lessons, mark complete after 10 seconds
+        const timer = setTimeout(() => {
+          completeLesson(lesson.id);
+          setHasMarkedComplete(true);
+        }, 10000);
+        return () => clearTimeout(timer);
+      }
     }
-  }, [lesson, isLoaded, completeLesson, hasMarkedComplete]);
+  }, [lesson, isLoaded, completeLesson, hasMarkedComplete, lessonHasSlides, slidesCompleted]);
+
+  const handleSlidesComplete = () => {
+    setSlidesCompleted(true);
+  };
 
   if (!lesson) {
     return (
@@ -392,13 +412,25 @@ export default function PractitionerLessonPage() {
           {/* Main content */}
           {activeTab === 'lesson' && (
             <>
-              <article className="bg-white rounded-xl shadow-sm border border-light-grey p-6 md:p-10 mb-8">
-                <div className="prose max-w-none">
-                  {renderContent(lesson.content)}
+              {/* Slide-based content */}
+              {lessonHasSlides && slides ? (
+                <div className="mb-8">
+                  <SlideViewer 
+                    slides={slides} 
+                    lessonTitle={lesson.title}
+                    onComplete={handleSlidesComplete}
+                  />
                 </div>
-              </article>
+              ) : (
+                <article className="bg-white rounded-xl shadow-sm border border-light-grey p-6 md:p-10 mb-8">
+                  <div className="prose max-w-none">
+                    {renderContent(lesson.content)}
+                  </div>
+                </article>
+              )}
 
-              {/* Key Takeaways */}
+              {/* Key Takeaways - show after slides are completed or for non-slide lessons */}
+              {(!lessonHasSlides || slidesCompleted) && (
               <div className="bg-gradient-to-r from-deep-teal/10 to-slate-navy/10 rounded-xl p-6 md:p-8 mb-8 border border-deep-teal/20">
                 <h3 className="font-heading text-xl font-bold text-slate-navy mb-4 flex items-center gap-2">
                   <svg className="w-6 h-6 text-deep-teal" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -417,6 +449,7 @@ export default function PractitionerLessonPage() {
                   ))}
                 </ul>
               </div>
+              )}
             </>
           )}
 
