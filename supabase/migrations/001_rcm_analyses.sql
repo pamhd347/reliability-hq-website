@@ -210,7 +210,7 @@ CREATE POLICY "Users can view failures for own functions" ON rcm_functional_fail
     EXISTS (
       SELECT 1 FROM rcm_functions f
       JOIN rcm_analyses a ON f.analysis_id = a.id
-      WHERE f.id = function_id AND a.user_id = auth.uid()
+      WHERE f.id = rcm_functional_failures.function_id AND a.user_id = auth.uid()
     )
   );
 
@@ -219,7 +219,7 @@ CREATE POLICY "Users can manage failures for own functions" ON rcm_functional_fa
     EXISTS (
       SELECT 1 FROM rcm_functions f
       JOIN rcm_analyses a ON f.analysis_id = a.id
-      WHERE f.id = function_id AND a.user_id = auth.uid()
+      WHERE f.id = rcm_functional_failures.function_id AND a.user_id = auth.uid()
     )
   );
 
