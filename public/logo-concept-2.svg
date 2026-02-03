@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <!-- Concept 2: Abstract "R" shield with uptime indicator -->
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D6E6E"/>
+      <stop offset="100%" style="stop-color:#2C3E50"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Shield shape -->
+  <path d="M24 4 L40 8 L40 22 C40 32 32 40 24 44 C16 40 8 32 8 22 L8 8 Z" 
+        fill="url(#shieldGrad)"/>
+  
+  <!-- Stylized R inside shield -->
+  <path d="M16 12 L16 36 M16 12 L28 12 C32 12 34 14 34 18 C34 22 32 24 28 24 L16 24 M24 24 L34 36" 
+        stroke="#F8F9FA" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Small uptime bar indicator -->
+  <rect x="36" y="34" width="3" height="6" fill="#E67E22" rx="1"/>
+  <rect x="36" y="28" width="3" height="4" fill="#E67E22" rx="1" opacity="0.7"/>
+  <rect x="36" y="24" width="3" height="2" fill="#E67E22" rx="1" opacity="0.4"/>
+  
+  <!-- Text -->
+  <text x="52" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#2C3E50">
+    Reliability
+  </text>
+  <text x="145" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#0D6E6E">
+    HQ
+  </text>
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <!-- Concept 4: Hexagon (stability) with pulse/heartbeat line -->
+  <defs>
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D6E6E"/>
+      <stop offset="100%" style="stop-color:#2C3E50"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Hexagon -->
+  <polygon points="24,4 42,13 42,31 24,40 6,31 6,13" fill="url(#hexGrad)"/>
+  
+  <!-- Reliability pulse line inside -->
+  <polyline points="10,22 16,22 19,14 24,30 29,18 32,22 38,22" 
+            stroke="#F8F9FA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Small amber accent -->
+  <circle cx="24" cy="22" r="2" fill="#E67E22"/>
+  
+  <!-- Text -->
+  <text x="52" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#2C3E50">
+    Reliability
+  </text>
+  <text x="145" y="32" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#0D6E6E">
+    HQ
+  </text>
+</svg>

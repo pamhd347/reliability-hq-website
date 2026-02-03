@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,15 +8,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-deep-teal rounded-lg flex items-center justify-center">
-                <span className="text-white font-heading font-bold text-lg">R</span>
-              </div>
-              <div>
-                <span className="font-heading font-semibold text-xl">Reliability</span>
-                <span className="font-heading font-semibold text-xl text-deep-teal"> HQ</span>
-              </div>
-            </div>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/logo-white.svg"
+                alt="Reliability HQ"
+                width={160}
+                height={36}
+                className="h-9 w-auto"
+              />
+            </Link>
             <p className="text-gray-300 text-sm">
               Built for Reliability Engineers
             </p>

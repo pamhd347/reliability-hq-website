@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -28,14 +29,15 @@ export default function Header() {
       <nav className="container-max px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-deep-teal rounded-lg flex items-center justify-center">
-              <span className="text-white font-heading font-bold text-lg">R</span>
-            </div>
-            <div className="hidden sm:block">
-              <span className="font-heading font-semibold text-xl text-slate-navy">Reliability</span>
-              <span className="font-heading font-semibold text-xl text-deep-teal"> HQ</span>
-            </div>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.svg"
+              alt="Reliability HQ"
+              width={180}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}

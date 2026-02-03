@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" width="200" height="50">
+  <!-- Concept 3: Clean interlocking circles (reliability chain) + bold text -->
+  
+  <!-- Three interlocking rings representing reliability chain -->
+  <g transform="translate(8, 13)">
+    <!-- Ring 1 -->
+    <circle cx="12" cy="12" r="10" fill="none" stroke="#0D6E6E" stroke-width="3"/>
+    <!-- Ring 2 (interlocked) -->
+    <circle cx="24" cy="12" r="10" fill="none" stroke="#2C3E50" stroke-width="3"/>
+    <!-- Ring 3 (interlocked) -->
+    <circle cx="36" cy="12" r="10" fill="none" stroke="#0D6E6E" stroke-width="3"/>
+    <!-- Highlight dot -->
+    <circle cx="24" cy="12" r="3" fill="#E67E22"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="60" y="32" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="#2C3E50">
+    RELIABILITY
+  </text>
+  <text x="165" y="32" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="800" fill="#0D6E6E">
+    HQ
+  </text>
+</svg>

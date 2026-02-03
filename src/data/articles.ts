@@ -3896,6 +3896,395 @@ Your maintenance programme will thank you. Your future FMEA sessions will thank 
 
 *Start building your library today. Our [Failure Mode Suggester](/ai-tools/failure-modes) generates equipment-specific failure modes in seconds, and the [RCM Wizard](/ai-tools/rcm-wizard) guides you through complete analysis. Both are free—because we'd rather you finish your library than get stuck on step one.*
 `
+  },
+  {
+    slug: 'motor-failure-modes-complete-guide',
+    title: 'Motor Failure Modes: The Complete Guide for Reliability Engineers',
+    excerpt: 'Electric motors drive everything—and they fail in predictable ways. This guide covers the 8 most common motor failure modes, from bearing wear to winding insulation breakdown, with specific detection methods and P-F intervals for each.',
+    category: 'rcm-basics',
+    author: 'Reliability HQ',
+    publishDate: '2026-02-02',
+    readTime: 12,
+    featured: true,
+    featuredImage: '/blog/motor-failure-modes.svg',
+    metaDescription: 'Complete guide to electric motor failure modes. Covers bearing failures, winding insulation, rotor bar defects, shaft issues, and more—with detection methods, P-F intervals, and recommended maintenance tasks.',
+    relatedSlugs: ['5-pump-failure-modes-every-engineer-should-know', '7-rcm-questions-explained', 'pf-interval-cheat-sheet', 'how-to-use-ai-for-rcm-analysis'],
+    content: `
+## The Workhorse That Keeps Breaking
+
+Electric motors are everywhere. They drive pumps, compressors, fans, conveyors, agitators—if it rotates, there's probably a motor behind it. In a typical industrial facility, motors consume 60-70% of electrical energy and represent a significant portion of maintenance spend.
+
+The good news? Motors fail in predictable patterns. Understand these patterns, and you can catch most failures before they stop your process.
+
+I've analysed hundreds of motor failures across refineries, chemical plants, utilities, and manufacturing. The same eight failure modes show up repeatedly—accounting for roughly 85% of all motor failures. Master these, and you've mastered motor reliability.
+
+---
+
+## Motor Anatomy: What Can Fail
+
+Before diving into failure modes, let's establish what we're working with. A typical AC induction motor has:
+
+**Stator assembly:**
+- Stator core (laminated steel)
+- Stator windings (copper coils)
+- Winding insulation
+- Slot wedges
+
+**Rotor assembly:**
+- Rotor core (laminated steel)
+- Rotor bars (aluminium or copper)
+- End rings
+- Shaft
+
+**Bearings:**
+- Drive end (DE) bearing
+- Non-drive end (NDE) bearing
+
+**Other components:**
+- Frame and end brackets
+- Cooling fan
+- Terminal box and connections
+
+Each component has specific failure modes. Let's work through them systematically.
+
+---
+
+## 1. Bearing Failure (Drive End)
+
+**What it is:** Degradation of the drive-end rolling element bearing, leading to increased friction, heat, vibration, and eventual seizure.
+
+**Why the DE bearing fails more often:**
+- Higher radial load from belt/coupling forces
+- Greater heat exposure (closer to load)
+- Often carries thrust loads from misalignment
+
+**Typical causes:**
+- **Lubrication problems** (40% of bearing failures)—wrong grease, over/under-greasing, contamination
+- **Misalignment**—puts uneven load on bearing elements
+- **Belt tension**—excessive tension overloads the bearing
+- **Electrical discharge machining (EDM)**—current flow through bearings pits the races
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | High-frequency vibration, slight temperature rise | 2-4 months |
+| Developing | Audible noise, vibration at bearing frequencies | 2-6 weeks |
+| Advanced | Grinding noise, excessive heat, visible damage | Days |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Vibration (velocity) | Overall increase, BPFO/BPFI peaks | >4.5 mm/s RMS |
+| Vibration (envelope) | Bearing defect frequencies | 3x baseline |
+| Temperature | Bearing housing temp rise | >80°C or >15°C above baseline |
+| Ultrasound | High-frequency noise | dB increase from baseline |
+
+**Recommended task:** Monthly vibration monitoring with trending. For critical motors, consider online monitoring. Proper greasing programme based on manufacturer recommendations—not too much, not too little.
+
+---
+
+## 2. Bearing Failure (Non-Drive End)
+
+**What it is:** Same degradation as DE bearing, but typically longer life due to lower loads.
+
+**Why NDE bearings last longer:**
+- No radial load from drive
+- Lower operating temperature
+- Often a smaller, lighter-duty bearing
+
+**Typical causes:**
+- Same as DE bearing, but greasing errors are more common (often neglected)
+- Shaft current damage (EDM) sometimes worse on NDE
+
+**Detection:** Same methods as DE bearing, but adjust thresholds—NDE bearings should run quieter and cooler than DE bearings.
+
+**Pro tip:** If your NDE bearing fails before your DE bearing, investigate shaft currents. This is backwards from normal wear patterns and suggests electrical damage.
+
+---
+
+## 3. Stator Winding Insulation Breakdown
+
+**What it is:** Degradation of the insulation between winding turns, phases, or to ground, leading to short circuits and winding burnout.
+
+**Why it's critical:** Winding failure is often catastrophic—the motor stops, and repair requires complete rewind or replacement. Average rewind cost: £800-£3,000+ depending on motor size.
+
+**Typical causes:**
+- **Thermal aging**—every 10°C above rated temperature halves insulation life
+- **Contamination**—moisture, oil, dust, chemicals degrade insulation
+- **Mechanical damage**—vibration causes winding movement and abrasion
+- **Voltage stress**—VFD operation creates voltage spikes
+- **Overloading**—excess current generates heat
+
+**Insulation life rule of thumb:**
+- Class F insulation: 20,000+ hours at 155°C
+- Every 10°C above rated temperature cuts life by ~50%
+- A motor running 20°C hot loses 75% of expected insulation life
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | Reduced insulation resistance on megger test | 12-36 months |
+| Developing | Polarisation index decline, elevated operating temp | 3-12 months |
+| Advanced | Current imbalance between phases, tripping | Weeks to months |
+| Failure | Short circuit, smoke, trip on overcurrent | N/A |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Insulation resistance (megger) | Resistance to ground | <100 MΩ, or declining trend |
+| Polarisation index | Ratio of 10-min to 1-min IR | <2.0 |
+| Motor current analysis (MCSA) | Current imbalance, harmonics | >3% imbalance |
+| Infrared thermography | Hot spots on frame | >10°C variation |
+
+**Recommended task:** Annual insulation resistance testing for critical motors. Ensure motors run within temperature ratings—fix cooling problems, reduce loads, clean fins.
+
+---
+
+## 4. Rotor Bar Defects
+
+**What it is:** Cracking or breakage of rotor bars or end rings, reducing motor torque and efficiency.
+
+**Why it matters:** Broken rotor bars don't stop the motor immediately—they cause efficiency loss, vibration, and heat. Multiple bar failures can lead to catastrophic rotor damage.
+
+**Typical causes:**
+- **Thermal cycling**—frequent starts expand/contract bars
+- **High starting loads**—excessive current during acceleration
+- **Manufacturing defects**—porosity in cast rotors
+- **Mechanical stress**—from operating at high slip
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | Slight efficiency drop, increased slip | 6-24 months |
+| Developing | Vibration at 2x slip frequency, current fluctuation | 2-6 months |
+| Advanced | Excessive vibration, rotor heating, sparking | Weeks |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Motor current signature analysis (MCSA) | Sidebands around line frequency at ±2xslipxf | Sidebands >-50 dB of fundamental |
+| Vibration | 2x line frequency, modulated by slip | Increasing trend |
+| Current spectrum | Asymmetry in phase currents | >3% imbalance |
+
+**Recommended task:** Annual MCSA on critical motors. Reduce number of starts where possible—VFDs help by allowing soft starting.
+
+---
+
+## 5. Shaft Damage/Failure
+
+**What it is:** Bending, cracking, or wear of the motor shaft, affecting alignment, bearing loads, and power transmission.
+
+**Typical causes:**
+- **Fatigue**—cyclic stress from misalignment or imbalance
+- **Corrosion**—moisture ingress, especially during storage
+- **Mechanical damage**—coupling installation, bearing removal
+- **Excessive loads**—belt tension, overhung loads
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | Slight runout increase, vibration at 1x speed | Variable |
+| Developing | Increasing vibration, coupling wear, seal wear | Months |
+| Advanced | Visible shaft damage, excessive vibration | Weeks |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Vibration | 1x running speed (imbalance from bent shaft) | >4 mm/s at 1x |
+| Shaft runout check | Dial indicator reading on shaft | >0.05 mm TIR |
+| Visual inspection | Scoring, corrosion, damage | Any visible damage |
+
+**Recommended task:** Check shaft runout during bearing replacements. Proper storage for spare motors (rotate shafts monthly, control humidity).
+
+---
+
+## 6. Cooling System Failure
+
+**What it is:** Loss of cooling capacity from blocked air passages, failed cooling fans, or contaminated heat exchange surfaces.
+
+**Why it matters:** Motors depend on cooling to maintain winding temperature. Loss of cooling = accelerated insulation aging = winding failure.
+
+**Typical causes:**
+- **Blocked air passages**—dust, debris accumulation
+- **Failed cooling fan**—broken blades, loose on shaft
+- **Environmental**—high ambient temperature, blocked ventilation
+- **Contamination**—oil film on fins reduces heat transfer
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | Elevated winding temperature, fan noise change | Months |
+| Developing | Temperature approaching limits, tripping | Weeks |
+| Advanced | Overheating, derating required | Days to weeks |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Temperature monitoring | Winding/bearing temperature | >Class rating, or >10°C above baseline |
+| Infrared thermography | Hot spots, blocked fins | Temperature variation |
+| Visual inspection | Debris, fan condition | Any accumulation |
+| Airflow | Reduced discharge velocity | Subjective assessment |
+
+**Recommended task:** Quarterly visual inspection and cleaning of air passages. Annual thermography survey. Ensure adequate ventilation around motor.
+
+---
+
+## 7. Electrical Connection Problems
+
+**What it is:** High-resistance connections at terminal box, junction boxes, or motor leads, causing localised heating and potential failure.
+
+**Typical causes:**
+- **Loose connections**—vibration loosens terminals over time
+- **Corrosion**—moisture, chemical exposure
+- **Undersized cables**—voltage drop, excessive heating
+- **Poor workmanship**—initial installation defects
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | Slight temperature rise at connection | Months |
+| Developing | Visible discoloration, higher resistance | Weeks to months |
+| Advanced | Melting, burning smell, intermittent operation | Days |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Infrared thermography | Hot connections | >10°C above ambient, or >5°C phase-to-phase |
+| Resistance testing | High resistance at connections | Compare phase-to-phase |
+| Visual inspection | Discoloration, corrosion | Any visible damage |
+
+**Recommended task:** Annual infrared survey of motor connections. Include in routine electrical PM. Re-torque connections during major maintenance.
+
+---
+
+## 8. Contamination-Related Failures
+
+**What it is:** Damage from ingress of moisture, dust, chemicals, or other contaminants affecting windings, bearings, or cooling.
+
+**Typical causes:**
+- **Moisture ingress**—condensation, wash-downs, outdoor exposure
+- **Dust accumulation**—clogs cooling, contaminates bearings
+- **Chemical attack**—corrosive atmospheres, process leaks
+- **Vermin/debris**—especially in infrequently run motors
+
+**What you'll notice:**
+
+| Stage | Symptoms | P-F Remaining |
+|-------|----------|---------------|
+| Early | Reduced insulation resistance, dirty appearance | Variable |
+| Developing | Bearing noise, winding degradation | Weeks to months |
+| Advanced | Ground faults, bearing failure | Days to weeks |
+
+**Detection methods:**
+
+| Method | What to look for | Alert threshold |
+|--------|------------------|-----------------|
+| Insulation resistance | Reduced IR, especially when cold | <100 MΩ |
+| Visual inspection | Contamination, moisture evidence | Any visible contamination |
+| Bearing monitoring | Noise, temperature increase | As per bearing thresholds |
+
+**Recommended task:** Specify appropriate enclosure (IP rating) for environment. Include cleaning in PM schedules. Use space heaters on standby motors in humid environments.
+
+---
+
+## Quick Reference Table
+
+| Failure Mode | P-F Interval | Primary Detection | Key Threshold |
+|--------------|--------------|-------------------|---------------|
+| **Bearing (DE)** | 1-4 months | Vibration/temperature | >4.5 mm/s, >80°C |
+| **Bearing (NDE)** | 2-6 months | Vibration/temperature | >4.0 mm/s, >75°C |
+| **Winding insulation** | 3-36 months | Insulation resistance | <100 MΩ, PI <2.0 |
+| **Rotor bar defects** | 2-24 months | MCSA | Sidebands >-50 dB |
+| **Shaft damage** | Months-years | Vibration/visual | >4 mm/s at 1x |
+| **Cooling failure** | Weeks-months | Temperature/visual | >Class rating |
+| **Connections** | Days-months | Thermography | >10°C rise |
+| **Contamination** | Variable | IR/visual | <100 MΩ, visible |
+
+---
+
+## The Motor Reliability Hierarchy
+
+Based on failure frequency and criticality, here's where to focus:
+
+### Must Do (for all motors)
+- **Proper lubrication**—right grease, right amount, right interval
+- **Vibration monitoring**—monthly for critical, quarterly for general
+- **Keep clean**—cooling passages, terminal boxes, surroundings
+
+### Should Do (for critical motors)
+- **Annual insulation testing**—megger and PI test
+- **Thermography surveys**—connections and frame temperature
+- **MCSA baseline**—catch rotor issues early
+
+### Consider (for high-value motors)
+- **Online monitoring**—continuous vibration and temperature
+- **Power quality monitoring**—catch electrical issues affecting the motor
+- **Predictive analytics**—trending and automated alerting
+
+---
+
+## When to Replace vs. Rewind
+
+The age-old question: when a motor fails, repair or replace?
+
+**Factors favouring replacement:**
+- Motor is small (<15 kW)—rewind cost approaches replacement
+- Motor is old (>20 years) or has been rewound multiple times
+- Premium efficiency motor available—energy savings may justify cost
+- Failure was catastrophic—core damage, shaft damage
+- Original motor was already inefficient
+
+**Factors favouring rewind:**
+- Motor is large (>100 kW)—replacement lead time and cost significant
+- Motor is specialised or custom
+- Good rewind shop available with quality processes
+- Failure was limited to windings, mechanical components OK
+
+**The efficiency trap:** Rewound motors typically lose 1-2% efficiency. For a continuously running motor, this adds up. Calculate lifetime energy cost before deciding.
+
+---
+
+## Motor Failure Mode Library
+
+Want to go deeper? Use our **[Failure Mode Suggester](/ai-tools/failure-modes)** to generate comprehensive failure mode lists for any motor type—AC induction, DC, synchronous, or specialty motors. Plug in your motor details, operating context, and get a tailored starting point.
+
+For complete RCM analysis including task selection, the **[RCM Analysis Wizard](/ai-tools/rcm-wizard)** walks you through functions, failure modes, effects, and recommended maintenance—step by step.
+
+---
+
+## The Bottom Line
+
+Electric motors are critical, expensive, and everywhere. But they fail in predictable patterns:
+
+1. **Bearings**—vibration and temperature monitoring
+2. **Windings**—insulation testing and thermal management
+3. **Rotor**—motor current analysis
+4. **Shaft**—vibration and inspection
+5. **Cooling**—visual inspection and thermography
+6. **Connections**—thermography
+7. **Contamination**—environmental control
+
+Master these eight failure modes, and you've got 85% of motor reliability covered. The detection methods are proven, the P-F intervals are known, and the maintenance tasks are straightforward.
+
+The motors that keep failing in your plant? They're probably failing in one of these eight ways. Find out which, and you'll know exactly what to do about it.
+
+---
+
+*Need a failure mode library for your motors? Our [Failure Mode Suggester](/ai-tools/failure-modes) generates equipment-specific lists in seconds—covering all motor types and operating contexts. It's free, and it'll save you hours of research.*
+
+`
   }
 ];
 

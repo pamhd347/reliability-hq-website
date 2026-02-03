@@ -23,6 +23,12 @@ export const metadata: Metadata = {
   description: "Professional RCM templates, tools, and training built by reliability engineers, for reliability engineers. Based on SAE JA1011 standards. Ready to use today.",
   keywords: ["RCM", "reliability engineering", "FMEA", "maintenance", "SAE JA1011", "Moubray", "templates"],
   authors: [{ name: "Reliability HQ" }],
+  icons: {
+    icon: [
+      { url: '/logo-icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/logo-icon.svg',
+  },
   openGraph: {
     title: "Reliability HQ - Reliability Made Practical",
     description: "Free RCM training built by engineers, for engineers. SAE JA1011 compliant courses with interactive slides and quizzes.",
