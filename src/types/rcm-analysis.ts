@@ -13,6 +13,7 @@ export type AnalysisStatus =
   | 'IN_PROGRESS'
   | 'PENDING_REVIEW'
   | 'APPROVED'
+  | 'ACTIVE'
   | 'ARCHIVED';
 
 export type AnalysisType = 
@@ -383,6 +384,90 @@ export interface FailureCause {
   description: string;
   mechanism: string; // wear, corrosion, fatigue, etc.
   contributingFactors?: string;
+}
+
+// ============================================
+// COMPONENT 4: CONSEQUENCE CLASSIFICATION
+// ============================================
+
+export type ConsequenceType =
+  | 'SAFETY'
+  | 'ENVIRONMENTAL'
+  | 'OPERATIONAL'
+  | 'ECONOMIC'
+  | 'HIDDEN_SAFETY'
+  | 'HIDDEN_ENVIRONMENTAL'
+  | 'HIDDEN_OPERATIONAL'
+  | 'HIDDEN_ECONOMIC';
+
+export interface ConsequenceClassification {
+  id: string;
+  analysisId: string;
+  failureModeId: string;
+  isEvident: boolean;
+  consequenceType: ConsequenceType;
+  classificationPath: Record<string, unknown>;
+  notes?: string;
+}
+
+// ============================================
+// COMPONENT 5: TASK SELECTION
+// ============================================
+
+export type RCMTaskType =
+  | 'ON_CONDITION'
+  | 'SCHEDULED_RESTORATION'
+  | 'SCHEDULED_DISCARD'
+  | 'FAILURE_FINDING'
+  | 'RUN_TO_FAILURE'
+  | 'REDESIGN';
+
+export type IntervalUnit = 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS' | 'STARTUPS';
+
+export interface RCMTask {
+  id: string;
+  analysisId: string;
+  failureModeId: string;
+  taskType: RCMTaskType;
+  description: string;
+  interval?: number;
+  intervalUnit?: IntervalUnit;
+  feasibilityAssessment: Record<string, unknown>;
+  costEstimate?: number;
+  justification?: string;
+  assignedTo?: string;
+}
+
+// ============================================
+// COMPONENT 6: REVIEW (AUDIT, APPROVALS, MOC)
+// ============================================
+
+export type ApprovalRole = 'FACILITATOR' | 'OPERATIONS' | 'MAINTENANCE' | 'ENGINEERING';
+
+export interface RCMApproval {
+  id: string;
+  analysisId: string;
+  role: ApprovalRole;
+  userId?: string;
+  approvedAt?: Date;
+  signatureText?: string;
+}
+
+export type MOCTriggerType =
+  | 'EQUIPMENT_MODIFICATION'
+  | 'OPERATING_CONTEXT_CHANGE'
+  | 'NEW_FAILURE_MODE'
+  | 'REGULATORY_CHANGE'
+  | 'OTHER';
+
+export interface MOCTrigger {
+  id: string;
+  analysisId: string;
+  triggerType: MOCTriggerType;
+  description?: string;
+  triggeredAt: Date;
+  resolvedAt?: Date;
+  resolutionNotes?: string;
 }
 
 // ============================================

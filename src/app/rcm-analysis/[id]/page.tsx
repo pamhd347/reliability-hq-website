@@ -1,17 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { getAnalysis } from '@/lib/rcm-api';
+import { useAuth } from '@/context/AuthContext';
+import { getAnalysis, getApprovals, getConsequenceClassifications, getFailureModes, getTasksForAnalysis } from '@/lib/rcm-api';
 
 export default function AnalysisOverviewPage() {
+  const { user } = useAuth();
   const params = useParams<{ id: string }>();
   const id = params.id;
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [analysis, setAnalysis] = useState<Record<string, unknown> | null>(null);
+
+  const [modeCount, setModeCount] = useState(0);
+  const [classifiedCount, setClassifiedCount] = useState(0);
+  const [taskCount, setTaskCount] = useState(0);
+  const [approvalCount, setApprovalCount] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -23,6 +30,21 @@ export default function AnalysisOverviewPage() {
         const res = await getAnalysis(id);
         if (cancelled) return;
         setAnalysis(res.analysis);
+
+        if (user) {
+          const [modes, cons, tasks, approvals] = await Promise.all([
+            getFailureModes(id),
+            getConsequenceClassifications(id),
+            getTasksForAnalysis(id),
+            getApprovals(id),
+          ]);
+          if (cancelled) return;
+
+          setModeCount((modes ?? []).length);
+          setClassifiedCount((cons ?? []).length);
+          setTaskCount((tasks ?? []).length);
+          setApprovalCount((approvals ?? []).filter((a: any) => !!a.approved_at).length);
+        }
       } catch (e: unknown) {
         if (cancelled) return;
         const message = e instanceof Error ? e.message : 'Failed to load analysis';
@@ -37,7 +59,18 @@ export default function AnalysisOverviewPage() {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [id, user]);
+
+  const component3Complete = modeCount > 0;
+  const component4Complete = modeCount > 0 && classifiedCount >= modeCount;
+  const component5Complete = modeCount > 0 && taskCount >= modeCount;
+  const component6Complete = approvalCount >= 4;
+
+  const progress = useMemo(() => {
+    const total = 4;
+    const done = [component3Complete, component4Complete, component5Complete, component6Complete].filter(Boolean).length;
+    return { done, total };
+  }, [component3Complete, component4Complete, component5Complete, component6Complete]);
 
   if (loading) {
     return (
@@ -92,12 +125,26 @@ export default function AnalysisOverviewPage() {
             </span>
           </p>
 
+          <div className="mt-4 flex items-center justify-between gap-4">
+            <div className="text-sm text-gray-600">
+              Progress: <span className="font-semibold text-gray-900">{progress.done}/{progress.total}</span> components complete
+            </div>
+            {user ? (
+              <div className="text-xs text-gray-500">Based on saved data (failure modes, classifications, tasks, approvals).</div>
+            ) : (
+              <div className="text-xs text-gray-500">Sign in to see completion tracking.</div>
+            )}
+          </div>
+
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
               href={`/rcm-analysis/${id}/functions`}
               className="block rounded-xl border border-gray-200 p-5 hover:border-deep-teal/50 hover:shadow-md transition-all"
             >
-              <div className="text-sm font-semibold text-slate-navy">Component 2</div>
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-slate-navy">Component 2</div>
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700">In progress</span>
+              </div>
               <div className="text-lg font-bold text-gray-900 mt-1">Functions & Functional Failures</div>
               <div className="text-sm text-gray-600 mt-2">Define what the system must do and what constitutes failure.</div>
             </Link>
@@ -106,9 +153,72 @@ export default function AnalysisOverviewPage() {
               href={`/rcm-analysis/${id}/failure-modes`}
               className="block rounded-xl border border-gray-200 p-5 hover:border-deep-teal/50 hover:shadow-md transition-all"
             >
-              <div className="text-sm font-semibold text-slate-navy">Component 3</div>
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-slate-navy">Component 3</div>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs border ${
+                    component3Complete ? 'bg-green-50 text-green-800 border-green-200' : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  {user ? (component3Complete ? `Complete (${modeCount})` : `Not complete (${modeCount})`) : '—'}
+                </span>
+              </div>
               <div className="text-lg font-bold text-gray-900 mt-1">Failure Modes, Causes & Effects</div>
               <div className="text-sm text-gray-600 mt-2">Capture HOW failures occur, WHY they occur, and their effects.</div>
+            </Link>
+
+            <Link
+              href={`/rcm-analysis/${id}/consequences`}
+              className="block rounded-xl border border-gray-200 p-5 hover:border-deep-teal/50 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-slate-navy">Component 4</div>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs border ${
+                    component4Complete ? 'bg-green-50 text-green-800 border-green-200' : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  {user ? (component4Complete ? 'Complete' : `${classifiedCount}/${modeCount}`) : '—'}
+                </span>
+              </div>
+              <div className="text-lg font-bold text-gray-900 mt-1">Consequence Classification</div>
+              <div className="text-sm text-gray-600 mt-2">Classify each failure mode consequence using a JA1011 decision tree.</div>
+            </Link>
+
+            <Link
+              href={`/rcm-analysis/${id}/tasks`}
+              className="block rounded-xl border border-gray-200 p-5 hover:border-deep-teal/50 hover:shadow-md transition-all"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-slate-navy">Component 5</div>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs border ${
+                    component5Complete ? 'bg-green-50 text-green-800 border-green-200' : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  {user ? (component5Complete ? 'Complete' : `${taskCount}/${modeCount}`) : '—'}
+                </span>
+              </div>
+              <div className="text-lg font-bold text-gray-900 mt-1">Task Selection</div>
+              <div className="text-sm text-gray-600 mt-2">Assess feasibility and select scheduled tasks (or redesign) per JA1011.</div>
+            </Link>
+
+            <Link
+              href={`/rcm-analysis/${id}/review`}
+              className="block rounded-xl border border-gray-200 p-5 hover:border-deep-teal/50 hover:shadow-md transition-all sm:col-span-2"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-slate-navy">Component 6</div>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs border ${
+                    component6Complete ? 'bg-green-50 text-green-800 border-green-200' : 'bg-slate-100 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  {user ? (component6Complete ? 'Ready to activate' : `${approvalCount}/4 approvals`) : '—'}
+                </span>
+              </div>
+              <div className="text-lg font-bold text-gray-900 mt-1">Review & Approval</div>
+              <div className="text-sm text-gray-600 mt-2">Audit trail, approvals, management of change triggers, and exports.</div>
             </Link>
 
             <div className="block rounded-xl border border-gray-200 p-5 bg-slate-50 sm:col-span-2">

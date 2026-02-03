@@ -400,3 +400,210 @@ export async function getFunctionalFailuresForAnalysis(analysisId: string): Prom
   if (error) throw error;
   return (data ?? []) as JsonObject[];
 }
+
+// ============================================
+// COMPONENT 4: CONSEQUENCE CLASSIFICATION
+// ============================================
+
+export type ConsequenceType =
+  | 'SAFETY'
+  | 'ENVIRONMENTAL'
+  | 'OPERATIONAL'
+  | 'ECONOMIC'
+  | 'HIDDEN_SAFETY'
+  | 'HIDDEN_ENVIRONMENTAL'
+  | 'HIDDEN_OPERATIONAL'
+  | 'HIDDEN_ECONOMIC';
+
+export interface ConsequenceClassificationInput {
+  analysisId: string;
+  failureModeId: string;
+  isEvident: boolean;
+  consequenceType: ConsequenceType;
+  classificationPath: JsonObject;
+  notes?: string | null;
+}
+
+export async function getConsequenceClassifications(analysisId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('rcm_consequence_classifications')
+    .select('*')
+    .eq('analysis_id', analysisId)
+    .order('updated_at', { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function upsertConsequenceClassification(input: ConsequenceClassificationInput): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row = {
+    analysis_id: input.analysisId,
+    failure_mode_id: input.failureModeId,
+    is_evident: input.isEvident,
+    consequence_type: input.consequenceType,
+    classification_path: input.classificationPath,
+    notes: input.notes ?? null,
+  };
+
+  // Unique key is failure_mode_id
+  const { data, error } = await supabase
+    .from('rcm_consequence_classifications')
+    .upsert(row, { onConflict: 'failure_mode_id' })
+    .select('*')
+    .single();
+
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+// ============================================
+// COMPONENT 5: TASK SELECTION
+// ============================================
+
+export type RCMTaskType =
+  | 'ON_CONDITION'
+  | 'SCHEDULED_RESTORATION'
+  | 'SCHEDULED_DISCARD'
+  | 'FAILURE_FINDING'
+  | 'RUN_TO_FAILURE'
+  | 'REDESIGN';
+
+export type IntervalUnit = 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS' | 'YEARS' | 'STARTUPS';
+
+export interface TaskInput {
+  analysisId: string;
+  failureModeId: string;
+  taskType: RCMTaskType;
+  description: string;
+  interval?: number | null;
+  intervalUnit?: IntervalUnit | null;
+  feasibilityAssessment: JsonObject;
+  costEstimate?: number | null;
+  justification?: string | null;
+  assignedTo?: string | null;
+}
+
+export async function getTasksForAnalysis(analysisId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('rcm_tasks')
+    .select('*')
+    .eq('analysis_id', analysisId)
+    .order('updated_at', { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function upsertTask(input: TaskInput & { id?: string }): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row: Record<string, unknown> = {
+    id: input.id,
+    analysis_id: input.analysisId,
+    failure_mode_id: input.failureModeId,
+    task_type: input.taskType,
+    description: input.description,
+    interval: input.interval ?? null,
+    interval_unit: input.intervalUnit ?? null,
+    feasibility_assessment: input.feasibilityAssessment,
+    cost_estimate: input.costEstimate ?? null,
+    justification: input.justification ?? null,
+    assigned_to: input.assignedTo ?? null,
+  };
+
+  const { data, error } = await supabase.from('rcm_tasks').upsert(row).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function deleteTask(id: string): Promise<void> {
+  const supabase = requireSupabase();
+  const { error } = await supabase.from('rcm_tasks').delete().eq('id', id);
+  if (error) throw error;
+}
+
+// ============================================
+// COMPONENT 6: REVIEW (AUDIT, APPROVALS, MOC)
+// ============================================
+
+export async function listAuditLog(analysisId: string, limit = 200): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('rcm_audit_log')
+    .select('*')
+    .eq('analysis_id', analysisId)
+    .order('timestamp', { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function getApprovals(analysisId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase.from('rcm_approvals').select('*').eq('analysis_id', analysisId);
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function upsertApproval(input: {
+  analysisId: string;
+  role: string;
+  approved: boolean;
+  signatureText?: string;
+}): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row = {
+    analysis_id: input.analysisId,
+    role: input.role,
+    approved_at: input.approved ? new Date().toISOString() : null,
+    signature_text: input.signatureText ?? null,
+  };
+
+  const { data, error } = await supabase.from('rcm_approvals').upsert(row, { onConflict: 'analysis_id,role' }).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function getMocTriggers(analysisId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('rcm_moc_triggers')
+    .select('*')
+    .eq('analysis_id', analysisId)
+    .order('triggered_at', { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function createMocTrigger(input: {
+  analysisId: string;
+  triggerType: string;
+  description?: string;
+}): Promise<JsonObject> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('rcm_moc_triggers')
+    .insert({ analysis_id: input.analysisId, trigger_type: input.triggerType, description: input.description ?? null })
+    .select('*')
+    .single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function resolveMocTrigger(input: {
+  id: string;
+  resolved: boolean;
+  resolutionNotes?: string;
+}): Promise<JsonObject> {
+  const supabase = requireSupabase();
+  const patch = {
+    resolved_at: input.resolved ? new Date().toISOString() : null,
+    resolution_notes: input.resolutionNotes ?? null,
+  };
+  const { data, error } = await supabase.from('rcm_moc_triggers').update(patch).eq('id', input.id).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
