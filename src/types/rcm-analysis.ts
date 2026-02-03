@@ -337,6 +337,26 @@ export interface Constraint {
 }
 
 // ============================================
+// COMPONENT 2: FUNCTIONS & FUNCTIONAL FAILURES
+// ============================================
+
+// JA1011: Function statements should describe: what the asset does, to what standard,
+// and in what operating context.
+export interface RCMFunction {
+  id: string;
+  functionStatement: string;
+  performanceStandard: string;
+  context: string;
+  functionalFailures: FunctionalFailure[];
+}
+
+export interface FunctionalFailure {
+  id: string;
+  functionId: string;
+  description: string;
+}
+
+// ============================================
 // QUALITY GATES & AUDIT
 // ============================================
 
