@@ -102,7 +102,16 @@ export default function AnalysisOverviewPage() {
               <div className="text-sm text-gray-600 mt-2">Define what the system must do and what constitutes failure.</div>
             </Link>
 
-            <div className="block rounded-xl border border-gray-200 p-5 bg-slate-50">
+            <Link
+              href={`/rcm-analysis/${id}/failure-modes`}
+              className="block rounded-xl border border-gray-200 p-5 hover:border-deep-teal/50 hover:shadow-md transition-all"
+            >
+              <div className="text-sm font-semibold text-slate-navy">Component 3</div>
+              <div className="text-lg font-bold text-gray-900 mt-1">Failure Modes, Causes & Effects</div>
+              <div className="text-sm text-gray-600 mt-2">Capture HOW failures occur, WHY they occur, and their effects.</div>
+            </Link>
+
+            <div className="block rounded-xl border border-gray-200 p-5 bg-slate-50 sm:col-span-2">
               <div className="text-sm font-semibold text-slate-navy">Component 1</div>
               <div className="text-lg font-bold text-gray-900 mt-1">Operating Context & Boundaries</div>
               <div className="text-sm text-gray-600 mt-2">Captured during creation (edit tooling to follow).</div>

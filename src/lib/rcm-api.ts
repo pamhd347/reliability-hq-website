@@ -252,3 +252,151 @@ export async function updateAnalysis(id: string, input: UpdateAnalysisInput): Pr
 
   return (data ?? {}) as JsonObject;
 }
+
+// ============================================
+// COMPONENT 3: FAILURE MODES & CAUSES (FMEA)
+// ============================================
+
+export interface FailureModeInput {
+  analysisId: string;
+  functionalFailureId: string;
+  modeNumber: number;
+  description: string;
+  localEffect?: string | null;
+  systemEffect?: string | null;
+  endEffect?: string | null;
+  evidenceOfFailure?: string | null;
+  detectionMethod?: string | null;
+  notes?: string | null;
+}
+
+export interface FailureModeUpdateInput extends Partial<Omit<FailureModeInput, 'analysisId' | 'functionalFailureId'>> {}
+
+export interface FailureCauseInput {
+  failureModeId: string;
+  causeNumber: number;
+  description: string;
+  mechanism: string;
+  contributingFactors?: string | null;
+}
+
+export interface FailureCauseUpdateInput extends Partial<Omit<FailureCauseInput, 'failureModeId'>> {}
+
+export async function getFailureModes(analysisId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+
+  const { data, error } = await supabase
+    .from('rcm_failure_modes')
+    .select('*, rcm_failure_causes(*)')
+    .eq('analysis_id', analysisId)
+    .order('mode_number', { ascending: true });
+
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function createFailureMode(input: FailureModeInput): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row = {
+    analysis_id: input.analysisId,
+    functional_failure_id: input.functionalFailureId,
+    mode_number: input.modeNumber,
+    description: input.description,
+    local_effect: input.localEffect ?? null,
+    system_effect: input.systemEffect ?? null,
+    end_effect: input.endEffect ?? null,
+    evidence_of_failure: input.evidenceOfFailure ?? null,
+    detection_method: input.detectionMethod ?? null,
+    notes: input.notes ?? null,
+  };
+
+  const { data, error } = await supabase.from('rcm_failure_modes').insert(row).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function updateFailureMode(id: string, patch: FailureModeUpdateInput): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row: Record<string, unknown> = {};
+  setIfDefined(row, 'mode_number', patch.modeNumber);
+  setIfDefined(row, 'description', patch.description);
+  setIfDefined(row, 'local_effect', patch.localEffect);
+  setIfDefined(row, 'system_effect', patch.systemEffect);
+  setIfDefined(row, 'end_effect', patch.endEffect);
+  setIfDefined(row, 'evidence_of_failure', patch.evidenceOfFailure);
+  setIfDefined(row, 'detection_method', patch.detectionMethod);
+  setIfDefined(row, 'notes', patch.notes);
+
+  const { data, error } = await supabase.from('rcm_failure_modes').update(row).eq('id', id).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function deleteFailureMode(id: string): Promise<void> {
+  const supabase = requireSupabase();
+  const { error } = await supabase.from('rcm_failure_modes').delete().eq('id', id);
+  if (error) throw error;
+}
+
+export async function getFailureCauses(failureModeId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('rcm_failure_causes')
+    .select('*')
+    .eq('failure_mode_id', failureModeId)
+    .order('cause_number', { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}
+
+export async function createFailureCause(input: FailureCauseInput): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row = {
+    failure_mode_id: input.failureModeId,
+    cause_number: input.causeNumber,
+    description: input.description,
+    mechanism: input.mechanism,
+    contributing_factors: input.contributingFactors ?? null,
+  };
+
+  const { data, error } = await supabase.from('rcm_failure_causes').insert(row).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function updateFailureCause(id: string, patch: FailureCauseUpdateInput): Promise<JsonObject> {
+  const supabase = requireSupabase();
+
+  const row: Record<string, unknown> = {};
+  setIfDefined(row, 'cause_number', patch.causeNumber);
+  setIfDefined(row, 'description', patch.description);
+  setIfDefined(row, 'mechanism', patch.mechanism);
+  setIfDefined(row, 'contributing_factors', patch.contributingFactors);
+
+  const { data, error } = await supabase.from('rcm_failure_causes').update(row).eq('id', id).select('*').single();
+  if (error) throw error;
+  return (data ?? {}) as JsonObject;
+}
+
+export async function deleteFailureCause(id: string): Promise<void> {
+  const supabase = requireSupabase();
+  const { error } = await supabase.from('rcm_failure_causes').delete().eq('id', id);
+  if (error) throw error;
+}
+
+// Helper: component 3 needs the functional failure context (Function number + Failure letter)
+export async function getFunctionalFailuresForAnalysis(analysisId: string): Promise<JsonObject[]> {
+  const supabase = requireSupabase();
+
+  const { data, error } = await supabase
+    .from('rcm_functional_failures')
+    .select('id, description, failure_letter, function_id, rcm_functions(function_number, full_statement, analysis_id)')
+    .eq('rcm_functions.analysis_id', analysisId)
+    .order('failure_letter', { ascending: true });
+
+  if (error) throw error;
+  return (data ?? []) as JsonObject[];
+}

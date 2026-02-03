@@ -230,6 +230,15 @@ export default function FunctionsPage() {
             </div>
 
             <div className="flex items-center gap-3">
+              <Link
+                href={`/rcm-analysis/${id}/failure-modes`}
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white text-gray-700 px-3 py-2 text-sm font-medium hover:bg-gray-50"
+              >
+                Failure Modes
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5l6 7.5-6 7.5M3 12h16.5" />
+                </svg>
+              </Link>
               <button
                 onClick={() => setShowSuggestions(true)}
                 className="inline-flex items-center gap-2 rounded-lg bg-industrial-amber text-slate-navy px-3 py-2 text-sm font-medium hover:opacity-90"

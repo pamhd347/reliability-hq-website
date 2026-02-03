@@ -357,6 +357,35 @@ export interface FunctionalFailure {
 }
 
 // ============================================
+// COMPONENT 3: FAILURE MODES, CAUSES & EFFECTS (FMEA)
+// ============================================
+
+// Critical JA1011 requirement:
+// - Failure Mode = HOW something fails (the event)
+// - Failure Cause = WHY it fails (the mechanism)
+
+export interface FailureMode {
+  id: string;
+  functionalFailureId: string;
+  modeNumber: number;
+  description: string; // HOW it fails
+  causes: FailureCause[]; // WHY it fails (array)
+  localEffect: string;
+  systemEffect: string;
+  endEffect: string;
+  evidenceOfFailure: string;
+  detectionMethod: string;
+  notes?: string;
+}
+
+export interface FailureCause {
+  id: string;
+  description: string;
+  mechanism: string; // wear, corrosion, fatigue, etc.
+  contributingFactors?: string;
+}
+
+// ============================================
 // QUALITY GATES & AUDIT
 // ============================================
 
