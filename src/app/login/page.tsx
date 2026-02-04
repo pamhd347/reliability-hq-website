@@ -6,14 +6,14 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
 function LoginForm() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, resetPassword } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirect') || '/training';
@@ -25,20 +25,28 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      if (isLogin) {
+      if (mode === 'login') {
         const { error } = await signIn(email, password);
         if (error) {
           setError(error.message);
         } else {
           router.push(redirectTo);
         }
-      } else {
+      } else if (mode === 'signup') {
         const { error } = await signUp(email, password);
         if (error) {
           setError(error.message);
         } else {
           setMessage('Check your email to confirm your account, then log in.');
-          setIsLogin(true);
+          setMode('login');
+        }
+      } else if (mode === 'forgot') {
+        const { error } = await resetPassword(email);
+        if (error) {
+          setError(error.message);
+        } else {
+          setMessage('Password reset link sent! Check your email.');
+          setMode('login');
         }
       }
     } catch (err) {
@@ -60,12 +68,14 @@ function LoginForm() {
               </svg>
             </div>
             <h1 className="font-heading text-2xl font-bold text-slate-navy">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {mode === 'login' ? 'Welcome Back' : mode === 'signup' ? 'Create Account' : 'Reset Password'}
             </h1>
             <p className="text-mid-grey mt-2">
-              {isLogin 
+              {mode === 'login' 
                 ? 'Log in to access your training courses' 
-                : 'Sign up for free access to RCM training'}
+                : mode === 'signup'
+                ? 'Sign up for free access to RCM training'
+                : 'Enter your email to receive a reset link'}
             </p>
           </div>
 
@@ -98,49 +108,74 @@ function LoginForm() {
               />
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-charcoal mb-1">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-                className="w-full px-4 py-3 border border-light-grey rounded-lg focus:ring-2 focus:ring-deep-teal focus:border-transparent outline-none transition-all"
-                placeholder="••••••••"
-              />
-              {!isLogin && (
-                <p className="text-xs text-mid-grey mt-1">Minimum 6 characters</p>
-              )}
-            </div>
+            {mode !== 'forgot' && (
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-charcoal mb-1">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="w-full px-4 py-3 border border-light-grey rounded-lg focus:ring-2 focus:ring-deep-teal focus:border-transparent outline-none transition-all"
+                  placeholder="••••••••"
+                />
+                {mode === 'signup' && (
+                  <p className="text-xs text-mid-grey mt-1">Minimum 6 characters</p>
+                )}
+              </div>
+            )}
+
+            {mode === 'login' && (
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => { setMode('forgot'); setError(''); setMessage(''); }}
+                  className="text-sm text-deep-teal hover:underline"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
 
             <button
               type="submit"
               disabled={loading}
               className="w-full bg-deep-teal text-white py-3 px-4 rounded-lg font-semibold hover:bg-slate-navy transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Please wait...' : isLogin ? 'Log In' : 'Create Account'}
+              {loading ? 'Please wait...' : mode === 'login' ? 'Log In' : mode === 'signup' ? 'Create Account' : 'Send Reset Link'}
             </button>
           </form>
 
           {/* Toggle */}
           <div className="mt-6 text-center text-sm">
-            <span className="text-mid-grey">
-              {isLogin ? "Don't have an account? " : 'Already have an account? '}
-            </span>
-            <button
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setError('');
-                setMessage('');
-              }}
-              className="text-deep-teal font-semibold hover:underline"
-            >
-              {isLogin ? 'Sign up' : 'Log in'}
-            </button>
+            {mode === 'forgot' ? (
+              <button
+                onClick={() => { setMode('login'); setError(''); setMessage(''); }}
+                className="text-deep-teal font-semibold hover:underline"
+              >
+                ← Back to login
+              </button>
+            ) : (
+              <>
+                <span className="text-mid-grey">
+                  {mode === 'login' ? "Don't have an account? " : 'Already have an account? '}
+                </span>
+                <button
+                  onClick={() => {
+                    setMode(mode === 'login' ? 'signup' : 'login');
+                    setError('');
+                    setMessage('');
+                  }}
+                  className="text-deep-teal font-semibold hover:underline"
+                >
+                  {mode === 'login' ? 'Sign up' : 'Log in'}
+                </button>
+              </>
+            )}
           </div>
 
           {/* Back link */}
